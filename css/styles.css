@@ -1389,63 +1389,69 @@ footer.main-footer p a:hover {
 
 /* --- Find Bar View --- */
 #findBarView {
-    width: 100%; /* Take full width of its parent (.container) */
-    margin-top: 2.5rem; /* Same as .controls-panel margin-bottom, for spacing */
+    width: 100%; 
+    margin-top: 20px; /* Match holiday timer's top margin for overall section start */
+    /* Apply container-like properties for centering and max-width */
+    max-width: 1200px; /* Same as .container */
+    margin-left: auto;  /* Same as .container */
+    margin-right: auto; /* Same as .container */
+    padding-left: 2rem; /* Same as .container padding */
+    padding-right: 2rem;/* Same as .container padding */
+    /* No top/bottom padding here, handled by children's margins */
 }
 
-#findBarView .main-header.find-bar-header { /* Specific to findBarView's header */
-    text-align: center;
-    padding: 1.5rem 1rem; /* Reduced padding a bit */
-    margin-bottom: 2rem; /* Spacing before its controls */
-    border-bottom: 1px solid var(--current-border-color);
+/* Styles for the removed .find-bar-header are no longer needed and can be deleted if they exist */
+/* #findBarView .main-header.find-bar-header { ... } */
+/* #findBarView .main-header.find-bar-header h1 { ... } */
+
+/* Styles for removed .find-bar-inner-container are no longer needed */
+/* #findBarView .container.find-bar-inner-container { ... } */
+
+.find-bar-controls { /* This now also has .controls-panel class */
+    /* It will now rely on .controls-panel styles for width and general layout. */
+    /* .controls-panel has padding: 1.5rem; */
+    padding-top: 2rem; /* Override .controls-panel padding-top to match timer's effective top spacing */
+    /* margin-bottom from .controls-panel is 2.5rem, which is fine for space above map/results */
 }
 
-#findBarView .main-header.find-bar-header h1 {
-    font-size: 2.4em; /* Consistent with main page title, or adjust as needed */
-    color: var(--accent-color);
-    font-weight: 700;
-    margin-bottom: 0; /* Remove bottom margin if no subtitle */
-}
-
-#findBarView .container.find-bar-inner-container {
-    padding: 0; /* Remove extra padding if parent .container provides it */
-}
-
-.find-bar-controls {
-    background: var(--secondary-color);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-    margin-bottom: 2rem; /* Spacing before results */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border: 1px solid var(--current-border-color);
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
+/* The media query that set max-width: 100% on .find-bar-controls is no longer needed */
 
 /* Adjustments for filter buttons inside find-bar-controls if needed */
 .find-bar-controls .filters .filter-btn {
 }
 
 /* Ensure search box elements are consistent */
-.find-bar-controls .city-search-box input[type="text"] {
-    width: 100%; /* Ensure it takes full width if .search-box is flex item */
-    padding: 0.75rem 1rem; /* Consistent with main search */
-    border: 1px solid var(--current-border-color);
-    border-radius: var(--border-radius);
-    font-size: 1em;
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    transition: border-color var(--transition-fast);
-}
-.find-bar-controls .city-search-box input[type="text"]:focus {
-    border-color: var(--accent-color);
-    outline: none;
-    box-shadow: 0 0 0 2px var(--accent-color-alpha, rgba(229, 57, 53, 0.3));
+.find-bar-controls .city-search-box {
+    /* display: flex; ALIGNMENT NOW HANDLED BY ABSOLUTE POSITIONING OF ICON */
+    /* align-items: center; */
+    /* gap: 0.5rem; */
+    /* .search-box class already provides position: relative; needed for the icon */
 }
 
-.find-bar-controls .city-search-box .filter-btn { /* For the search button */
-    padding: 0.6rem 1.2rem; /* Consistent with other filter buttons */
+.find-bar-controls .city-search-box input[type="text"] {
+    flex-grow: 1; /* Input takes available space */
+    /* Copied padding from main #searchInput */
+    padding: 0.75rem 2.5rem 0.75rem 1rem; 
+    /* Ensure other styles like border, font-size, etc., are consistent via .search-box input */
+}
+
+/* Remove specific styles for .find-bar-controls .city-search-box .filter-btn as it's no longer a button */
+/* .find-bar-controls .city-search-box .filter-btn { ... } */
+
+/* Style the new icon button for city search */
+.find-bar-controls .city-search-box #citySearchBtn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    cursor: pointer; /* Ensure it's clickable */
+    pointer-events: auto; /* Ensure it receives pointer events */
+    transition: color var(--transition-fast);
+}
+
+.find-bar-controls .city-search-box #citySearchBtn:hover {
+    color: var(--accent-color);
 }
 
 
@@ -1458,57 +1464,107 @@ footer.main-footer p a:hover {
 
 /* Placeholder for individual bar card styling */
 .bar-card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--card-border-color);
-    border-radius: var(--border-radius-medium);
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: var(--transition-medium);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .bar-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 5px 15px var(--current-shadow-color);
+    border-color: var(--accent-color);
+}
+
+.bar-card:last-child {
+    margin-bottom: 0;
 }
 
 .bar-card h3 {
-    margin-top: 0;
+    font-size: 1.1em;
     color: var(--accent-color);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
 }
 
 .bar-card p {
-    font-size: 0.9em;
-    margin-bottom: 8px;
-}
-
-.bar-card .bar-rating {
-    font-weight: bold;
-    color: var(--text-color);
+    font-size: 0.85em;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
 }
 
 .bar-card .bar-address {
-    font-style: italic;
-    color: var(--text-secondary-color);
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.bar-card strong { /* For labels like "Телефон:", "Часы работы:" */
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.bar-card .bar-categories {
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
+
+.bar-card .bar-category-badge {
+    background-color: var(--accent-color-alpha);
+    color: var(--accent-color);
+    padding: 0.2em 0.6em;
+    border-radius: 10px;
+    font-size: 0.75em;
+    font-weight: 500;
+    border: 1px solid var(--accent-color);
+}
+
+.bar-card .bar-phone,
+.bar-card .bar-hours,
+.bar-card .bar-website {
+    font-size: 0.8em;
+    margin-bottom: 0.25rem;
+}
+
+.bar-card .bar-website a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.bar-card .bar-website a:hover {
+    text-decoration: underline;
 }
 
 /* --- Yandex Map Container --- */
 
 .find-bar-content-area {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens if needed */
-    gap: 1.5rem; /* Space between map and results list */
-    margin-top: 1.5rem; /* Space from controls panel */
+    flex-wrap: wrap; 
+    gap: 1.5rem; 
+    /* margin-top from .controls-panel's margin-bottom is sufficient */
+    /* This area no longer needs clear: both; */
+    /* It does not need its own horizontal padding as #findBarView now provides it */
 }
 
 #yandexMapContainer {
-    flex: 1 1 55%; /* Map takes more space, allows shrinking/growing. Adjust basis (55%) as needed */
-    min-width: 300px; /* Minimum width for the map */
-    height: 500px; /* Adjusted height, can be changed */
-    border-radius: var(--border-radius-medium);
+    flex: 1 1 55%; 
+    min-width: 300px; 
+    height: 500px; /* Fixed height for the map */
+    border-radius: var(--border-radius); /* Consistent border-radius */
     border: 1px solid var(--current-border-color);
     background-color: var(--secondary-color); 
     overflow: hidden; 
-    position: relative; /* For placeholder message positioning */
+    position: relative; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Added subtle shadow like other cards */
 }
 
 .map-placeholder-message {
@@ -1521,22 +1577,24 @@ footer.main-footer p a:hover {
 }
 
 #barResultsListContainer {
-    flex: 1 1 40%; /* Results list takes less space, allows shrinking/growing. Adjust basis (40%) */
-    min-width: 280px; /* Minimum width for the results list */
-    max-height: 500px; /* Match map height, or adjust */
-    overflow-y: auto; /* Allow scrolling for bar list if it's long */
-    padding-right: 10px; /* For scrollbar space if needed, or use custom scrollbars */
-    background-color: var(--secondary-color); /* Optional: if you want a distinct bg */
-    border-radius: var(--border-radius-medium);
-    border: 1px solid var(--current-border-color);
+    flex-basis: 35%; 
     padding: 1rem;
+    overflow-y: auto; /* Ensure vertical scroll */
+    max-height: 500px; /* Make max-height same as map height */
+    background-color: rgba(var(--card-bg-rgb), 0.7); /* Slightly less transparent */
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius); /* Add border-radius for consistency */
+    /* remove height: 100%; as max-height is now set */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Added subtle shadow */
 }
 
 #barResultsListContainer .no-results-message {
-    /* Styles for the message if it's inside this specific container */
     text-align: center;
-    margin-top: 2rem;
+    padding: 2rem 1rem;
     color: var(--text-light);
+    font-style: italic;
 }
 
 /* Adjustments for bar cards if they are directly inside #barResultsListContainer */
@@ -1545,21 +1603,20 @@ footer.main-footer p a:hover {
 }
 
 /* Responsive adjustments for two-column layout */
-@media (max-width: 768px) { /* Example breakpoint */
+@media (max-width: 768px) { 
     .find-bar-content-area {
-        flex-direction: column; /* Stack map and results on smaller screens */
+        flex-direction: column; 
     }
     #yandexMapContainer,
     #barResultsListContainer {
-        flex-basis: auto; /* Reset flex-basis */
+        flex-basis: auto; 
         width: 100%;
-        max-height: none; /* Allow results list to grow */
     }
     #yandexMapContainer {
         height: 350px; /* Adjust map height for stacked view */
     }
     #barResultsListContainer {
-        max-height: 400px; /* Still limit height with scroll for results */
+        max-height: 400px; /* Adjust and still limit height with scroll for results in stacked view */
     }
 }
 

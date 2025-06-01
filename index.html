@@ -13,7 +13,7 @@
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/>
     <!-- Yandex Maps API -->
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=08fcd02f-fe25-4c96-b1c4-404e7e471082&lang=ru_RU" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=08fcd02f-fe25-4c96-b1c4-404e7e471082&lang=en_US" type="text/javascript"></script>
 </head>
 <body>
     <div id="icon-background-layer">
@@ -95,44 +95,33 @@
 
         <!-- "Find Bar" View Container (hidden by default) -->
         <div id="findBarView" class="view-container" style="display: none;">
-            <header class="main-header find-bar-header"> <!-- Added class for specific styling if needed -->
-                <h1 data-i18n="findBarTitle">Найти бар</h1>
-                <!-- Removed close button, view switch will be handled by the main toggle -->
-            </header>
-            <div class="container find-bar-inner-container">
-                <div class="controls-panel find-bar-controls">
-                    <div class="controls-row">
-                        <div class="search-box city-search-box">
-                            <input type="text" id="citySearchInput" data-i18n-placeholder="citySearchPlaceholder" placeholder="Введите город...">
-                            <button id="citySearchBtn" class="filter-btn" data-i18n="search">Поиск</button>
-                        </div>
-                    </div>
-                    <div class="controls-row">
-                        <div class="filters bar-type-filters">
-                            <h4 data-i18n="barTypeFilterTitle">Тип заведения:</h4>
-                            <button class="filter-btn active" data-type="all" data-i18n="filterAll">Все</button>
-                            <button class="filter-btn" data-type="wine_bar" data-i18n="filterWineBar">Винный бар</button>
-                            <button class="filter-btn" data-type="pub" data-i18n="filterPub">Паб/Пивной</button>
-                            <button class="filter-btn" data-type="cocktail_bar" data-i18n="filterCocktailBar">Коктейль-бар</button>
-                            <button class="filter-btn" data-type="whiskey_bar" data-i18n="filterWhiskeyBar">Виски-бар</button>
-                            <!-- Add more specific bar types if needed -->
-                        </div>
+            <div class="controls-panel find-bar-controls">
+                <div class="controls-row">
+                    <div class="search-box city-search-box">
+                        <input type="text" id="citySearchInput" data-i18n-placeholder="citySearchPlaceholder" placeholder="Введите город...">
+                        <i id="citySearchBtn" class="fas fa-search" title="Найти город"></i>
                     </div>
                 </div>
-
-                <!-- New wrapper for two-column layout: Map on left, Results on right -->
-                <div class="find-bar-content-area">
-                    <div id="yandexMapContainer">
-                        <!-- Map will be initialized here by Yandex API -->
-                        <p class="map-placeholder-message" data-i18n="mapLoadingMessage">Загрузка карты...</p>
-                    </div>
-                    <div id="barResultsListContainer" class="results-list-column">
-                        <!-- Bar results will be populated here -->
-                        <p class="no-results-message" data-i18n="noBarsFound">Бары не найдены или укажите город.</p>
+                <div class="controls-row">
+                    <div class="filters bar-type-filters">
+                        <h4 data-i18n="barTypeFilterTitle">Тип заведения:</h4>
+                        <button class="filter-btn active" data-type="all" data-i18n="filterAll">Все</button>
+                        <button class="filter-btn" data-type="wine_bar" data-i18n="filterWineBar">Винный бар</button>
+                        <button class="filter-btn" data-type="pub" data-i18n="filterPub">Паб/Пивной бар</button>
+                        <button class="filter-btn" data-type="cocktail_bar" data-i18n="filterCocktailBar">Коктейль-бар</button>
+                        <button class="filter-btn" data-type="whiskey_bar" data-i18n="filterWhiskeyBar">Виски-бар</button>
                     </div>
                 </div>
+            </div>
 
-            </div> <!-- Closing .container.find-bar-inner-container -->
+            <div class="find-bar-content-area">
+                <div id="yandexMapContainer">
+                    <p class="map-placeholder-message" data-i18n="mapLoadingMessage">Загрузка карты...</p>
+                </div>
+                <div id="barResultsListContainer" class="results-list-column">
+                    <p class="no-results-message" data-i18n="noBarsFound">Бары не найдены или укажите город.</p>
+                </div>
+            </div>
         </div> <!-- Closing #findBarView -->
 
     </div> <!-- Closing main .container -->
