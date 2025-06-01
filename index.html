@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pageTitle">Алкогольный календарь</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <!-- Yandex Maps API -->
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=08fcd02f-fe25-4c96-b1c4-404e7e471082&lang=ru_RU" type="text/javascript"></script>
+</head>
+<body>
+    <div id="icon-background-layer">
+        <!-- Iconify Icons - Set 1 -->
+        <iconify-icon icon="streamline:food-drinks-wine-bottle-cook-bottle-wine-drink-cooking-nutrition-food"></iconify-icon>
+        <iconify-icon icon="solar:wineglass-triangle-broken"></iconify-icon>
+        <iconify-icon icon="solar:wineglass-broken"></iconify-icon>
+        <iconify-icon icon="tdesign:drink"></iconify-icon>
+        <iconify-icon icon="arcticons:drinkable"></iconify-icon>
+        <iconify-icon icon="circum:beer-mug-full"></iconify-icon>
+        <iconify-icon icon="fluent-emoji-high-contrast:clinking-beer-mugs"></iconify-icon>
+        <iconify-icon icon="ion:beer-outline"></iconify-icon>
+        <iconify-icon icon="ph:beer-bottle-thin"></iconify-icon>
+        <iconify-icon icon="fluent:drink-margarita-20-regular"></iconify-icon>
+        <iconify-icon icon="emojione-monotone:cocktail-glass"></iconify-icon>
+
+        <!-- Iconify Icons - Set 2 -->
+        <iconify-icon icon="streamline:food-drinks-wine-bottle-cook-bottle-wine-drink-cooking-nutrition-food"></iconify-icon>
+        <iconify-icon icon="solar:wineglass-triangle-broken"></iconify-icon>
+        <iconify-icon icon="solar:wineglass-broken"></iconify-icon>
+        <iconify-icon icon="tdesign:drink"></iconify-icon>
+        <iconify-icon icon="arcticons:drinkable"></iconify-icon>
+        <iconify-icon icon="circum:beer-mug-full"></iconify-icon>
+        <iconify-icon icon="fluent-emoji-high-contrast:clinking-beer-mugs"></iconify-icon>
+        <iconify-icon icon="ion:beer-outline"></iconify-icon>
+        <iconify-icon icon="ph:beer-bottle-thin"></iconify-icon>
+        <iconify-icon icon="fluent:drink-margarita-20-regular"></iconify-icon>
+        <iconify-icon icon="emojione-monotone:cocktail-glass"></iconify-icon>
+    </div>
+
+    <div class="container">
+        <header class="main-header">
+            <h1 data-i18n="title">Алкогольный календарь</h1>
+            <p class="subtitle" data-i18n="subtitle">Праздники и события, связанные с алкогольными напитками</p>
+        </header>
+
+        <div id="nextHolidayTimerSection">
+            <h3 data-i18n="nextHolidayTitle">Следующий праздник через:</h3>
+            <p id="nextHolidayName">-</p>
+            <div id="nextHolidayInfo">
+                <span id="nextHolidayType">-</span>
+                <span id="nextHolidayDegree">-°</span>
+            </div>
+            <div id="countdownTimer">00д 00ч 00м 00с</div>
+        </div>
+
+        <div class="controls-panel">
+            <div class="controls-row">
+                <div class="search-box">
+                    <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Поиск праздников...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="view-toggle" id="viewToggleContainer"> 
+                    <!-- Кнопки Grid/Calendar будут добавлены JS из CalendarView -->
+                </div>
+            </div>
+            <div class="controls-row">
+                <div class="filters">
+                    <button class="filter-btn active" data-type="all" data-i18n="filterAll">Все</button>
+                    <button class="filter-btn" data-type="wine" data-i18n="filterWine">Вино</button>
+                    <button class="filter-btn" data-type="beer" data-i18n="filterBeer">Пиво</button>
+                    <button class="filter-btn" data-type="whiskey" data-i18n="filterWhiskey">Виски</button>
+                    <button class="filter-btn" data-type="cocktail" data-i18n="filterCocktail">Коктейли</button>
+                    <button class="filter-btn" data-type="other" data-i18n="filterOther">Другое</button>
+                </div>
+            </div>
+            <div class="controls-row">
+                <div class="degree-filter">
+                    <label for="degreeRange" data-i18n="degreeFilter">Градус до:</label>
+                    <input type="range" id="degreeRange" min="0" max="100" value="100">
+                    <span id="degreeValue">100°</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="calendarContainer" class="calendar-display-area">
+            <!-- Сюда будет рендериться CalendarView -->
+        </div>
+
+        <!-- "Find Bar" View Container (hidden by default) -->
+        <div id="findBarView" class="view-container" style="display: none;">
+            <header class="main-header find-bar-header"> <!-- Added class for specific styling if needed -->
+                <h1 data-i18n="findBarTitle">Найти бар</h1>
+                <!-- Removed close button, view switch will be handled by the main toggle -->
+            </header>
+            <div class="container find-bar-inner-container">
+                <div class="controls-panel find-bar-controls">
+                    <div class="controls-row">
+                        <div class="search-box city-search-box">
+                            <input type="text" id="citySearchInput" data-i18n-placeholder="citySearchPlaceholder" placeholder="Введите город...">
+                            <button id="citySearchBtn" class="filter-btn" data-i18n="search">Поиск</button>
+                        </div>
+                    </div>
+                    <div class="controls-row">
+                        <div class="filters bar-type-filters">
+                            <h4 data-i18n="barTypeFilterTitle">Тип заведения:</h4>
+                            <button class="filter-btn active" data-type="all" data-i18n="filterAll">Все</button>
+                            <button class="filter-btn" data-type="wine_bar" data-i18n="filterWineBar">Винный бар</button>
+                            <button class="filter-btn" data-type="pub" data-i18n="filterPub">Паб/Пивной</button>
+                            <button class="filter-btn" data-type="cocktail_bar" data-i18n="filterCocktailBar">Коктейль-бар</button>
+                            <button class="filter-btn" data-type="whiskey_bar" data-i18n="filterWhiskeyBar">Виски-бар</button>
+                            <!-- Add more specific bar types if needed -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New wrapper for two-column layout: Map on left, Results on right -->
+                <div class="find-bar-content-area">
+                    <div id="yandexMapContainer">
+                        <!-- Map will be initialized here by Yandex API -->
+                        <p class="map-placeholder-message" data-i18n="mapLoadingMessage">Загрузка карты...</p>
+                    </div>
+                    <div id="barResultsListContainer" class="results-list-column">
+                        <!-- Bar results will be populated here -->
+                        <p class="no-results-message" data-i18n="noBarsFound">Бары не найдены или укажите город.</p>
+                    </div>
+                </div>
+
+            </div> <!-- Closing .container.find-bar-inner-container -->
+        </div> <!-- Closing #findBarView -->
+
+    </div> <!-- Closing main .container -->
+
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-image" id="modalImage"></div>
+            <h2 id="modalTitle"></h2>
+            <p class="modal-date" id="modalDate"></p>
+            
+            <h3 data-i18n="description">Описание</h3>
+            <p id="modalDescription"></p>
+            
+            <h3 data-i18n="history">История</h3>
+            <p id="modalHistory"></p>
+            
+            <h3 data-i18n="traditions">Традиции</h3>
+            <p id="modalTraditions"></p>
+        </div>
+    </div>
+
+    <!-- Модальное окно для событий дня (для Calendar View) -->
+    <div id="dayEventsModal" class="modal">
+        <div class="day-events-content modal-content"> <!-- Используем общий modal-content для консистентности -->
+            <div class="day-events-header">
+                <h3 class="day-events-header-title" data-i18n="dayEventsTitle">События на дату</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <ul class="day-events-list">
+                <!-- События дня будут добавлены JS -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Модальное окно "О проекте" -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span> <!-- JS будет закрывать по этому классу -->
+            <h2 data-i18n="aboutProject">🍷 О проекте</h2>
+            <p>«Алкогольный календарь» — это не просто календарь, это твой интерактивный повод налить!<br>
+            Ведь каждый день может быть праздником — главное, знать когда и что именно поднимать в тосте.</p>
+            
+            <p>Разработанный с юмором, душой и лёгким хмелем с помощью HTML, CSS и JavaScript, этот проект служит верным спутником тем, кто хочет оставаться в курсе алкогольных традиций человечества. От Дня текилы до Международного дня водки, от мохито до маргариты — у нас всё по науке (и по бутылке).</p>
+            
+            <h3>Зачем это нужно?</h3>
+            <p class="special-section-paragraph">Потому что взрослой жизни не хватает одного — причин весело выпить.<br>
+            А мы эти причины по календарю разложили.<br>
+            Знаешь, как сложно объяснить, зачем ты пьёшь мартини в среду утром?<br>
+            Легко! Сегодня Всемирный день сухого коктейля. У нас доказательства.</p>
+            
+            <h3>Особенности:</h3>
+            <ul class="about-features-list">
+                <li><iconify-icon icon="material-symbols:calendar-month-outline-rounded"></iconify-icon> Уникальный список праздников в течении года — чтобы ты был готов заранее.</li>
+                <li><iconify-icon icon="material-symbols:local-drink-outline-sharp"></iconify-icon> Привязка к конкретным напиткам — винный день, пивной день, вискарный день, и даже день дегустации (хотя это, по сути, любой день).</li>
+                <li><iconify-icon icon="material-symbols:mindfulness-outline"></iconify-icon> Познавательно: можно не только выпить, но и культурно обосновать это дело.</li>
+            </ul>
+            
+            <p class="signature-block" style="margin-top: 1.5em; text-align: right;">Создано с любовью и чувством вкуса —<br>
+            Kotelevskaya Marina,<br>
+            разработчица, дизайнер, немного бармен по душе. 🍸</p>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button class="action-button-fixed" id="themeToggle" title="Сменить тему">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Language Selector -->
+    <div class="language-selector" id="languageSelectorContainer">
+        <button class="lang-btn active" data-lang="ru">RU</button>
+        <button class="lang-btn" data-lang="sl">SL</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <!-- "Find Bar" Toggle Button -->
+    <button class="action-button-fixed" id="findBarToggleBtn" title="Найти бар">
+        <i class="fas fa-search-location"></i> <!-- Or fas fa-compass, fas fa-beer, etc. -->
+    </button>
+
+    <footer class="main-footer">
+        <p><span data-i18n="copyright">© 2025 Алкогольный календарь.</span> <a href="#" id="openAboutModal" data-i18n="aboutProject">О проекте</a>.</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/calendar-view.js"></script>
+    <script src="js/app.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация CalendarView будет в app.js
+        });
+    </script> -->
+</body>
+</html> 

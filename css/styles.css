@@ -1,0 +1,1646 @@
+:root {
+    /* Dark theme (default) */
+    --primary-color-dark: #0d0d0d; /* Очень темный фон */
+    --secondary-color-dark: #1a1a1a; /* Чуть светлее для карточек */
+    --accent-color-dark: #e53935; /* Яркий красный акцент */
+    --text-color-dark: #e0e0e0; /* Светлый текст для читаемости */
+    --text-secondary-dark: #b0bec5; /* Вторичный текст */
+    --border-color-dark: rgba(255, 255, 255, 0.1);
+    --glass-bg-dark: rgba(40, 40, 40, 0.35); /* Made more transparent */
+    --glass-border-dark: rgba(255, 255, 255, 0.05);
+    --shadow-color-dark: rgba(229, 57, 53, 0.3); /* Тень от акцентного цвета */
+    --accent-color-alpha-dark: rgba(229, 57, 53, 0.4); /* For hover glow, derived from accent-color-dark */
+    --card-bg-rgb-dark: 26, 26, 26; /* From #1a1a1a */
+
+    /* Light theme */
+    --primary-color-light: #f5f5f5; /* Светлый фон */
+    --secondary-color-light: #ffffff; /* Белый для карточек */
+    --accent-color-light: #d32f2f; /* Приглушенный красный акцент */
+    --text-color-light: #212121; /* Темный текст */
+    --text-secondary-light: #546e7a; /* Вторичный текст */
+    --border-color-light: rgba(0, 0, 0, 0.1);
+    --glass-bg-light: rgba(255, 255, 255, 0.35); /* Made more transparent */
+    --glass-border-light: rgba(0, 0, 0, 0.05);
+    --shadow-color-light: rgba(211, 47, 47, 0.2); /* Тень от акцентного цвета */
+    --accent-color-alpha-light: rgba(211, 47, 47, 0.3); /* For hover glow, derived from accent-color-light */
+    --card-bg-rgb-light: 255, 255, 255; /* From #ffffff */
+
+    --border-radius: 12px;
+    --transition-fast: all 0.2s ease-in-out;
+    --transition-medium: all 0.3s ease-in-out;
+}
+
+html[data-theme="dark"] {
+    --primary-color: var(--primary-color-dark);
+    --secondary-color: var(--secondary-color-dark);
+    --accent-color: var(--accent-color-dark);
+    --background-color: var(--primary-color-dark);
+    --card-background: var(--secondary-color-dark);
+    --text-color: var(--text-color-dark);
+    --text-light: var(--text-secondary-dark);
+    --glass-background: var(--glass-bg-dark);
+    --glass-border: var(--glass-border-dark);
+    --glass-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    --current-border-color: var(--border-color-dark);
+    --current-shadow-color: var(--shadow-color-dark);
+    --accent-color-alpha: var(--accent-color-alpha-dark);
+    --icon-sketch-color: rgba(255, 255, 255, 0.06); /* Lighter for thin sketch */
+    --card-bg-rgb: var(--card-bg-rgb-dark);
+}
+
+html[data-theme="light"] {
+    --primary-color: var(--primary-color-light);
+    --secondary-color: var(--secondary-color-light);
+    --accent-color: var(--accent-color-light);
+    --background-color: var(--primary-color-light);
+    --card-background: var(--secondary-color-light);
+    --text-color: var(--text-color-light);
+    --text-light: var(--text-secondary-light);
+    --glass-background: var(--glass-bg-light);
+    --glass-border: var(--glass-border-light);
+    --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --current-border-color: var(--border-color-light);
+    --current-shadow-color: var(--shadow-color-light);
+    --accent-color-alpha: var(--accent-color-alpha-light);
+    --icon-sketch-color: rgba(0, 0, 0, 0.08); /* Lighter for thin sketch */
+    --card-bg-rgb: var(--card-bg-rgb-light);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll from icons that might go off-screen */
+}
+
+#icon-background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent scrollbars if icons are too large/outside bounds */
+    z-index: -2; /* Ensure it's behind everything, even the body's own content flow */
+    pointer-events: none; /* Make sure it doesn't interfere with clicks */
+}
+
+#icon-background-layer iconify-icon {
+    position: absolute;
+    color: var(--icon-sketch-color); 
+    opacity: 0.45; 
+    will-change: transform; 
+    transition: transform 0.5s ease-out; 
+    line-height: 1; 
+    animation: subtleWiggle 10s infinite alternate ease-in-out; /* Even Faster animation */
+}
+
+/* Make individual icon animations slightly offset and faster */
+#icon-background-layer iconify-icon:nth-child(odd) {
+    animation-duration: 5s; /* Even Faster */
+    animation-delay: -1s; /* Adjusted delay slightly */
+}
+#icon-background-layer iconify-icon:nth-child(3n) {
+    animation-duration: 9s; /* Even Faster, but still varied */
+    animation-delay: -2s; /* Adjusted delay slightly */
+}
+
+/* Positioning and sizing for Iconify icons. Varied large sizes for 22 icons. Adjusted for better distribution and rotation. */
+#icon-background-layer iconify-icon:nth-child(1) { font-size: 280px; top: 5%; left: 5%; transform: rotate(-25deg); } /* Corner */
+#icon-background-layer iconify-icon:nth-child(2) { font-size: 180px; top: 10%; left: 80%; transform: rotate(30deg); } /* Edge */
+#icon-background-layer iconify-icon:nth-child(3) { font-size: 220px; top: 70%; left: 8%; transform: rotate(45deg); } /* Corner */
+#icon-background-layer iconify-icon:nth-child(4) { font-size: 250px; top: 85%; left: 85%; transform: rotate(-10deg); } /* Corner */
+#icon-background-layer iconify-icon:nth-child(5) { font-size: 330px; top: 35%; left: 40%; transform: rotate(5deg); }
+#icon-background-layer iconify-icon:nth-child(6) { font-size: 160px; top: 2%; left: 90%; transform: rotate(60deg); } /* Corner/Edge */
+#icon-background-layer iconify-icon:nth-child(7) { font-size: 270px; top: 88%; left: 50%; transform: rotate(-35deg); } /* Edge */
+#icon-background-layer iconify-icon:nth-child(8) { font-size: 200px; top: 45%; left: 92%; transform: rotate(15deg); } /* Edge */
+#icon-background-layer iconify-icon:nth-child(9) { font-size: 240px; top: 80%; left: 15%; transform: rotate(-50deg); }
+#icon-background-layer iconify-icon:nth-child(10) { font-size: 300px; top: 15%; left: 30%; transform: rotate(20deg);}
+#icon-background-layer iconify-icon:nth-child(11) { font-size: 170px; top: 55%; left: 65%; transform: rotate(-5deg); }
+
+/* Set 2 (12-22) - More varied sizes, better distribution and rotation */
+#icon-background-layer iconify-icon:nth-child(12) { font-size: 260px; top: 20%; left: 2%; transform: rotate(70deg); } /* Edge */
+#icon-background-layer iconify-icon:nth-child(13) { font-size: 210px; top: 78%; left: 25%; transform: rotate(-15deg);}
+#icon-background-layer iconify-icon:nth-child(14) { font-size: 190px; top: 50%; left: 80%; transform: rotate(35deg); }
+#icon-background-layer iconify-icon:nth-child(15) { font-size: 310px; top: 8%; left: 60%; transform: rotate(-40deg);}
+#icon-background-layer iconify-icon:nth-child(16) { font-size: 230px; top: 65%; left: 75%; transform: rotate(55deg);}
+#icon-background-layer iconify-icon:nth-child(17) { font-size: 280px; top: 92%; left: 5%; transform: rotate(10deg); } /* Corner */
+#icon-background-layer iconify-icon:nth-child(18) { font-size: 180px; top: 30%; left: 70%; transform: rotate(-60deg); }
+#icon-background-layer iconify-icon:nth-child(19) { font-size: 250px; top: 60%; left: 30%; transform: rotate(25deg);}
+#icon-background-layer iconify-icon:nth-child(20) { font-size: 290px; top: 22%; left: 15%; transform: rotate(5deg); }
+#icon-background-layer iconify-icon:nth-child(21) { font-size: 200px; top: 82%; left: 65%; transform: rotate(75deg);}
+#icon-background-layer iconify-icon:nth-child(22) { font-size: 340px; top: 2%; left: 45%; transform: rotate(-5deg); } /* Edge */
+
+/* Set 3 (23-33) */
+#icon-background-layer iconify-icon:nth-child(23) { font-size: 280px; top: 15%; left: 82%; transform: rotate(-15deg); }
+#icon-background-layer iconify-icon:nth-child(24) { font-size: 210px; top: 32%; left: 8%; transform: rotate(28deg); }
+#icon-background-layer iconify-icon:nth-child(25) { font-size: 240px; top: 55%; left: 90%; transform: rotate(3deg); }
+#icon-background-layer iconify-icon:nth-child(26) { font-size: 300px; top: 85%; left: 15%; transform: rotate(-20deg); }
+#icon-background-layer iconify-icon:nth-child(27) { font-size: 200px; top: 5%; left: 45%; transform: rotate(10deg); }
+#icon-background-layer iconify-icon:nth-child(28) { font-size: 260px; top: 48%; left: 8%; transform: rotate(22deg); }
+#icon-background-layer iconify-icon:nth-child(29) { font-size: 220px; top: 90%; left: 80%; transform: rotate(-2deg);}
+#icon-background-layer iconify-icon:nth-child(30) { font-size: 320px; top: 20%; left: 60%; transform: rotate(-25deg); }
+#icon-background-layer iconify-icon:nth-child(31) { font-size: 190px; top: 70%; left: 5%; transform: rotate(32deg); }
+#icon-background-layer iconify-icon:nth-child(32) { font-size: 250px; top: 35%; left: 50%; transform: rotate(-12deg);}
+#icon-background-layer iconify-icon:nth-child(33) { font-size: 280px; top: 75%; left: 75%; transform: rotate(8deg); }
+
+/* Set 4 (34-44) */
+#icon-background-layer iconify-icon:nth-child(34) { font-size: 270px; top: 2%; left: 70%; transform: rotate(15deg); }
+#icon-background-layer iconify-icon:nth-child(35) { font-size: 200px; top: 95%; left: 30%; transform: rotate(-30deg);}
+#icon-background-layer iconify-icon:nth-child(36) { font-size: 300px; top: 50%; left: 20%; transform: rotate(5deg); }
+#icon-background-layer iconify-icon:nth-child(37) { font-size: 230px; top: 18%; left: 90%; transform: rotate(-8deg);}
+#icon-background-layer iconify-icon:nth-child(38) { font-size: 330px; top: 60%; left: 50%; transform: rotate(20deg);}
+#icon-background-layer iconify-icon:nth-child(39) { font-size: 210px; top: 88%; left: 2%; transform: rotate(2deg); }
+#icon-background-layer iconify-icon:nth-child(40) { font-size: 250px; top: 25%; left: 78%; transform: rotate(-18deg); }
+#icon-background-layer iconify-icon:nth-child(41) { font-size: 290px; top: 5%; left: 15%; transform: rotate(25deg);}
+#icon-background-layer iconify-icon:nth-child(42) { font-size: 220px; top: 70%; left: 92%; transform: rotate(-22deg); }
+#icon-background-layer iconify-icon:nth-child(43) { font-size: 310px; top: 40%; left: 5%; transform: rotate(-5deg);}
+#icon-background-layer iconify-icon:nth-child(44) { font-size: 260px; top: 90%; left: 60%; transform: rotate(16deg);}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure #app can fill viewport height if content is short */
+    padding: 20px;
+    border-radius: var(--border-radius-large); /* Ensure this var exists or use var(--border-radius) */
+    background-color: rgba(var(--card-bg-rgb), 0.8); /* Slightly more transparent */
+    backdrop-filter: blur(8px); /* Slightly less blur if bg is more visible */
+    box-shadow: 0 8px 32px 0 rgba(var(--shadow-color-rgb), 0.37);
+    border: 1px solid rgba(var(--border-color-rgb), 0.18);
+    position: relative; /* Ensure content is above body::before */
+    z-index: 1;
+}
+
+/* Ensure other direct children of body also have a z-index if they appear behind */
+header, footer, #controlsPanel, #calendarContainer, .modal {
+    position: relative;
+    z-index: 1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container { /* Переименовано с app-container для краткости */
+    max-width: 1200px; /* Немного уменьшено для компактности */
+    margin: 0 auto;
+    padding: 2rem; /* Используем rem для масштабируемости */
+}
+
+/* Header Styles */
+header.main-header { /* Более специфичный селектор */
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--current-border-color); /* Тонкая линия вместо градиента */
+}
+
+header.main-header h1 {
+    font-size: 2.8em; /* Немного увеличено */
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: var(--accent-color); /* Акцентный цвет для заголовка */
+}
+
+header.main-header .subtitle { /* Более специфичный селектор */
+    font-size: 1.1em;
+    color: var(--text-light);
+}
+
+/* Next Holiday Timer Section Styles */
+#nextHolidayTimerSection {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px; /* Add some left margin so it doesn't touch other floated content */
+    margin-bottom: 20px; /* Add bottom margin for spacing */
+    padding: 2rem 1rem; /* INCREASED vertical padding for more height */
+    background-color: var(--glass-background); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    width: auto; /* Let content define width, or set a max-width */
+    max-width: 300px; /* Prevent it from becoming too wide */
+    display: flex; /* Added for content alignment */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically if timer gets taller */
+    text-align: right; /* Keep text aligned to the right */
+}
+
+#nextHolidayTimerSection h3 {
+    font-size: 0.9em; /* Smaller title */
+    color: var(--accent-color);
+    margin-bottom: 0.25rem;
+}
+
+#nextHolidayTimerSection #nextHolidayName {
+    font-size: 0.8em; /* Smaller event name */
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+#nextHolidayTimerSection #countdownTimer {
+    font-size: 1.2em; /* Smaller timer font */
+    color: var(--text-color);
+    font-weight: 600; /* Slightly less bold */
+    padding: 0.3rem 0.5rem; /* Smaller padding */
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    display: inline-block; 
+}
+
+#nextHolidayInfo {
+    font-size: 0.75em;
+    color: var(--text-light);
+    margin-bottom: 0.4rem;
+    display: flex; /* Use flex to align items */
+    justify-content: flex-end; /* Align to the right */
+    gap: 0.5rem; /* Space between type and degree */
+    align-items: center; /* Vertically align badges */
+}
+
+#nextHolidayType,
+#nextHolidayDegree {
+    padding: 0.25em 0.75em; /* Vertical and horizontal padding for badge shape */
+    border-radius: 1em; /* Large border-radius for oval shape */
+    font-weight: 500;
+    font-size: 0.9em; /* Slightly adjust font size within badge */
+    line-height: 1.2; /* Ensure text fits well */
+    display: inline-block; /* Allow padding and border-radius */
+}
+
+#nextHolidayType {
+    text-transform: capitalize;
+    background-color: var(--accent-color-alpha); /* Use a subtle accent background */
+    color: var(--accent-color); /* Text color that contrasts with its badge BG */
+    border: 1px solid var(--accent-color);
+}
+
+#nextHolidayDegree {
+    background-color: var(--primary-color); /* Different background for degree */
+    color: var(--text-color); /* Text color that contrasts with its badge BG */
+    border: 1px solid var(--current-border-color);
+}
+
+/* Controls (объединение search, filters, degree, view toggle) */
+.controls-panel {
+    background: var(--secondary-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid var(--current-border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-box {
+    flex-grow: 1; /* Занимает доступное пространство */
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 1rem; /* Увеличены отступы */
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    background-color: var(--primary-color); /* Фон инпута */
+    color: var(--text-color);
+    transition: border-color var(--transition-fast);
+}
+
+.search-box input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-color-alpha, rgba(229, 57, 53, 0.3)); /* Тень при фокусе */
+}
+
+.search-box i {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    pointer-events: none; /* Иконка не мешает клику */
+}
+
+.filters .filter-btn, /* Объединяем стили для кнопок */
+.view-toggle .view-btn {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius); /* Единый стиль скругления */
+    background-color: transparent; /* Прозрачный фон по умолчанию */
+    color: var(--text-light);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    font-weight: 500;
+}
+
+.filters .filter-btn:hover,
+.view-toggle .view-btn:hover {
+    background-color: var(--accent-color);
+    color: white; /* Явный цвет текста для контраста */
+    border-color: var(--accent-color);
+}
+
+.filters .filter-btn.active,
+.view-toggle .view-btn.active {
+    background-color: var(--accent-color);
+    color: white; /* Явный цвет текста для контраста */
+    border-color: var(--accent-color);
+    box-shadow: 0 2px 8px var(--current-shadow-color);
+}
+
+.degree-filter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-basis: 100%; /* Занимает всю ширину в своей строке */
+}
+
+.degree-filter label {
+    white-space: nowrap; /* Предотвращает перенос текста */
+    color: var(--text-light);
+}
+
+.degree-filter input[type="range"] {
+    flex-grow: 1;
+    height: 8px; /* Немного толще */
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--primary-color); /* Фон слайдера */
+    border-radius: var(--border-radius);
+    outline: none;
+    border: 1px solid var(--current-border-color);
+}
+
+.degree-filter input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid var(--secondary-color); /* Обводка для видимости */
+    transition: transform var(--transition-fast);
+}
+
+.degree-filter input[type="range"]::-moz-range-thumb {
+    width: 18px; /* Чуть меньше для Firefox */
+    height: 18px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid var(--secondary-color);
+    transition: transform var(--transition-fast);
+}
+
+.degree-filter input[type="range"]::-webkit-slider-thumb:hover,
+.degree-filter input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+#degreeValue { /* Прямой ID селектор */
+    font-weight: 600;
+    color: var(--accent-color);
+    min-width: 40px; /* Фиксированная ширина для выравнивания */
+    text-align: right;
+}
+
+/* Calendar Grid (для обоих видов) */
+.calendar-display-area { /* Общий контейнер для сетки или календаря */
+    margin-top: 2rem;
+}
+
+.calendar-grid { /* This is for the MONTH grid view */
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); */ /* Old, allows 4+ on wide screens */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Aims for ~3 on 1000px+ screens, adjust 280px as needed */
+    gap: 1.5rem; /* Increased gap a bit for visual separation */
+}
+
+@media (max-width: 992px) {
+    .calendar-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* 2 columns */
+    }
+}
+
+@media (max-width: 600px) { /* Further adjustment for smaller screens if needed */
+    .calendar-grid {
+        grid-template-columns: 1fr; /* 1 column */
+    }
+}
+
+.month-card {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--current-border-color);
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+    position: relative; 
+    overflow: hidden; 
+    display: flex; /* Added flex to control height better if content varies */
+    flex-direction: column; /* Stack title and list vertically */
+}
+
+.month-card:hover {
+    transform: translateY(-5px) scale(1.02); /* Added slight scale for more pop */
+    box-shadow: 0 10px 25px var(--accent-color-alpha, rgba(229, 57, 53, 0.4)), /* Accent shadow */
+                0 0 15px var(--accent-color-alpha, rgba(229, 57, 53, 0.3)); /* Glow effect */
+    border-color: var(--accent-color); /* Highlight border with accent color */
+    /* background-color: var(--glass-background); */ /* Optional: Make it more glassy on hover */
+}
+
+.month-title {
+    color: var(--accent-color);
+    font-size: 1.5em; /* Slightly reduced for card size */
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--current-border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem; /* Slightly reduced gap */
+    font-weight: 600;
+    flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.month-title i {
+    color: var(--accent-color);
+    font-size: 0.9em; 
+    margin-right: 0.2em; /* Add a bit of space if gap isn't enough */
+}
+
+.month-avg-degree {
+    font-size: 0.7em;
+    font-weight: 500;
+    color: var(--text-light);
+    margin-left: auto; /* Push to the right */
+    padding: 0.2em 0.5em;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--current-border-color);
+}
+
+.event-list {
+    list-style: none;
+    padding-left: 0; 
+    flex-grow: 1; /* Allow list to take remaining space */
+    /* overflow-y: auto; */ /* Removed to prevent scrollbar */
+    /* max-height: 200px; */ /* Removed to prevent scrollbar/spoiler effect */
+}
+
+.event-item {
+    margin-bottom: 0.8rem; /* Increased margin a bit */
+    padding: 0; /* Remove padding, will control with inner elements */
+    border-left: none; /* Removed old border, will style differently */
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius); /* Apply border-radius to the whole item */
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    display: flex; /* Key change: Use flexbox for layout */
+    align-items: stretch; /* Make children stretch to full height */
+    overflow: hidden; /* Ensure content respects border-radius */
+    border: 1px solid var(--current-border-color);
+}
+
+.event-item:hover {
+    background-color: var(--secondary-color); /* Darken slightly on hover */
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 4px 12px var(--current-shadow-color);
+}
+
+.event-item-image {
+    width: 80px; /* Fixed width for the image area */
+    flex-shrink: 0; /* Prevent image area from shrinking */
+    background-size: cover;
+    background-position: center;
+    background-color: var(--secondary-color); /* Placeholder bg if image fails */
+    border-right: 1px solid var(--current-border-color);
+    display: flex; /* For placeholder icon centering */
+    align-items: center;
+    justify-content: center;
+}
+
+.event-placeholder-icon {
+    font-size: 2em;
+    color: var(--text-light);
+    opacity: 0.5;
+}
+
+.event-item-content {
+    padding: 0.8rem 1rem; /* Padding for the text content */
+    display: flex;
+    flex-direction: column; /* Stack date, name, type vertically */
+    justify-content: center; /* Vertically center content if space allows */
+    flex-grow: 1; /* Allow content to take remaining space */
+    min-width: 0; /* Fix for flex item text overflow */
+}
+
+.event-date {
+    font-weight: 600; /* Made date bolder */
+    color: var(--accent-color); /* Date with accent color */
+    font-size: 0.8em; 
+    margin-bottom: 0.25rem; /* Space below date */
+    white-space: nowrap; 
+}
+
+.event-name {
+    color: var(--text-color);
+    font-weight: 600; /* Bolder name */
+    font-size: 0.95em; 
+    line-height: 1.3;
+    margin-bottom: 0.35rem; /* Space below name */
+    /* white-space: nowrap; */ /* Allow wrapping for a couple of lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box; /* Required for multi-line ellipsis */
+    -webkit-line-clamp: 2; /* Max number of lines to show */
+    -webkit-box-orient: vertical;
+    /* max-height: calc(1.3em * 2); */ /* Fallback for browsers not supporting -webkit-line-clamp, adjust 1.3em to match line-height */
+}
+
+.event-type-badge {
+    font-size: 0.7em;
+    font-weight: 500;
+    color: var(--text-light);
+    padding: 0.2em 0.5em;
+    border-radius: var(--border-radius);
+    background-color: var(--secondary-color); /* Subtle background */
+    border: 1px solid var(--current-border-color);
+    align-self: flex-start; /* Align badge to the start */
+    text-transform: capitalize; /* Capitalize type, e.g., "Wine" */
+}
+
+/* Optional: Specific styling for badges based on type */
+.event-type-badge[data-event-type="wine"] {
+    /* border-left: 3px solid #8c1c13; */ /* Example: Red accent for wine */
+}
+.event-type-badge[data-event-type="beer"] {
+    /* border-left: 3px solid #e6a11f; */ /* Example: Yellow accent for beer */
+}
+/* Add more for other types if desired */
+
+.event-description-snippet {
+    font-size: 0.8em;
+    color: var(--text-light);
+    line-height: 1.4;
+    margin-top: 0.3rem;
+    /* Potentially limit lines with CSS if needed, but JS substring is simpler for now */
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Прокрутка, если контент больше */
+    background-color: rgba(0, 0, 0, 0.7); /* Более темный фон */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 5% auto; /* Центрирование и отступы */
+    padding: 20px; /* Ensure padding for overall content */
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 700px; /* Немного уменьшена макс. ширина */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2); /* Улучшенная тень */
+    position: relative;
+    animation: modalOpen 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Пружинистая анимация */
+}
+
+/* Specific styling for the event modal's content area for scrolling */
+#eventModal .modal-content {
+    max-height: 80vh; /* Максимальная высота, например 80% высоты видимой области */
+    overflow-y: auto; /* Включаем вертикальную прокрутку, если контент превышает max-height */
+}
+
+.close-modal { /* Используем общий класс для всех кнопок закрытия */
+    color: var(--text-light);
+    position: absolute;
+    top: 1rem; /* Увеличены отступы */
+    right: 1rem;
+    font-size: 1.8em; /* Увеличен размер иконки */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: var(--accent-color);
+    text-decoration: none;
+    transform: scale(1.1); /* Увеличение при наведении */
+}
+
+.modal-image {
+    width: 100%;
+    height: 250px; /* Фиксированная высота изображения */
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem; /* Отступ снизу */
+    border: 1px solid var(--current-border-color);
+}
+
+.modal-content h2#modalTitle { /* Более специфичный селектор */
+    font-size: 1.8em; /* Увеличен размер */
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.modal-content p#modalDate { /* Более специфичный селектор */
+    font-size: 1em;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.modal-content h3 { /* Общий стиль для подзаголовков в модалке */
+    font-size: 1.2em;
+    color: var(--text-color);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--current-border-color);
+}
+
+.modal-content p { /* Общий стиль для параграфов в модалке */
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: var(--text-light);
+}
+
+/* Remove scroll from specific text blocks in modal, as the parent will scroll */
+.modal-content #modalDescription,
+.modal-content #modalHistory,
+.modal-content #modalTraditions {
+    /* max-height: 120px; */ /* REMOVED */
+    /* overflow-y: auto; */   /* REMOVED */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color-light); /* Use theme variable */
+    border-radius: 5px;
+    background-color: var(--background-color-secondary); /* Use theme variable */
+    color: var(--text-color-primary); /* Use theme variable */
+    line-height: 1.6;
+}
+
+/* Footer Styles */
+footer.main-footer { /* Более специфичный селектор */
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: 3rem; /* Увеличен отступ сверху */
+    border-top: 1px solid var(--current-border-color);
+    color: var(--text-light);
+    font-size: 0.9em;
+}
+
+footer.main-footer p a { /* Ссылка в футере */
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+footer.main-footer p a:hover {
+    color: var(--text-color);
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    header.main-header h1 {
+        font-size: 2.2em;
+    }
+    header.main-header .subtitle {
+        font-size: 1em;
+    }
+
+    .controls-row {
+        flex-direction: column; /* В столбец на малых экранах */
+        align-items: stretch; /* Растягиваем элементы */
+    }
+    
+    .filters .filter-btn,
+    .view-toggle .view-btn {
+        flex-grow: 1; /* Кнопки занимают всю ширину */
+        text-align: center;
+    }
+    
+    .degree-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .degree-filter input[type="range"] {
+        width: 100%; /* Занимает всю ширину */
+    }
+
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .modal-image {
+        height: 200px;
+    }
+
+    .calendar-grid { /* Для сеточного вида месяцев */
+        grid-template-columns: 1fr; /* Один месяц в строке */
+    }
+}
+
+/* Animations */
+@keyframes modalOpen {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Удаляем старые анимации, если они больше не нужны или перекрываются */
+/* @keyframes fadeIn, @keyframes float, @keyframes glow, @keyframes pulse, @keyframes slideIn */
+
+/* Language Selector */
+.language-selector,
+.theme-toggle {
+    position: fixed; /* Фиксированное позиционирование */
+    z-index: 1001; /* Выше модального окна */
+    background: var(--secondary-color);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid var(--current-border-color);
+}
+
+.language-selector {
+    bottom: 1rem; /* Внизу слева */
+    left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.theme-toggle {
+    bottom: 1rem; /* Внизу справа */
+    right: 1rem;
+}
+
+.lang-btn,
+.theme-toggle button { /* Общие стили для кнопок */
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    font-size: 0.9em; /* Немного уменьшен шрифт */
+}
+
+.lang-btn:hover,
+.theme-toggle button:hover {
+    color: var(--accent-color);
+}
+
+.lang-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.theme-toggle i {
+    font-size: 1.2em; /* Размер иконки темы */
+    transition: transform var(--transition-medium);
+}
+.theme-toggle:hover i {
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* Стили для календарного представления (calendar-view) */
+.calendar-view {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--current-border-color);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.calendar-header button {
+    background: transparent;
+    border: 1px solid var(--current-border-color);
+    color: var(--text-light);
+    font-size: 1em; /* Уменьшен размер */
+    cursor: pointer;
+    padding: 0.5rem 0.75rem; /* Уменьшены отступы */
+    border-radius: var(--border-radius);
+    transition: var(--transition-fast);
+}
+
+.calendar-header button:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.calendar-header h2 {
+    font-size: 1.4em; /* Немного уменьшен */
+    color: var(--text-color);
+    margin: 0 1rem; /* Added margin to separate from buttons */
+    font-weight: 600;
+    flex-grow: 1; /* Allow title to take space */
+    text-align: center; /* Center the title */
+}
+
+.calendar-mode-toggle {
+    display: flex;
+    margin-left: 1rem; /* Space from next button */
+}
+
+.calendar-mode-btn {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-size: 0.9em;
+}
+
+.calendar-mode-btn:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.calendar-mode-btn:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none; /* Avoid double border */
+}
+
+.calendar-mode-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.calendar-mode-btn:not(.active):hover {
+    background-color: var(--secondary-color);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.calendar-grid-days { /* Отличаем от grid-template-columns для месяцев */
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem; /* Уменьшен gap */
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-weight: 600; /* Более жирный */
+    color: var(--accent-color);
+    padding: 0.5rem 0.25rem; /* Скорректированы отступы */
+    font-size: 0.9em; /* Немного уменьшен */
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column; /* Позволяет разместить число и индикатор */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    border-radius: var(--border-radius); /* Единый радиус */
+    transition: var(--transition-fast);
+    background: var(--primary-color); /* Фон ячейки дня */
+    border: 1px solid var(--current-border-color);
+    font-size: 0.9em;
+    color: var(--text-light);
+}
+
+.calendar-day:hover {
+    background: var(--secondary-color); /* Фон при наведении */
+    border-color: var(--accent-color);
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+.calendar-day.has-events {
+    color: var(--accent-color); /* Цвет текста для дня с событием */
+    font-weight: 700; /* Делаем дату жирнее */
+}
+
+.calendar-day.has-events::after { /* Индикатор события */
+    content: '';
+    position: absolute;
+    bottom: 8px; /* Скорректировано положение */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px; /* Увеличен размер */
+    height: 6px;
+    background: var(--accent-color);
+    border-radius: 50%;
+}
+
+.event-count { /* Если используется для количества событий в дне */
+    display: none; /* Скрываем, т.к. используем ::after */
+}
+
+/* Стили для модального окна событий дня (day-events-modal) */
+.day-events-modal {
+    /* Используются общие стили .modal */
+}
+
+.day-events-content {
+    /* Используются общие стили .modal-content */
+    max-width: 450px; /* Меньше, чем основная модалка */
+}
+
+.day-events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--current-border-color);
+}
+
+.day-events-header h3 {
+    margin: 0;
+    color: var(--accent-color);
+    font-size: 1.3em;
+}
+
+/* .close-modal - используется общий стиль */
+
+.day-events-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 60vh; /* Ограничение высоты списка */
+    overflow-y: auto; /* Прокрутка для длинных списков */
+}
+
+.day-event-item {
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 0.5rem;
+    background: var(--primary-color);
+    border: 1px solid var(--current-border-color);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    flex-direction: column; /* Дата и название друг под другом */
+}
+
+.day-event-item:hover {
+    background-color: var(--accent-color-alpha, rgba(229, 57, 53, 0.1));
+    border-left: 3px solid var(--accent-color); /* Акцентная линия при наведении */
+    padding-left: calc(1rem - 3px); /* Компенсация border-left */
+}
+
+.day-event-item .event-time { /* Используется для даты в этом контексте */
+    font-size: 0.8em;
+    color: var(--text-light);
+    margin-bottom: 0.25rem; /* Небольшой отступ */
+}
+
+.day-event-item .event-name {
+    font-weight: 500; /* Средняя жирность */
+    color: var(--text-color);
+    font-size: 0.95em;
+}
+
+/* Скрытие старого calendar-grid для месяцев, если он не используется */
+.app-container > .calendar-grid {
+    display: none;
+}
+
+/* Уточнение для calendar-grid внутри calendar-view */
+.calendar-view .calendar-grid {
+    display: grid; /* Убедимся, что это grid */
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+/* Styles for Year View */
+.calendar-year-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for mini-month size */
+    gap: 1rem;
+    padding-top: 1rem; /* Space from header */
+}
+
+.mini-month-card {
+    background: var(--primary-color); /* Slightly different bg from main calendar days */
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius);
+    padding: 0.75rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.mini-month-title {
+    text-align: center;
+    font-weight: 600;
+    color: var(--accent-color);
+    font-size: 1em;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--current-border-color);
+}
+
+.mini-month-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px; /* Minimal gap */
+}
+
+.mini-calendar-weekday {
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.7em;
+    color: var(--text-light);
+    padding-bottom: 2px;
+}
+
+.mini-calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em; /* Smaller font for days */
+    border-radius: 4px; /* Smaller radius */
+    cursor: pointer;
+    color: var(--text-light);
+    transition: var(--transition-fast);
+    position: relative; /* For event indicator */
+}
+
+.mini-calendar-day:not(.empty):hover {
+    background-color: var(--secondary-color);
+}
+
+.mini-calendar-day.empty {
+    cursor: default;
+}
+
+.mini-calendar-day.has-events {
+    color: var(--accent-color);
+    font-weight: 700;
+    background-color: var(--accent-color-alpha, rgba(229, 57, 53, 0.1));
+}
+
+.mini-calendar-day.has-events::after { /* Simplified indicator for mini view */
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 50%;
+}
+
+@keyframes subtleWiggle {
+    0% {
+        transform: rotate(0deg) translate(0px, 0px) scale(1);
+    }
+    25% {
+        transform: rotate(var(--wiggle-rotate, 2deg)) translate(var(--wiggle-x, 3px), var(--wiggle-y, -2px)) scale(var(--wiggle-scale, 1.01));
+    }
+    50% {
+        transform: rotate(var(--wiggle-rotate, -2deg)) translate(var(--wiggle-x, -3px), var(--wiggle-y, 2px)) scale(var(--wiggle-scale, 0.99));
+    }
+    75% {
+        transform: rotate(var(--wiggle-rotate, 1deg)) translate(var(--wiggle-x, 2px), var(--wiggle-y, -3px)) scale(var(--wiggle-scale, 1.02));
+    }
+    100% {
+        transform: rotate(0deg) translate(0px, 0px) scale(1);
+    }
+}
+
+/* Enhanced Styles for "About Project" Modal */
+#aboutModal .modal-content {
+    max-width: 750px; 
+    text-align: left; 
+    line-height: 1.7; 
+    /* Subtle gradient background - adjust colors to fit theme */
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    border: 1px solid var(--accent-color-alpha); /* Accent border */
+    box-shadow: 0 8px 32px 0 var(--current-shadow-color); /* Deeper shadow */
+    max-height: 80vh; /* Limit height to 80% of viewport height */
+    overflow-y: auto; /* Allow internal scrolling if content exceeds max-height */
+}
+
+#aboutModal .modal-content h2 {
+    display: flex; 
+    align-items: center;
+    gap: 0.5em;
+    font-size: 2.2em; /* Slightly larger */
+    margin-bottom: 1em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle text shadow */
+}
+
+#aboutModal .modal-content h3 {
+    font-size: 1.5em; /* Slightly larger */
+    color: var(--accent-color);
+    margin-top: 1.5em;
+    margin-bottom: 0.7em;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.3em;
+    font-weight: 600;
+}
+
+/* Special styling for "Зачем это нужно?" section */
+/* #aboutModal .modal-content h3:contains("Зачем это нужно?") + p { */ /* Old, non-standard selector */
+#aboutModal .modal-content p.special-section-paragraph {
+    background-color: var(--accent-color-alpha); /* Use a very light accent background */
+    padding: 1em;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+    margin-bottom: 1.5em; /* More space after */
+    /* Ensure text wraps and doesn't cause overflow if it's a width issue */
+    overflow-wrap: break-word; /* Standard property for word wrapping */
+    word-wrap: break-word; /* Older, equivalent property */
+}
+
+#aboutModal .modal-content p {
+    margin-bottom: 1em;
+    color: var(--text-light); 
+}
+
+#aboutModal .modal-content p:first-of-type { /* First paragraph after h2 */
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--text-color);
+    border-left: 3px solid var(--accent-color);
+    padding-left: 0.8em;
+    margin-bottom: 1.5em;
+}
+
+.about-features-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.5em;
+}
+
+.about-features-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-bottom: 0.8em;
+    font-size: 1em;
+    color: var(--text-light);
+    padding: 0.5em;
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    overflow-wrap: break-word; /* Ensure text wraps */
+    word-break: break-word; /* Additional safety for wrapping */
+}
+
+.about-features-list li:hover {
+    background-color: var(--accent-color-alpha);
+    transform: translateX(5px);
+    /* Ensure no other styles are here from the previous incorrect edit */
+}
+
+.about-features-list iconify-icon {
+    font-size: 1.8em; 
+    color: var(--accent-color); 
+    flex-shrink: 0; 
+}
+
+.signature-block {
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 0.95em;
+    border-top: 1px dashed var(--current-border-color);
+    padding-top: 1em;
+    margin-top: 2em !important; /* Ensure margin override if needed */
+    overflow-wrap: break-word; /* Ensure text wraps */
+    word-break: break-word; /* Additional safety for wrapping */
+}
+
+/* Floating Action Button (FAB) for "Time to Pour!" */
+.fab {
+    position: fixed;
+    bottom: 60px; /* Adjust to be above language/theme toggles if they are also bottom-fixed */
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.2);
+    font-size: 1.5em; /* Icon size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000; /* Same level as other interactive fixed elements */
+    transition: transform 0.2s ease-out, background-color 0.2s;
+}
+
+.fab:hover {
+    transform: scale(1.05);
+    background-color: var(--accent-color-dark); /* Darken on hover, or use a theme-aware variable */
+}
+
+/* Map Modal Styles */
+#mapModal .modal-content.map-modal-content {
+    background-color: rgba(var(--card-bg-rgb), 0.85); /* Semi-transparent background. card-bg-rgb needs to be defined */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    max-width: 90%; /* Wider for map */
+    width: 700px; /* Or a specific width */
+    padding: 1rem; /* Less padding if map is full width/height */
+}
+
+#mapModal #mapContainer {
+    width: 100%;
+    height: 60vh; /* Or a fixed pixel height like 400px */
+    border-radius: var(--border-radius);
+    border: 1px solid var(--current-border-color);
+    background-color: var(--secondary-color); /* Placeholder bg until map loads */
+}
+
+#mapModal #mapContainer p { /* For messages like "Locating..." */
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-light);
+}
+
+/* Ensure Leaflet popups are styled consistently if needed */
+.leaflet-popup-content-wrapper {
+    background: var(--card-background);
+    color: var(--text-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.leaflet-popup-content {
+    font-size: 0.9em;
+    padding: 0.5em;
+}
+.leaflet-popup-tip {
+    background: var(--card-background);
+}
+
+/* Common styles for fixed action buttons (Theme, Find Bar) */
+.action-button-fixed {
+    position: fixed;
+    bottom: 1rem;
+    z-index: 1001;
+    background: var(--secondary-color);
+    padding: 0.6rem; /* Unified padding for desired size */
+    border-radius: var(--border-radius); /* Consistent rounded corners */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid var(--current-border-color);
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+    line-height: 1; /* Ensure consistent height based on icon */
+    display: inline-flex; /* To wrap the icon tightly */
+    align-items: center;
+    justify-content: center;
+}
+
+.action-button-fixed i {
+    font-size: 1.2em; /* Unified icon size */
+    transition: transform var(--transition-medium);
+}
+
+.action-button-fixed:hover {
+    color: var(--accent-color);
+}
+
+/* ID-specific positioning and unique hover/active states */
+#themeToggle {
+    right: 1rem;
+}
+
+#themeToggle:hover i {
+    transform: rotate(15deg) scale(1.1);
+}
+
+#findBarToggleBtn {
+    /* left: 9.5rem; */ /* Removed old left positioning */
+    right: 4.5rem; /* Theme toggle is at right: 1rem. Approx width of theme toggle (padding + icon) ~2.5-3rem. Gap ~0.5-1rem. So, 1 + 3 + 0.5 = 4.5rem */
+                 /* Adjust if theme toggle size or desired gap is different */
+}
+
+#findBarToggleBtn:hover i {
+    transform: scale(1.1); 
+}
+
+#findBarToggleBtn.active { /* Specific active state for Find Bar toggle */
+    color: var(--accent-color); 
+    box-shadow: 0 0 0 2px var(--accent-color-alpha, rgba(229, 57, 53, 0.3));
+}
+
+/* REMOVE or comment out old .theme-toggle and .find-bar-toggle specific rules if they exist elsewhere */
+/* Example: commenting out the previous rules for .find-bar-toggle and .theme-toggle */
+
+/* --- Find Bar View --- */
+#findBarView {
+    width: 100%; /* Take full width of its parent (.container) */
+    margin-top: 2.5rem; /* Same as .controls-panel margin-bottom, for spacing */
+}
+
+#findBarView .main-header.find-bar-header { /* Specific to findBarView's header */
+    text-align: center;
+    padding: 1.5rem 1rem; /* Reduced padding a bit */
+    margin-bottom: 2rem; /* Spacing before its controls */
+    border-bottom: 1px solid var(--current-border-color);
+}
+
+#findBarView .main-header.find-bar-header h1 {
+    font-size: 2.4em; /* Consistent with main page title, or adjust as needed */
+    color: var(--accent-color);
+    font-weight: 700;
+    margin-bottom: 0; /* Remove bottom margin if no subtitle */
+}
+
+#findBarView .container.find-bar-inner-container {
+    padding: 0; /* Remove extra padding if parent .container provides it */
+}
+
+.find-bar-controls {
+    background: var(--secondary-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem; /* Spacing before results */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid var(--current-border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Adjustments for filter buttons inside find-bar-controls if needed */
+.find-bar-controls .filters .filter-btn {
+}
+
+/* Ensure search box elements are consistent */
+.find-bar-controls .city-search-box input[type="text"] {
+    width: 100%; /* Ensure it takes full width if .search-box is flex item */
+    padding: 0.75rem 1rem; /* Consistent with main search */
+    border: 1px solid var(--current-border-color);
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    transition: border-color var(--transition-fast);
+}
+.find-bar-controls .city-search-box input[type="text"]:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-color-alpha, rgba(229, 57, 53, 0.3));
+}
+
+.find-bar-controls .city-search-box .filter-btn { /* For the search button */
+    padding: 0.6rem 1.2rem; /* Consistent with other filter buttons */
+}
+
+
+#barResultsContainer {
+    display: grid;
+    /* Using CSS Grid for bar results, similar to event grid */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Placeholder for individual bar card styling */
+.bar-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border-color);
+    border-radius: var(--border-radius-medium);
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.bar-card h3 {
+    margin-top: 0;
+    color: var(--accent-color);
+}
+
+.bar-card p {
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+
+.bar-card .bar-rating {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.bar-card .bar-address {
+    font-style: italic;
+    color: var(--text-secondary-color);
+}
+
+/* --- Yandex Map Container --- */
+
+.find-bar-content-area {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens if needed */
+    gap: 1.5rem; /* Space between map and results list */
+    margin-top: 1.5rem; /* Space from controls panel */
+}
+
+#yandexMapContainer {
+    flex: 1 1 55%; /* Map takes more space, allows shrinking/growing. Adjust basis (55%) as needed */
+    min-width: 300px; /* Minimum width for the map */
+    height: 500px; /* Adjusted height, can be changed */
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--current-border-color);
+    background-color: var(--secondary-color); 
+    overflow: hidden; 
+    position: relative; /* For placeholder message positioning */
+}
+
+.map-placeholder-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-light);
+    font-size: 1.1em;
+}
+
+#barResultsListContainer {
+    flex: 1 1 40%; /* Results list takes less space, allows shrinking/growing. Adjust basis (40%) */
+    min-width: 280px; /* Minimum width for the results list */
+    max-height: 500px; /* Match map height, or adjust */
+    overflow-y: auto; /* Allow scrolling for bar list if it's long */
+    padding-right: 10px; /* For scrollbar space if needed, or use custom scrollbars */
+    background-color: var(--secondary-color); /* Optional: if you want a distinct bg */
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--current-border-color);
+    padding: 1rem;
+}
+
+#barResultsListContainer .no-results-message {
+    /* Styles for the message if it's inside this specific container */
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-light);
+}
+
+/* Adjustments for bar cards if they are directly inside #barResultsListContainer */
+#barResultsListContainer .bar-card {
+    margin-bottom: 1rem;
+}
+
+/* Responsive adjustments for two-column layout */
+@media (max-width: 768px) { /* Example breakpoint */
+    .find-bar-content-area {
+        flex-direction: column; /* Stack map and results on smaller screens */
+    }
+    #yandexMapContainer,
+    #barResultsListContainer {
+        flex-basis: auto; /* Reset flex-basis */
+        width: 100%;
+        max-height: none; /* Allow results list to grow */
+    }
+    #yandexMapContainer {
+        height: 350px; /* Adjust map height for stacked view */
+    }
+    #barResultsListContainer {
+        max-height: 400px; /* Still limit height with scroll for results */
+    }
+}
+
+
+/* Стили для элементов управления Яндекс.Карт, чтобы они соответствовали теме */
+/* Эти селекторы могут потребовать уточнения после того, как карта реально появится */
+.ymaps-2-1-79-map {
+    border-radius: var(--border-radius-medium); /* Повторяем для основного контейнера карты */
+}
+
+.ymaps-2-1-79-controls__control,
+.ymaps-2-1-79-zoom,
+.ymaps-2-1-79-search__button,
+.ymaps-2-1-79-traffic__button,
+.ymaps-2-1-79-gotoymaps__button {
+    background-color: var(--secondary-color) !important;
+    border: 1px solid var(--current-border-color) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+}
+
+.ymaps-2-1-79-controls__control_toolbar,
+.ymaps-2-1-79-zoom__button {
+    background-color: var(--secondary-color) !important;
+    border-radius: var(--border-radius-small) !important;
+}
+
+.ymaps-2-1-79-gotoymaps__container {
+     background-color: var(--secondary-color) !important;
+}
+
+.ymaps-2-1-79-copyrights-pane {
+    background: var(--glass-background) !important; /* Полупрозрачный фон для копирайтов */
+    padding: 2px 5px !important;
+    border-radius: var(--border-radius-small) !important;
+}
+
+.ymaps-2-1-79-copyrights-pane a,
+.ymaps-2-1-79-copyrights-pane span {
+    color: var(--text-light) !important;
+    font-size: 0.75em !important;
+}
+
+.ymaps-2-1-79-search__input input {
+    background-color: var(--primary-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--current-border-color) !important;
+    border-radius: var(--border-radius-small) !important;
+}
+
+/* Placeholder text in Yandex search input */
+.ymaps-2-1-79-search__input input::placeholder {
+    color: var(--text-secondary-color) !important;
+}
+
+/* Popup/balloon styles for Yandex Maps */
+.ymaps-2-1-79-balloon__layout,
+.ymaps-2-1-79-balloon__content {
+    background-color: var(--card-background) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--current-border-color) !important;
+    border-radius: var(--border-radius-medium) !important; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+.ymaps-2-1-79-balloon__close-button {
+    color: var(--text-light) !important;
+    background-color: var(--secondary-color) !important; /* Match other controls */
+    border-radius: 50% !important; /* Make it circular */   
+}
+
+.ymaps-2-1-79-balloon__close-button:hover {
+    color: var(--accent-color) !important;
+    background-color: var(--primary-color) !important;
+}
+
+.ymaps-2-1-79-balloon__tail {
+    /* This is an SVG, direct fill might not work easily without JS or more complex CSS */
+    /* Often better to accept default or use custom balloon layouts if a must */
+}
+
+.ymaps-2-1-79-balloon__layout h3, /* Example if you put H3 in balloon */
+.ymaps-2-1-79-balloon__layout p { /* Example if you put P in balloon */
+    color: var(--text-color) !important;
+} 
