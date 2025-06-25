@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Engineering Metrics Selection</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        :root {
+            --green: #009A4D;
+            --dark-text: #111827;
+            --medium-text: #374151;
+            --light-text: #6B7280;
+            --bg-light: #F9FAFB;
+            --bg-white: #FFFFFF;
+            --border-color: #E5E7EB;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-light);
+            color: var(--dark-text); 
+            overflow: hidden;
+        }
+
+        .presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2vw;
+        }
+        
+        .slide { 
+            display: none; 
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 16 / 9;
+            background: var(--bg-white);
+            border-radius: 24px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            position: relative;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .slide.active { display: flex; }
+
+        .slide-header {
+            position: absolute;
+            top: 40px;
+            left: 60px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--green);
+            opacity: 0;
+            animation: fadeIn 0.5s 0.2s ease-out forwards;
+        }
+
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            padding: 80px 60px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-content > * {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: slideUpFadeIn 0.6s ease-out forwards;
+        }
+
+        .slide-content > *:nth-child(1) { animation-delay: 0.2s; }
+        .slide-content > *:nth-child(2) { animation-delay: 0.4s; }
+        .slide-content > *:nth-child(3) { animation-delay: 0.6s; }
+        .slide-content > *:nth-child(4) { animation-delay: 0.8s; }
+        .slide-content > *:nth-child(5) { animation-delay: 1.0s; }
+
+
+        @keyframes slideUpFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        h1 { 
+            font-size: 3.8em; 
+            font-weight: 800;
+            text-align: center; 
+            color: var(--dark-text);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        h2 { 
+            font-size: 2.8em; 
+            font-weight: 700;
+            color: var(--dark-text);
+            text-align: left;
+            margin-bottom: 40px;
+            width: 100%;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        h3 { 
+            font-size: 1.5em; 
+            font-weight: 600;
+            margin-bottom: 15px; 
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 .icon {
+            color: var(--green);
+        }
+        
+        p { 
+            font-size: 1.2em; 
+            line-height: 1.6; 
+            color: var(--medium-text);
+        }
+        
+        ul { list-style: none; }
+        
+        li {
+            font-size: 1.2em; 
+            line-height: 1.6; 
+            color: var(--medium-text);
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--green);
+            border-radius: 50%;
+        }
+        
+        strong { color: var(--green); font-weight: 600; }
+        
+        .card-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px; 
+            width: 100%;
+        }
+
+        .card-grid .card {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: slideUpFadeIn 0.6s ease-out forwards;
+        }
+        .card-grid .card:nth-child(1) { animation-delay: 0.5s; }
+        .card-grid .card:nth-child(2) { animation-delay: 0.7s; }
+        .card-grid .card:nth-child(3) { animation-delay: 0.9s; }
+        
+        .card { 
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--border-color);
+            padding: 30px; 
+            border-radius: 16px; 
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--green);
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--border-color);
+            padding: 25px; 
+            border-radius: 16px; 
+            text-align: center;
+        }
+
+        .stat-number { 
+            font-size: 3em; 
+            font-weight: 700; 
+            color: var(--green);
+        }
+        
+        .stat-label { font-size: 1em; color: var(--light-text); font-weight: 500; }
+        
+        .navigation { 
+            position: fixed; 
+            bottom: 30px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            display: flex; 
+            gap: 15px; 
+            z-index: 1000;
+        }
+        
+        .nav-btn { 
+            padding: 12px 24px; 
+            background: var(--bg-white);
+            color: var(--medium-text); 
+            border: 1px solid var(--border-color);
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-size: 1em; 
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .nav-btn:hover { 
+            border-color: var(--green);
+            color: var(--green);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled { 
+            background: var(--bg-light);
+            color: #9CA3AF;
+            cursor: not-allowed; 
+            border-color: var(--border-color);
+            box-shadow: none;
+            transform: none;
+        }
+        
+        .slide-counter { 
+            position: fixed; 
+            top: 30px; 
+            right: 30px; 
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px; 
+            border-radius: 30px; 
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--medium-text);
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .authors { text-align: center; font-size: 1.2em; font-weight: 500; color: var(--light-text); margin-top: 30px; }
+        .university { text-align: center; font-size: 1.2em; font-weight: 600; color: var(--green); margin-top: 10px; }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+            width: 100%;
+        }
+        
+        .formula {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 1.1em;
+            text-align: center;
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .flow-diagram::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background-color: var(--border-color);
+            z-index: 0;
+        }
+
+        .flow-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            width: 18%;
+        }
+
+        .flow-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--bg-white);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: var(--green);
+            transition: all 0.3s ease;
+        }
+
+        .flow-item:hover .flow-circle {
+            border-color: var(--green);
+            transform: scale(1.1);
+        }
+
+        .flow-label {
+            font-weight: 600;
+            color: var(--dark-text);
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .flow-desc {
+            font-size: 0.9em;
+            color: var(--light-text);
+        }
+
+        .icon {
+            width: 1.2em;
+            height: 1.2em;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .chart-container {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--border-color);
+            padding: 20px; 
+            border-radius: 16px; 
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: space-between;
+        }
+        .chart-container h3 {
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .chart-container p {
+            font-size: 0.9em;
+            text-align: center;
+            color: var(--light-text);
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .reduction-chart {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            height: 100%;
+        }
+        .reduction-viz {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
+        .bar {
+            background-color: var(--border-color);
+            border-radius: 8px;
+            position: relative;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: 700;
+            font-size: 1.2em;
+            color: var(--dark-text);
+        }
+        .bar-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background-color: var(--green);
+            border-radius: 8px;
+        }
+        .bar-fill.original { width: 100%; background-color: #A7F3D0; }
+        .bar-fill.selected { width: 11.6%; } /* 5/43 */
+
+        .gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            position: relative;
+            width: 100%;
+        }
+        .gauge {
+            width: 180px;
+            height: 90px;
+            position: relative;
+            overflow: hidden;
+        }
+        .gauge-bg, .gauge-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 25px solid var(--border-color);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%);
+        }
+        .gauge-fill {
+            border-color: var(--green);
+            transform: rotate(171deg); /* 0.95 * 180 */
+        }
+        .gauge-text {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-top:-45px;
+            position: relative;
+        }
+
+        .comparison-chart-container {
+            margin-top: 10px;
+            padding: 10px;
+            margin-right: auto;
+        }
+        .comparison-chart svg {
+            width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+        .axis path, .axis line {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 2px;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            fill: var(--light-text);
+            font-weight: 500;
+        }
+        .line {
+            fill: none;
+            stroke-width: 3px;
+            stroke-linecap: round;
+        }
+        .line-eo { stroke: var(--green); }
+        .line-de { stroke: var(--dark-text); }
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 10px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1em;
+            font-weight: 500;
+        }
+        .legend-color {
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .three-column {
+             display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .formula-legend {
+            font-size: 0.85em;
+            color: var(--light-text);
+            margin-top: 10px;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .slide-thesis {
+            font-size: 1em;
+            font-weight: 500;
+            color: var(--medium-text);
+            text-align: center;
+            margin-top: 25px;
+            padding: 10px 20px;
+            background: rgba(0, 154, 77, 0.05);
+            border-radius: 12px;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #comparison-slide .slide-content {
+            justify-content: flex-start;
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        #comparison-slide h2 { 
+            margin-bottom: 15px;
+            font-size: 2.5em;
+        }
+        #comparison-slide .two-column {
+            margin-bottom: 10px;
+        }
+        #comparison-slide .two-column .card {
+            padding: 15px 20px;
+        }
+        #comparison-slide .comparison-chart-container {
+            margin-top: 0;
+            padding: 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="presentation-wrapper">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-content" style="text-align:center;">
+                <div class="university" style="font-size: 1.5em; margin-bottom: 10px; animation-delay: 0.2s;">Innopolis University</div>
+                <h1 style="animation-delay: 0.4s;">Software Engineering Metrics Selection</h1>
+                <p style="font-size: 1.5em; color: var(--medium-text); animation-delay: 0.6s;">Using Equilibrium Optimizer and Differential Evolution</p>
+                <div class="authors" style="animation-delay: 0.8s;">Marina Kotelevskaya </div>
+            </div>
+        </div>
+        <!-- Slide 2: The Challenge of Metrics -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Problem Statement</div>
+                <h2>The Challenge of High-Dimensional Metrics</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Key Difficulties</h3>
+                        <ul>
+                            <li><strong>Collinearity Risk:</strong> Large numbers of metrics increase multicollinearity, leading to unreliable statistical models.</li>
+                            <li><strong>Resource Intensive:</strong> High-dimensional data requires more storage and computational power, slowing down analysis.</li>
+                            <li><strong>Obscured Insights:</strong> Redundant metrics can hide the true relationships between key predictors and outcomes.</li>
+                            <li><strong>Structural Disregard:</strong> Traditional reduction methods often fail to preserve the geometric structure of the data.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Our Initial Dataset</h3>
+                         <div class="stat-card" style="margin-bottom: 20px; background: transparent; border:none;">
+                            <div class="stat-number">106</div>
+                            <div class="stat-label">Software Repositories Analyzed</div>
+                        </div>
+                        <div class="stat-card" style="background: transparent; border:none;">
+                            <div class="stat-number">43</div>
+                            <div class="stat-label">Original Metrics Collected (e.g., LCOM5, WMC, CBO, LOC)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Our Contribution -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Our Approach</div>
+                <h2>A Framework for Intelligent Metric Selection</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+                            Intelligent Selection
+                        </h3>
+                        <p>Find the minimal metric subset that preserves the original dataset's geometric relationships.</p>
+                    </div>
+                    <div class="card">
+                        <h3>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V7.5a2.25 2.25 0 00-2.25-2.25H7.5A2.25 2.25 0 005.25 7.5v9.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                            Advanced Optimization
+                        </h3>
+                        <p>Utilize Equilibrium Optimizer (EO) and Differential Evolution (DE) to efficiently search the solution space.</p>
+                    </div>
+                    <div class="card">
+                         <h3>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                            Robust Validation
+                        </h3>
+                        <p>Employ Sammon Error and Kruskal Stress functions to guide the search and validate the results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Methodology -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Methodology</div>
+                <h2>Our Step-by-Step Process</h2>
+                <div class="flow-diagram">
+                    <div class="flow-item" style="animation-delay: 0.4s;"> <div class="flow-circle">1</div> <div class="flow-label">Input Data</div><div class="flow-desc">CSV file with 106 records & 43 metrics</div></div>
+                    <div class="flow-item" style="animation-delay: 0.6s;"> <div class="flow-circle">2</div> <div class="flow-label">Preprocessing</div><div class="flow-desc">Z-score normalization & correlation filtering</div></div>
+                    <div class="flow-item" style="animation-delay: 0.8s;"> <div class="flow-circle">3</div> <div class="flow-label">Optimization</div><div class="flow-desc">Run EO & DE algorithms</div></div>
+                    <div class="flow-item" style="animation-delay: 1.0s;"> <div class="flow-circle">4</div> <div class="flow-label">Evaluation</div><div class="flow-desc">Calculate Fitness (Sammon/Kruskal)</div></div>
+                    <div class="flow-item" style="animation-delay: 1.2s;"> <div class="flow-circle">5</div> <div class="flow-label">Output</div><div class="flow-desc">Optimal subset of metrics</div></div>
+                </div>
+                <div class="card" style="margin-top: 40px; animation-delay: 1.4s;">
+                    <h3>Preprocessing Detail: Normalization & Filtering</h3>
+                    <p>We apply <strong>Z-score normalization</strong> (<i>X'</i> = (<i>X</i> - &mu;) / &sigma;) to standardize metrics, then remove constant features and filter out highly correlated metrics (Pearson r > 0.8) to reduce noise and redundancy.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Equilibrium Optimizer (EO) -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Algorithm 1</div>
+                <h2>Equilibrium Optimizer (EO)</h2>
+                <div class="three-column">
+                    <div class="card">
+                        <h3>Core Concept</h3>
+                        <p>A physics-inspired algorithm modeling mass balance. It uses an <strong>Equilibrium Pool</strong> of best-so-far solutions to balance exploration and exploitation.</p>
+                    </div>
+                     <div class="card">
+                        <h3>Initialization & Update</h3>
+                        <p>Particles representing feature subsets are updated towards equilibrium candidates.</p>
+                        <div class="formula"><i>x</i><sub>new</sub> = <i>x</i><sub>best</sub> + <i>F</i>⋅(<i>&lambda;</i>⋅(<i>x</i><sub>best</sub> - <i>x</i>))</div>
+                        <div class="formula-legend"><strong>x_best</strong>: top solution, <strong>F</strong>: control param, <strong>λ</strong>: random weight</div>
+                    </div>
+                    <div class="card">
+                        <h3>Fitness Function</h3>
+                        <p>Fitness combines structural error (E_s) with a penalty (E_p) for subset size.</p>
+                        <div class="formula"><i>f</i> = <i>E</i><sub>s</sub> + <i>E</i><sub>p</sub> × (1 - <i>&omega;</i>)</div>
+                        <div class="formula-legend"><strong>E_s</strong>: structural error, <strong>E_p</strong>: size penalty, <strong>ω</strong>: weight factor</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Differential Evolution (DE) -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Algorithm 2</div>
+                <h2>Differential Evolution (DE)</h2>
+                 <div class="three-column">
+                    <div class="card">
+                        <h3>Core Concept</h3>
+                        <p>A robust evolutionary algorithm that creates candidates via <strong>differential mutation</strong>, making it highly effective for global optimization tasks.</p>
+                    </div>
+                     <div class="card">
+                        <h3>Mutation</h3>
+                        <p>The core of DE's search is creating a mutant vector <i>v</i><sub>i</sub> from three random vectors.</p>
+                        <div class="formula"><i>v</i><sub>i</sub> = <i>x</i><sub>r1</sub> + <i>F</i> × (<i>x</i><sub>r2</sub> - <i>x</i><sub>r3</sub>)</div>
+                        <div class="formula-legend"><strong>x_r1,r2,r3</strong>: random vectors, <strong>F</strong>: scaling factor</div>
+                    </div>
+                    <div class="card">
+                        <h3>Crossover & Selection</h3>
+                        <p>The trial vector <i>u</i><sub>i</sub> is created and replaces the target vector if it has better fitness.</p>
+                        <div class="formula"><i>u</i><sub>i</sub> if <i>f</i>(<i>u</i><sub>i</sub>) &lt; <i>f</i>(<i>x</i><sub>i</sub>) else <i>x</i><sub>i</sub></div>
+                        <div class="formula-legend"><strong>u_i</strong>: trial vector, <strong>x_i</strong>: target vector, <strong>f()</strong>: fitness func.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Evaluation Metrics -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Validation</div>
+                <h2>Measuring Structural Preservation</h2>
+                <div class="two-column">
+                    <div class="card">
+                        <h3>Sammon Error (<i>E</i><sub>Sammon</sub>)</h3>
+                        <p>Measures how well the pairwise distances in the original space are preserved in the reduced-dimensional space. Lower values are better.</p>
+                        <div class="formula"><i>E</i> = [ &Sigma;(<i>d</i><sub>ij</sub> - <i>d&#x0302;</i><sub>ij</sub>)² / <i>d</i><sub>ij</sub> ] / &Sigma;<i>d</i><sub>ij</sub></div>
+                    </div>
+                    <div class="card">
+                        <h3>Kruskal Stress</h3>
+                        <p>Quantifies the distortion of geometric relationships by comparing original and reduced-space distances. Lower values are better.</p>
+                        <div class="formula">Stress = &radic;[ &Sigma;(<i>d</i><sub>ij</sub> - <i>d&#x0302;</i><sub>ij</sub>)² / &Sigma;<i>d</i><sub>ij</sub>² ]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Key Results -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Results</div>
+                <h2>Key Experimental Outcomes</h2>
+                <div class="three-column">
+                    <div class="chart-container">
+                        <h3>Dimensionality Reduction</h3>
+                        <p style="font-size:0.9em; text-align:center; color: var(--light-text); margin-bottom: 10px;">From 43 to just 5 features</p>
+                        <div class="reduction-chart">
+                            <div class="reduction-viz">
+                                <div class="bar"><div class="bar-fill original"></div>43 Original</div>
+                                <div class="bar"><div class="bar-fill selected"></div>5 Selected</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Structural Integrity</h3>
+                         <p style="font-size:0.9em; text-align:center; color: var(--light-text); margin-bottom: 10px;">Measured by Sammon Error</p>
+                        <div class="gauge-container">
+                             <div class="gauge">
+                                <div class="gauge-bg"></div>
+                                <div class="gauge-fill"></div>
+                            </div>
+                            <div class="gauge-text">>95%</div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Error vs. Metrics</h3>
+                        <p style="font-size:0.9em; text-align:center; color: var(--light-text); margin-bottom: 10px;">Diminishing returns after 5-10 features</p>
+                        <div style="width:100%; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 30px; position:relative;">
+                             <svg viewBox="0 0 200 150" style="width:100%;">
+                                <!-- Y Axis Labels -->
+                                <text x="15" y="75" font-size="10" fill="#B0B0B0" text-anchor="end">0.1</text>
+                                <line x1="20" y1="75" x2="170" y2="75" stroke="#E5E7EB" stroke-dasharray="2,2"></line>
+                                <text x="15" y="125" font-size="10" fill="#B0B0B0" text-anchor="end">0.05</text>
+                                <line x1="20" y1="125" x2="170" y2="125" stroke="#E5E7EB" stroke-dasharray="2,2"></line>
+                                
+                                <g>
+                                    <rect x="20" y="70" width="30" height="80" fill="#A7F3D0" rx="4"></rect><text x="35" y="160" font-size="12" fill="#6B7280" text-anchor="middle">5</text>
+                                    <rect x="60" y="90" width="30" height="60" fill="#A7F3D0" rx="4"></rect><text x="75" y="160" font-size="12" fill="#6B7280" text-anchor="middle">10</text>
+                                    <rect x="100" y="110" width="30" height="40" fill="#A7F3D0" rx="4"></rect><text x="115" y="160" font-size="12" fill="#6B7280" text-anchor="middle">15</text>
+                                    <rect x="140" y="125" width="30" height="25" fill="#A7F3D0" rx="4"></rect><text x="155" y="160" font-size="12" fill="#6B7280" text-anchor="middle">20</text>
+                                </g>
+                                <text x="95" y="15" font-size="14" fill="#374151" text-anchor="middle">Sammon Error</text>
+                             </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Statistical Validation -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Validation</div>
+                <h2>Statistical Significance & Generalizability</h2>
+                <div class="two-column">
+                    <div class="card">
+                        <h3>Hypothesis Testing</h3>
+                        <p>We tested the null hypothesis that algorithm performance is inconsistent. Statistical tests rejected this, confirming robustness.</p>
+                        <ul>
+                            <li><strong>Mann-Whitney U Test:</strong> Significant differences between early and late iterations (p < 0.05).</li>
+                            <li><strong>One-Sample t-Test:</strong> Mean error on validation set is below threshold (p < 0.01).</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Generalizability</h3>
+                        <p>To test generalizability, we ran the algorithm on a separate validation set of <strong>32 repositories</strong>.</p>
+                         <ul>
+                            <li><strong>Kernel Density Estimation (KDE)</strong> confirmed that error distributions were similar between training and validation sets.</li>
+                            <li><strong>Jaccard Index > 0.8</strong> showed strong agreement in feature selection between EO and DE.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Algorithm Comparison -->
+        <div class="slide" id="comparison-slide">
+            <div class="slide-content">
+                <div class="slide-header">Analysis</div>
+                <h2>EO vs. DE Performance Comparison</h2>
+                <div class="two-column">
+                    <div class="card">
+                        <h3>Equilibrium Optimizer</h3>
+                        <ul>
+                            <li>Demonstrates <strong>rapid convergence</strong> towards a solution.</li>
+                            <li>Highly effective at <strong>local search</strong> and fine-tuning.</li>
+                            <li>Can sometimes be at risk of converging to a local minimum.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>Differential Evolution</h3>
+                        <ul>
+                            <li>Provides superior <strong>global exploration</strong> of the solution space.</li>
+                            <li>Exhibits higher <strong>stability and consistency</strong> across multiple runs.</li>
+                            <li>Convergence is generally slower but more robust.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="comparison-chart-container card">
+                     <p class="slide-thesis" style="width:100%; margin-top:0; margin-bottom:15px;">Thesis: EO provides speed, while DE ensures robust exploration, making them a complementary pair for feature selection.</p>
+                     <div class="chart-legend">
+                        <div class="legend-item"><div class="legend-color" style="background-color: var(--green);"></div>Equilibrium Optimizer (EO)</div>
+                        <div class="legend-item"><div class="legend-color" style="background-color: var(--dark-text);"></div>Differential Evolution (DE)</div>
+                    </div>
+                    <div class="comparison-chart">
+                        <svg viewBox="0 0 500 200">
+                            <!-- Axes -->
+                            <g class="axis">
+                                <line x1="40" y1="180" x2="480" y2="180"></line>
+                                <line x1="40" y1="20" x2="40" y2="180"></line>
+                                <text x="260" y="198" text-anchor="middle">Generations</text>
+                                <text x="15" y="100" transform="rotate(-90, 15, 100)" text-anchor="middle">Fitness (Error)</text>
+                            </g>
+                            <!-- EO Line: fast convergence -->
+                            <path class="line line-eo" d="M 50 160 Q 100 80, 250 60 T 450 55"></path>
+                            <!-- DE Line: slower, more stable convergence -->
+                            <path class="line line-de" d="M 50 160 C 150 120, 250 80, 450 40"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Future Work -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-header">Next Steps</div>
+                <h2>Future Research Directions</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3><svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" /></svg>Hybrid Methods</h3>
+                        <p>Combine EO/DE with other techniques like Particle Swarm Optimization (PSO) or Genetic Algorithms (GA).</p>
+                    </div>
+                    <div class="card">
+                        <h3><svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>Automated Tuning</h3>
+                        <p>Implement methods like Bayesian Optimization for automated hyperparameter tuning to boost performance.</p>
+                    </div>
+                    <div class="card">
+                        <h3><svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h12M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-12a2.25 2.25 0 01-2.25-2.25V3m12.75 0v6.75a2.25 2.25 0 01-2.25 2.25H9.75a2.25 2.25 0 01-2.25-2.25V3" /></svg>Extended Testing</h3>
+                        <p>Apply the framework to larger, more complex datasets from different programming languages and domains.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Thank You -->
+        <div class="slide">
+             <div class="slide-content" style="text-align:center; justify-content:center;">
+                 <h1 style="font-size: 5em;">Thank You</h1>
+                 <p style="font-size: 1.8em; color: var(--medium-text);">Questions & Answers</p>
+             </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="previousSlide()">Previous</button>
+        <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next</button>
+    </div>
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">12</span>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const totalSlides = slides.length;
+        const counterCurrent = document.getElementById('current-slide');
+        const counterTotal = document.getElementById('total-slides');
+        counterTotal.textContent = totalSlides;
+
+        function showSlide(n) {
+            slides.forEach((slide, index) => {
+                const content = slide.querySelector('.slide-content');
+                if (index === n) {
+                    slide.classList.add('active');
+                    // Reset animations
+                    if(content) {
+                        const newContent = content.cloneNode(true);
+                        content.parentNode.replaceChild(newContent, content);
+                    }
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            
+            counterCurrent.textContent = currentSlide + 1;
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        showSlide(0);
+    </script>
+</body>
+</html>
