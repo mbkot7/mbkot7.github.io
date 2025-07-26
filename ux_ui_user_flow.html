@@ -9,49 +9,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js" rel="stylesheet">
     <style>
-        /* Horizon Color System */
+        /* Modern Minimalist Color System */
         :root {
-            /* White Scale */
-            --white-100: #FFFFFF;
-            --white-200: #FAFCFE;
-            --white-300: #F4F7FE;
-            --white-400: #EFF4FB;
-            --white-500: #E9EDF7;
+            /* Neutral Scale */
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
             
-            /* Gray Scale */
-            --gray-100: #E0E5F2;
-            --gray-500: #A3AED0;
-            --gray-900: #707EAE;
+            /* Primary */
+            --primary: #1A1A1A;
+            --primary-light: #333333;
             
-            /* Blue Scale */
-            --blue-500: #4481EB;
-            --skyblue-300: #6AD2FF;
-            --skyblue-500: #04BEFE;
+            /* Accent */
+            --accent: #0066FF;
+            --accent-light: #E6F2FF;
             
-            /* Purple Scale */
-            --purple-300: #6946ff;
-            --purple-500: #4318FF;
-            
-            /* Indigo Scale */
-            --indigo-300: #868CFF;
-            --indigo-500: #2B3674;
-            
-            /* Red Scale */
-            --red-100: #FEEFEE;
-            --red-500: #EE5D50;
-            --red-900: #E31A1A;
-            
-            /* Green Scale */
-            --green-500: #05CD99;
-            --green-900: #01B574;
-            
-            /* Yellow Scale */
-            --yellow-300: #FFB547;
-            --yellow-500: #FFCE20;
+            /* Status */
+            --success: #00C851;
+            --warning: #FF8800;
+            --error: #FF4444;
             
             /* Typography */
-            --font-dm-sans: 'DM Sans', sans-serif;
-            --font-poppins: 'Poppins', sans-serif;
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -61,11 +67,14 @@
         }
 
         body {
-            font-family: var(--font-dm-sans);
-            background: linear-gradient(135deg, var(--white-300) 0%, var(--white-400) 100%);
+            font-family: var(--font-primary);
+            background: var(--gray-50);
             min-height: 100vh;
-            color: var(--indigo-500);
-            line-height: 1.6;
+            color: var(--gray-900);
+            line-height: 1.5;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .main-container {
@@ -75,9 +84,9 @@
 
         /* Sidebar Navigation */
         .sidebar {
-            width: 290px;
-            background: var(--white-100);
-            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.1);
+            width: 280px;
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
             position: fixed;
             height: 100vh;
             overflow-y: auto;
@@ -85,51 +94,58 @@
         }
 
         .sidebar-header {
-            padding: 2rem;
+            padding: var(--space-xl);
             border-bottom: 1px solid var(--gray-100);
         }
 
         .logo {
-            font-family: var(--font-poppins);
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--indigo-500);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: var(--space-sm);
         }
 
         .nav-menu {
-            padding: 1rem 0;
+            padding: var(--space-lg) 0;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            padding: 0.75rem 2rem;
-            color: var(--gray-900);
+            padding: var(--space-md) var(--space-xl);
+            color: var(--gray-600);
             text-decoration: none;
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.875rem;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: var(--white-300);
-            color: var(--indigo-500);
-            border-left-color: var(--blue-500);
+        .nav-item:hover {
+            background: var(--gray-50);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--accent-light);
+            color: var(--accent);
+            border-right: 2px solid var(--accent);
         }
 
         .nav-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 1rem;
+            width: 18px;
+            height: 18px;
+            margin-right: var(--space-md);
+            stroke-width: 1.5;
         }
 
         /* Main Content */
         .main-content {
-            margin-left: 290px;
+            margin-left: 280px;
             flex: 1;
-            padding: 2rem 3.5rem;
+            padding: var(--space-2xl);
+            max-width: calc(100vw - 280px);
         }
 
         /* Topbar */
@@ -137,178 +153,200 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 90px;
-            margin-bottom: 2rem;
+            height: 64px;
+            margin-bottom: var(--space-2xl);
         }
 
         .search-container {
             position: relative;
-            width: 320px;
+            width: 300px;
         }
 
         .search-input {
             width: 100%;
-            padding: 1rem 1.5rem;
-            background: var(--white-300);
-            border: none;
-            border-radius: 12px;
-            font-family: var(--font-dm-sans);
-            font-size: 1rem;
-            color: var(--indigo-500);
+            padding: var(--space-md) var(--space-lg);
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-family: var(--font-primary);
+            font-size: 0.875rem;
+            color: var(--gray-900);
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .search-input:focus {
-            background: var(--white-100);
-            box-shadow: 0 0 0 2px var(--blue-500);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-500);
         }
 
         .search-icon {
             position: absolute;
-            right: 1rem;
+            right: var(--space-md);
             top: 50%;
             transform: translateY(-50%);
-            color: var(--gray-500);
+            color: var(--gray-400);
+            width: 16px;
+            height: 16px;
         }
 
         .topbar-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: var(--space-md);
         }
 
         .notification-btn {
             position: relative;
-            background: var(--white-300);
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .notification-btn:hover {
-            background: var(--white-100);
-            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.1);
+            background: var(--gray-50);
+            border-color: var(--gray-300);
         }
 
         .notification-badge {
             position: absolute;
-            top: 0.25rem;
-            right: 0.25rem;
-            width: 8px;
-            height: 8px;
-            background: var(--red-500);
+            top: 6px;
+            right: 6px;
+            width: 6px;
+            height: 6px;
+            background: var(--error);
             border-radius: 50%;
+        }
+
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.875rem;
         }
 
         /* Page Header */
         .page-header {
-            margin-bottom: 3rem;
+            margin-bottom: var(--space-2xl);
         }
 
         .page-title {
-            font-family: var(--font-poppins);
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--indigo-500);
-            margin-bottom: 0.5rem;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.025em;
         }
 
         .page-subtitle {
-            font-size: 1.125rem;
-            color: var(--gray-900);
+            font-size: 1rem;
+            color: var(--gray-600);
             font-weight: 400;
         }
 
         /* Cards */
         .flow-card {
-            background: var(--white-100);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.1);
-            transition: all 0.3s ease;
-            border: 1px solid var(--gray-100);
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            margin-bottom: var(--space-xl);
+            border: 1px solid var(--gray-200);
+            transition: all 0.2s ease;
         }
 
         .flow-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(112, 126, 174, 0.15);
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-md);
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--gray-100);
         }
 
         .card-number {
-            background: linear-gradient(135deg, var(--blue-500), var(--purple-500));
-            color: var(--white-100);
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            background: var(--primary);
+            color: var(--white);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
-            margin-right: 1rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-right: var(--space-lg);
         }
 
         .card-title {
-            font-family: var(--font-poppins);
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--indigo-500);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.025em;
         }
 
         .card-score {
             margin-left: auto;
-            background: var(--green-500);
-            color: var(--white-100);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.875rem;
+            background: var(--success);
+            color: var(--white);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-lg);
+            font-weight: 500;
+            font-size: 0.75rem;
         }
 
         /* Flow Diagram */
         .flow-diagram {
-            background: var(--white-300);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 1.5rem 0;
-            border-left: 4px solid var(--blue-500);
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin: var(--space-xl) 0;
+            border-left: 3px solid var(--accent);
             overflow-x: auto;
         }
 
         .flow-step {
             display: inline-block;
-            background: linear-gradient(135deg, var(--blue-500), var(--skyblue-500));
-            color: var(--white-100);
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            margin: 0.5rem;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(68, 129, 235, 0.3);
-            transition: all 0.3s ease;
+            background: var(--primary);
+            color: var(--white);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-md);
+            margin: var(--space-sm);
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
             cursor: pointer;
         }
 
         .flow-step:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(68, 129, 235, 0.4);
+            background: var(--primary-light);
+            transform: translateY(-1px);
         }
 
         .flow-arrow {
-            color: var(--blue-500);
-            font-size: 1.5rem;
-            margin: 0 1rem;
+            color: var(--gray-400);
+            font-size: 1.25rem;
+            margin: 0 var(--space-md);
             display: inline-block;
-            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
@@ -319,84 +357,97 @@
         /* Grid Layouts */
         .states-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin: var(--space-xl) 0;
         }
 
         .state-card {
-            background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
-            color: var(--white-100);
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(105, 70, 255, 0.3);
-            transition: all 0.3s ease;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            transition: all 0.2s ease;
         }
 
         .state-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(105, 70, 255, 0.4);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-sm);
         }
 
         .state-card h4 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .state-card p {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            line-height: 1.5;
         }
 
         .goals-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-lg);
+            margin: var(--space-xl) 0;
         }
 
         .goal-item {
-            background: var(--white-200);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--green-500);
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(112, 126, 174, 0.1);
+            background: var(--gray-50);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            border-left: 3px solid var(--accent);
+            transition: all 0.2s ease;
         }
 
         .goal-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.15);
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
         }
 
         .goal-item strong {
-            color: var(--indigo-500);
+            color: var(--primary);
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
+            margin-bottom: var(--space-sm);
+            font-weight: 600;
+            font-size: 0.875rem;
         }
 
         .goal-item p {
-            color: var(--gray-900);
-            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-size: 0.8125rem;
+            line-height: 1.5;
         }
 
         /* Pattern Cards */
         .patterns-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin: var(--space-xl) 0;
         }
 
         .pattern-card {
-            background: linear-gradient(135deg, var(--yellow-300), var(--yellow-500));
-            padding: 1.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(255, 181, 71, 0.3);
-            color: var(--indigo-500);
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            transition: all 0.2s ease;
+        }
+
+        .pattern-card:hover {
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-sm);
         }
 
         .pattern-card h4 {
-            font-size: 1.125rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: var(--space-lg);
+            font-weight: 600;
+            color: var(--primary);
         }
 
         .pattern-card ul {
@@ -404,17 +455,19 @@
         }
 
         .pattern-card li {
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
+            margin-bottom: var(--space-sm);
+            padding-left: var(--space-lg);
             position: relative;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+            line-height: 1.5;
         }
 
         .pattern-card li::before {
-            content: "→";
+            content: "•";
             position: absolute;
             left: 0;
-            color: var(--blue-500);
+            color: var(--accent);
             font-weight: bold;
         }
 
@@ -544,16 +597,16 @@
         .scroll-indicator {
             position: fixed;
             top: 0;
-            left: 290px;
-            width: calc(100% - 290px);
-            height: 4px;
-            background: rgba(163, 174, 208, 0.3);
+            left: 280px;
+            width: calc(100% - 280px);
+            height: 2px;
+            background: var(--gray-200);
             z-index: 1001;
         }
 
         .scroll-progress {
             height: 100%;
-            background: linear-gradient(90deg, var(--blue-500), var(--purple-500));
+            background: var(--accent);
             width: 0%;
             transition: width 0.3s ease;
         }
@@ -563,6 +616,7 @@
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
+                box-shadow: var(--shadow-lg);
             }
             
             .sidebar.open {
@@ -571,6 +625,7 @@
             
             .main-content {
                 margin-left: 0;
+                max-width: 100vw;
             }
             
             .scroll-indicator {
@@ -579,17 +634,17 @@
             }
             
             .mobile-toggle {
-                display: block !important;
+                display: flex !important;
             }
         }
 
         @media (max-width: 768px) {
             .main-content {
-                padding: 1rem;
+                padding: var(--space-lg);
             }
             
             .page-title {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
             
             .comparison-grid {
@@ -598,27 +653,52 @@
             
             .search-container {
                 width: 100%;
-                max-width: 300px;
+                max-width: 250px;
+            }
+
+            .topbar {
+                height: 56px;
+                margin-bottom: var(--space-lg);
+            }
+
+            .flow-card {
+                padding: var(--space-lg);
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-md);
+            }
+
+            .card-score {
+                margin-left: 0;
             }
         }
 
         .mobile-toggle {
             display: none;
-            background: var(--white-300);
-            border: none;
-            border-radius: 12px;
-            padding: 0.75rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
             cursor: pointer;
-            margin-right: 1rem;
+            margin-right: var(--space-lg);
+            transition: all 0.2s ease;
+        }
+
+        .mobile-toggle:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
         }
 
         /* Table Styles */
         .data-table {
-            background: var(--white-100);
-            border-radius: 12px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(112, 126, 174, 0.1);
-            margin: 1.5rem 0;
+            margin: var(--space-xl) 0;
         }
 
         .data-table table {
@@ -627,41 +707,47 @@
         }
 
         .data-table th {
-            background: var(--white-300);
-            padding: 1rem;
+            background: var(--gray-50);
+            padding: var(--space-lg);
             text-align: left;
-            font-weight: 700;
-            color: var(--indigo-500);
-            border-bottom: 1px solid var(--gray-100);
+            font-weight: 600;
+            color: var(--primary);
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.875rem;
         }
 
         .data-table td {
-            padding: 1rem;
+            padding: var(--space-lg);
             border-bottom: 1px solid var(--gray-100);
-            color: var(--gray-900);
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
         }
 
         .data-table tr:hover {
-            background: var(--white-200);
+            background: var(--gray-50);
         }
 
         .grade-badge {
-            background: var(--green-500);
-            color: var(--white-100);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-weight: 600;
+            background: var(--success);
+            color: var(--white);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            font-weight: 500;
             font-size: 0.75rem;
         }
 
         .grade-badge.unavailable {
-            background: var(--gray-500);
+            background: var(--gray-400);
         }
 
         .download-link {
-            color: var(--blue-500);
+            color: var(--accent);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .download-link:hover {
@@ -679,40 +765,59 @@
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    📚 Moodle Analysis
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Moodle Analysis
                 </div>
             </div>
             <div class="nav-menu">
                 <a href="#auth-flow" class="nav-item active">
-                    <span class="nav-icon">🔐</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
                     Authentication
                 </a>
                 <a href="#dashboard-flow" class="nav-item">
-                    <span class="nav-icon">📊</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
                     Dashboard
                 </a>
                 <a href="#assignment-flow" class="nav-item">
-                    <span class="nav-icon">📝</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
                     Assignments
                 </a>
                 <a href="#schedule-flow" class="nav-item">
-                    <span class="nav-icon">📅</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
                     Schedule
                 </a>
                 <a href="#navigation-patterns" class="nav-item">
-                    <span class="nav-icon">🧭</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
                     Navigation
                 </a>
                 <a href="#mobile-design" class="nav-item">
-                    <span class="nav-icon">📱</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a1 1 0 001-1V4a1 1 0 00-1-1H8a1 1 0 00-1 1v16a1 1 0 001 1z"/>
+                    </svg>
                     Mobile Design
                 </a>
                 <a href="#error-handling" class="nav-item">
-                    <span class="nav-icon">⚠️</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
                     Error Handling
                 </a>
                 <a href="#optimization" class="nav-item">
-                    <span class="nav-icon">🚀</span>
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
                     Optimization
                 </a>
             </div>
@@ -723,18 +828,26 @@
             <!-- Topbar -->
             <div class="topbar">
                 <div style="display: flex; align-items: center;">
-                    <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+                    <button class="mobile-toggle" onclick="toggleSidebar()">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
                     <div class="search-container">
                         <input type="text" class="search-input" placeholder="Search flows and patterns...">
-                        <span class="search-icon">🔍</span>
+                        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
                     </div>
                 </div>
                 <div class="topbar-actions">
                     <button class="notification-btn">
-                        🔔
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.021 15.273l7.747-7.746a2 2 0 012.829 0l2.829 2.829a2 2 0 010 2.828l-7.747 7.747a2 2 0 01-1.414.586H4v-3.243a2 2 0 01.586-1.414z"/>
+                        </svg>
                         <span class="notification-badge"></span>
                     </button>
-                    <div style="width: 40px; height: 40px; background: var(--blue-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">M</div>
+                    <div class="profile-avatar">M</div>
                 </div>
             </div>
 
@@ -792,7 +905,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Hi-Fi Implementation Highlights</h3>
+                <h3 style="margin: var(--space-xl) 0 var(--space-lg) 0; color: var(--primary); font-weight: 600; font-size: 1.125rem;">Hi-Fi Implementation Highlights</h3>
                 <div class="goals-grid">
                     <div class="goal-item">
                         <strong>Clean Branded Interface</strong>
@@ -835,7 +948,7 @@
                     <div class="flow-step">Menu Access</div>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">User Goals Supported</h3>
+                <h3 style="margin: var(--space-xl) 0 var(--space-lg) 0; color: var(--primary); font-weight: 600; font-size: 1.125rem;">User Goals Supported</h3>
                 <div class="goals-grid">
                     <div class="goal-item">
                         <strong>Quick Overview</strong>
@@ -855,7 +968,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Smart Design Decisions</h3>
+                <h3 style="margin: var(--space-xl) 0 var(--space-lg) 0; color: var(--primary); font-weight: 600; font-size: 1.125rem;">Smart Design Decisions</h3>
                 <div class="patterns-grid">
                     <div class="pattern-card">
                         <h4>Cognitive Load Reduction</h4>
@@ -902,7 +1015,7 @@
                     <div class="flow-step">Confirmation</div>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Assignment Table Example</h3>
+                <h3 style="margin: var(--space-xl) 0 var(--space-lg) 0; color: var(--primary); font-weight: 600; font-size: 1.125rem;">Assignment Table Example</h3>
                 <div class="data-table">
                     <table>
                         <thead>
@@ -1018,7 +1131,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Enhancement Opportunities</h3>
+                <h3 style="margin: var(--space-xl) 0 var(--space-lg) 0; color: var(--primary); font-weight: 600; font-size: 1.125rem;">Enhancement Opportunities</h3>
                 <div class="patterns-grid">
                     <div class="pattern-card">
                         <h4>Current Strengths</h4>
@@ -1220,7 +1333,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Implementation Roadmap</h3>
+                <h3 style="margin: var(--space-xl) 0 var(--space-lg) 0; color: var(--primary); font-weight: 600; font-size: 1.125rem;">Implementation Roadmap</h3>
                 <div class="goals-grid">
                     <div class="goal-item">
                         <strong>Phase 1: Core Features</strong>
@@ -1242,9 +1355,9 @@
             </div>
 
             <!-- Footer -->
-            <div style="margin-top: 4rem; padding: 2rem; text-align: center; color: var(--gray-500); border-top: 1px solid var(--gray-100);">
-                <p>Moodle User Flow Analysis - Integrated with Horizon Design System</p>
-                <p style="margin-top: 0.5rem; font-size: 0.875rem;">Overall Usability Score: <strong style="color: var(--green-500);">8.4/10</strong></p>
+            <div style="margin-top: var(--space-2xl); padding: var(--space-xl); text-align: center; color: var(--gray-500); border-top: 1px solid var(--gray-200);">
+                <p style="font-size: 0.875rem;">Moodle User Flow Analysis - Modern Minimalist Design</p>
+                <p style="margin-top: var(--space-sm); font-size: 0.8125rem;">Overall Usability Score: <strong style="color: var(--success);">8.4/10</strong></p>
             </div>
         </main>
     </div>
