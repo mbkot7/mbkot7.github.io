@@ -909,6 +909,12 @@
 
             </div>
             <div class="nav-menu">
+                <a href="#general-overview" class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    General Overview
+                </a>
                 <a href="#auth-flow" class="nav-item active">
                     <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -1012,94 +1018,150 @@
             <div class="page-header">
                 <h1 class="page-title">Moodle User Flow Analysis</h1>
                 <p class="page-subtitle">Comprehensive Student Journey Analysis - Educational Platform Redesign</p>
+            </div>
+            <!-- General Overview -->
+            <div class="flow-card" id="general-overview" style="margin-top: var(--space-xl); background: var(--gray-50); border: 1px solid var(--gray-200);">
+                <div class="card-header">
+                    <h2 class="card-title" style="display: flex; align-items: center; gap: var(--space-sm);">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                        General Overview
+                    </h2>
+                </div>
+                <h3 style="color: var(--primary); font-weight: 600; margin-bottom: var(--space-lg);">Your Gateway to Enhanced Learning Experience</h3>
 
-                <!-- Executive Summary -->
-                <div class="flow-card"
-                    style="margin-top: var(--space-xl); background: var(--gray-50); border: 1px solid var(--gray-200);">
-                    <h3 style="color: var(--primary); font-weight: 600; margin-bottom: var(--space-lg);">Executive
-                        Summary</h3>
-                    <div class="goals-grid">
-                        <div class="goal-item">
-                            <strong>Research Scope</strong>
-                            <p>8 core user flows analyzed across 5 main interface screens with 47 interaction points
-                                evaluated</p>
-                        </div>
-                        <div class="goal-item">
-                            <strong>Methodology</strong>
-                            <p>Comparative low-fi to hi-fi analysis using Jakob Nielsen's usability heuristics and WCAG
-                                2.1 guidelines</p>
-                        </div>
-                        <div class="goal-item">
-                            <strong>Key Findings</strong>
-                            <p>89% improvement in task completion efficiency, 67% reduction in cognitive load through
-                                time-based organization</p>
-                        </div>
-                        <div class="goal-item">
-                            <strong>Implementation Status</strong>
-                            <p>Ready for development with 23 high-priority features and 15 medium-priority enhancements
-                                identified</p>
-                        </div>
+                <div class="goals-grid">
+                    <div class="goal-item">
+                        <strong style="display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.205 5 7.5 5A2.5 2.5 0 005 7.5c0 .602.235 1.167.659 1.591L12 17.25l6.341-8.159c.424-.424.659-1.0.659-1.591A2.5 2.5 0 0016.5 5c-1.705 0-3.332.477-4.5 1.253z"/>
+                            </svg>
+                            What is Moodle?
+                        </strong>
+                        <p>Moodle is a leading Learning Management System (LMS) utilized by educational institutions worldwide to create personalized learning environments. It provides tools for course management, content sharing, assessments, and tracking student progress.</p>
                     </div>
+                    <div class="goal-item">
+                        <strong style="display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Purpose of this document
+                        </strong>
+                        <p>This document presents a comprehensive analysis of Moodle's user flows and a detailed UX research, focusing on optimizing interactions for both students and educators.</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong style="display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                            </svg>
+                            What is presented?
+                        </strong>
+                        <p>The report thoroughly examines key user scenarios such as authentication, dashboard navigation, assignment management, and scheduling, alongside applying principles of mobile design and error handling.</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong style="display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.691h4.915c.971 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.324 1.129l1.519 4.674c.3.921-.755 1.688-1.539 1.129l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.559-1.838-.198-1.539-1.129l1.519-4.674a1 1 0 00-.324-1.129L2.285 9.1c-.783-.57-.383-1.81.588-1.81h4.914a1 1 0 00.95-.691l1.519-4.674z"/>
+                            </svg>
+                            Overall outcome
+                        </strong>
+                        <p>The research outcomes include identifying strengths and areas for improvement in current user flows, along with developing recommendations for UX optimization and technical implementation to enhance efficiency and user satisfaction.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Executive Summary -->
+            <div class="flow-card"
+                style="margin-top: var(--space-xl); background: var(--gray-50); border: 1px solid var(--gray-200);">
+                <div class="card-header">
+                    <div class="card-number">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                        </svg>
+                    </div>
+                    <h3 style="color: var(--primary); font-weight: 600;">Executive Summary</h3>
+                </div>
+                <div class="goals-grid">
+                    <div class="goal-item">
+                        <strong>Research Scope</strong>
+                        <p>8 core user flows analyzed across 5 main interface screens with 47 interaction points
+                            evaluated</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Methodology</strong>
+                        <p>Comparative low-fi to hi-fi analysis using Jakob Nielsen's usability heuristics and WCAG
+                            2.1 guidelines</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Key Findings</strong>
+                        <p>89% improvement in task completion efficiency, 67% reduction in cognitive load through
+                            time-based organization</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Implementation Status</strong>
+                        <p>Ready for development with 23 high-priority features and 15 medium-priority enhancements
+                            identified</p>
+                    </div>
+                </div>
 
-                    <!-- Metrics Overview -->
-                    <h4 style="color: var(--primary); font-weight: 600; margin: var(--space-xl) 0 var(--space-lg) 0;">
-                        Usability Metrics Overview</h4>
-                    <div class="data-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Screen/Flow</th>
-                                    <th>Usability Score</th>
-                                    <th>Task Success Rate</th>
-                                    <th>Error Recovery</th>
-                                    <th>Mobile Optimization</th>
-                                    <th>Accessibility</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Authentication</td>
-                                    <td><span class="grade-badge">9.0/10</span></td>
-                                    <td>96%</td>
-                                    <td>Excellent</td>
-                                    <td>Optimized</td>
-                                    <td>WCAG 2.1 AA</td>
-                                </tr>
-                                <tr>
-                                    <td>Dashboard</td>
-                                    <td><span class="grade-badge">8.0/10</span></td>
-                                    <td>89%</td>
-                                    <td>Good</td>
-                                    <td>Optimized</td>
-                                    <td>WCAG 2.1 AA</td>
-                                </tr>
-                                <tr>
-                                    <td>Assignments</td>
-                                    <td><span class="grade-badge">8.5/10</span></td>
-                                    <td>92%</td>
-                                    <td>Excellent</td>
-                                    <td>Optimized</td>
-                                    <td>WCAG 2.1 AA</td>
-                                </tr>
-                                <tr>
-                                    <td>Schedule</td>
-                                    <td><span class="grade-badge">7.5/10</span></td>
-                                    <td>84%</td>
-                                    <td>Good</td>
-                                    <td>Optimized</td>
-                                    <td>WCAG 2.1 A</td>
-                                </tr>
-                                <tr>
-                                    <td>Navigation</td>
-                                    <td><span class="grade-badge">9.0/10</span></td>
-                                    <td>94%</td>
-                                    <td>Excellent</td>
-                                    <td>Optimized</td>
-                                    <td>WCAG 2.1 AA</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- Metrics Overview -->
+                <h4 style="color: var(--primary); font-weight: 600; margin: var(--space-xl) 0 var(--space-lg) 0;">
+                    Usability Metrics Overview</h4>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Screen/Flow</th>
+                                <th>Usability Score</th>
+                                <th>Task Success Rate</th>
+                                <th>Error Recovery</th>
+                                <th>Mobile Optimization</th>
+                                <th>Accessibility</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1.Authentication</td>
+                                <td><span class="grade-badge">9.0/10</span></td>
+                                <td>96%</td>
+                                <td>Excellent</td>
+                                <td>Optimized</td>
+                                <td>WCAG 2.1 AA</td>
+                            </tr>
+                            <tr>
+                                <td>2.Dashboard</td>
+                                <td><span class="grade-badge">8.0/10</span></td>
+                                <td>89%</td>
+                                <td>Good</td>
+                                <td>Optimized</td>
+                                <td>WCAG 2.1 AA</td>
+                            </tr>
+                            <tr>
+                                <td>3.Assignments</td>
+                                <td><span class="grade-badge">8.5/10</span></td>
+                                <td>92%</td>
+                                <td>Excellent</td>
+                                <td>Optimized</td>
+                                <td>WCAG 2.1 AA</td>
+                            </tr>
+                            <tr>
+                                <td>4.Schedule</td>
+                                <td><span class="grade-badge">7.5/10</span></td>
+                                <td>84%</td>
+                                <td>Good</td>
+                                <td>Optimized</td>
+                                <td>WCAG 2.1 A</td>
+                            </tr>
+                            <tr>
+                                <td>5.Navigation</td>
+                                <td><span class="grade-badge">9.0/10</span></td>
+                                <td>94%</td>
+                                <td>Excellent</td>
+                                <td>Optimized</td>
+                                <td>WCAG 2.1 AA</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <!-- Authentication Flow -->
