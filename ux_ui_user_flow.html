@@ -229,6 +229,44 @@
             border-radius: 50%;
         }
 
+        .prototype-link {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--accent);
+        }
+
+        .prototype-link:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+        }
+
+        .telegram-link {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        .telegram-link:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
+        }
+
         .profile-avatar {
             width: 32px;
             height: 32px;
@@ -289,13 +327,14 @@
             color: var(--white);
             width: 32px;
             height: 32px;
-            border-radius: var(--radius-md);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
             font-size: 0.875rem;
             margin-right: var(--space-lg);
+            box-shadow: var(--shadow-sm);
         }
 
         .card-title {
@@ -317,37 +356,89 @@
 
         /* Flow Diagram */
         .flow-diagram {
-            background: var(--gray-50);
-            border-radius: var(--radius-lg);
-            padding: var(--space-xl);
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
             margin: var(--space-xl) 0;
-            border-left: 3px solid var(--accent);
+            border: 1px solid var(--gray-200);
             overflow-x: auto;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
         }
 
         .flow-step {
             display: inline-block;
-            background: var(--primary);
-            color: var(--white);
-            padding: var(--space-md) var(--space-lg);
-            border-radius: var(--radius-md);
-            margin: var(--space-sm);
+            background: var(--white);
+            color: var(--primary);
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: var(--radius-lg);
+            margin: var(--space-xs) var(--space-sm);
             font-weight: 500;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             transition: all 0.2s ease;
             cursor: pointer;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
         }
 
         .flow-step:hover {
-            background: var(--primary-light);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
             transform: translateY(-1px);
         }
 
+        .flow-step.active {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .flow-step-detailed {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--white);
+            color: var(--primary);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            margin: var(--space-xs);
+            font-weight: 500;
+            font-size: 0.8125rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .flow-step-detailed:hover {
+            border-color: var(--gray-300);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .flow-step-detailed.active {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .flow-step-detailed small {
+            color: var(--gray-500);
+            font-size: 0.75rem;
+            margin-top: var(--space-xs);
+            font-weight: 400;
+        }
+
         .flow-arrow {
-            color: var(--gray-400);
-            font-size: 1.25rem;
-            margin: 0 var(--space-md);
+            color: var(--gray-300);
+            font-size: 1rem;
+            margin: 0 var(--space-sm);
             display: inline-block;
+            font-weight: 300;
         }
 
         @keyframes pulse {
@@ -374,13 +465,32 @@
             background: var(--white);
             border: 1px solid var(--gray-200);
             padding: var(--space-lg);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-xl);
             transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .state-card:hover {
             border-color: var(--accent);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .state-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .state-card:hover::before {
+            opacity: 1;
         }
 
         .state-card h4 {
@@ -404,16 +514,18 @@
         }
 
         .goal-item {
-            background: var(--gray-50);
-            padding: var(--space-lg);
-            border-radius: var(--radius-lg);
-            border-left: 3px solid var(--accent);
+            background: var(--white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gray-200);
             transition: all 0.2s ease;
+            position: relative;
         }
 
         .goal-item:hover {
-            background: var(--white);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+            border-color: var(--gray-300);
         }
 
         .goal-item strong {
@@ -441,14 +553,16 @@
         .pattern-card {
             background: var(--white);
             border: 1px solid var(--gray-200);
-            padding: var(--space-lg);
-            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            border-radius: var(--radius-xl);
             transition: all 0.2s ease;
+            position: relative;
         }
 
         .pattern-card:hover {
-            border-color: var(--gray-300);
-            box-shadow: var(--shadow-sm);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
         }
 
         .pattern-card h4 {
@@ -479,75 +593,54 @@
             font-weight: bold;
         }
 
-        /* Navigation Demo */
-        .navigation-demo {
-            background: var(--indigo-500);
-            color: var(--white-100);
-            padding: 2rem;
-            border-radius: 16px;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
-        }
 
-        .nav-header-demo {
-            background: var(--gray-900);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-menu-demo {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 3px solid var(--blue-500);
-        }
-
-        .nav-menu-demo ul {
-            list-style: none;
-        }
-
-        .nav-menu-demo li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-menu-demo li:last-child {
-            border-bottom: none;
-            color: var(--red-500);
-        }
 
         /* Strengths/Weaknesses */
         .comparison-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
+            gap: var(--space-xl);
+            margin: var(--space-xl) 0;
         }
 
         .strengths-card {
-            background: linear-gradient(135deg, var(--green-500), var(--green-900));
-            color: var(--white-100);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(5, 205, 153, 0.3);
+            background: var(--white);
+            color: var(--primary);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .strengths-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         .weaknesses-card {
-            background: linear-gradient(135deg, var(--yellow-300), var(--red-500));
-            color: var(--white-100);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(255, 181, 71, 0.3);
+            background: var(--white);
+            color: var(--primary);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .weaknesses-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
         .comparison-grid h3 {
-            margin-bottom: 1rem;
-            font-family: var(--font-poppins);
-            font-weight: 700;
+            margin-bottom: var(--space-lg);
+            font-family: var(--font-primary);
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
         }
 
         .comparison-grid ul {
@@ -561,24 +654,30 @@
         }
 
         .strengths-card li::before {
-            content: "✅";
+            content: "•";
             position: absolute;
             left: 0;
+            color: var(--success);
+            font-weight: bold;
         }
 
         .weaknesses-card li::before {
-            content: "⚠️";
+            content: "•";
             position: absolute;
             left: 0;
+            color: var(--warning);
+            font-weight: bold;
         }
 
         /* Mobile Features */
         .mobile-features {
-            background: linear-gradient(135deg, var(--indigo-300), var(--indigo-500));
-            color: var(--white-100);
-            padding: 2rem;
-            border-radius: 16px;
-            margin: 1.5rem 0;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            color: var(--primary);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            margin: var(--space-xl) 0;
+            box-shadow: var(--shadow-sm);
         }
 
         .mobile-grid {
@@ -589,11 +688,17 @@
         }
 
         .mobile-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--gray-50);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+            transition: all 0.2s ease;
+        }
+
+        .mobile-item:hover {
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-1px);
         }
 
         .mobile-item h4 {
@@ -780,6 +885,7 @@
                     </svg>
                     Moodle Analysis
                 </div>
+
             </div>
             <div class="nav-menu">
                 <a href="#auth-flow" class="nav-item active">
@@ -859,14 +965,19 @@
                     </div>
                 </div>
                 <div class="topbar-actions">
-                    <button class="notification-btn">
+                    <a href="https://mbkot7.github.io/moodle_prototype" target="_blank" class="prototype-link"
+                        title="View Live Prototype">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 17h5l-5 5v-5zM4.021 15.273l7.747-7.746a2 2 0 012.829 0l2.829 2.829a2 2 0 010 2.828l-7.747 7.747a2 2 0 01-1.414.586H4v-3.243a2 2 0 01.586-1.414z" />
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
-                        <span class="notification-badge"></span>
-                    </button>
+                    </a>
                     <div class="profile-avatar">M</div>
+                    <a href="https://t.me/mbkot7" target="_blank" class="telegram-link" title="Contact via Telegram">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
@@ -973,21 +1084,88 @@
                 </div>
 
                 <div class="flow-diagram">
-                    <div class="flow-step">Entry Point</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Form Validation</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Processing</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Success</div>
-                    <br><br>
-                    <div class="flow-step">Empty Form</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Filled Form</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Loading</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Dashboard</div>
+                    <div style="margin-bottom: var(--space-xl);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            Primary Authentication Flow
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                </svg>
+                                <div>Entry Point</div>
+                                <small>User lands on login</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div>Form Validation</div>
+                                <small>Real-time feedback</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                <div>Processing</div>
+                                <small>Server authentication</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed active">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <div>Success</div>
+                                <small>Redirect to dashboard</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--gray-100);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            User Experience Journey
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <div>Empty Form</div>
+                                <small>Initial state</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                                <div>Filled Form</div>
+                                <small>User input</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div>Loading</div>
+                                <small>Processing request</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed active">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                                </svg>
+                                <div>Dashboard</div>
+                                <small>User logged in</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="states-grid">
@@ -1140,7 +1318,12 @@
             <!-- Comprehensive UX Research Methodology -->
             <div class="flow-card" style="background: var(--gray-50); border: 2px solid var(--accent-light);">
                 <div class="card-header">
-                    <div class="card-number" style="background: var(--accent);">📊</div>
+                    <div class="card-number">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
                     <h2 class="card-title">Research Methodology & Data Analysis</h2>
                 </div>
 
@@ -1382,17 +1565,72 @@
                 </div>
 
                 <div class="flow-diagram">
-                    <div class="flow-step">Landing</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Content Organization</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Navigation Options</div>
-                    <br><br>
-                    <div class="flow-step">Today View</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Time Grouping</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Menu Access</div>
+                    <div style="margin-bottom: var(--space-xl);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                            Information Architecture
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                                </svg>
+                                <div>Landing</div>
+                                <small>Dashboard entry</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                                <div>Content Organization</div>
+                                <small>Time-based grouping</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed active">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                                <div>Navigation Options</div>
+                                <small>Menu & actions</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--gray-100);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Time-Based Organization
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed active">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <div>Today View</div>
+                                <small>Urgent tasks first</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                                <div>Time Grouping</div>
+                                <small>Today/Tomorrow/Later</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                                <div>Menu Access</div>
+                                <small>Navigation drawer</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <h3
@@ -1449,21 +1687,88 @@
                 </div>
 
                 <div class="flow-diagram">
-                    <div class="flow-step">Access</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Browse</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Action</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Feedback</div>
-                    <br><br>
-                    <div class="flow-step">Entry</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Table</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Download</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Confirmation</div>
+                    <div style="margin-bottom: var(--space-xl);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            User Interaction Pattern
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                                </svg>
+                                <div>Access</div>
+                                <small>Navigate to assignments</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <div>Browse</div>
+                                <small>Scan table content</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                                </svg>
+                                <div>Action</div>
+                                <small>Click download link</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed active">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                                <div>Feedback</div>
+                                <small>Success notification</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--gray-100);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            Download Process
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                </svg>
+                                <div>Entry</div>
+                                <small>Assignment page</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a1 1 0 011-1h3M3 20h18"/>
+                                </svg>
+                                <div>Table</div>
+                                <small>Assignment list</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed active">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+                                </svg>
+                                <div>Download</div>
+                                <small>File processing</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <div>Confirmation</div>
+                                <small>Download complete</small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Assignment Data Analysis -->
@@ -1599,21 +1904,31 @@
                 </div>
 
                 <div class="flow-diagram">
-                    <div class="flow-step">Calendar View</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Date Selection</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Event Details</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Navigation</div>
-                    <br><br>
-                    <div class="flow-step">Monthly Grid</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Highlight Day</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Show Events</div>
-                    <span class="flow-arrow">→</span>
-                    <div class="flow-step">Change Period</div>
+                    <div style="margin-bottom: var(--space-lg);">
+                        <h4
+                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
+                            Calendar Navigation</h4>
+                        <div class="flow-step">Calendar View</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">Date Selection</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step active">Event Details</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">Navigation</div>
+                    </div>
+                    <div
+                        style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--gray-100);">
+                        <h4
+                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
+                            Visual Interaction</h4>
+                        <div class="flow-step">Monthly Grid</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step active">Highlight Day</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">Show Events</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step">Change Period</div>
+                    </div>
                 </div>
 
                 <div class="goals-grid">
@@ -1668,29 +1983,39 @@
                     <div class="card-score">Score: 9/10</div>
                 </div>
 
-                <div class="navigation-demo">
-                    <div class="nav-header-demo">
-                        <span>[☰] Screen Title</span>
-                        <span>[Date/Context]</span>
-                    </div>
-
-                    <div class="nav-menu-demo">
-                        <h4>Overlay Menu:</h4>
-                        <ul>
-                            <li>Dashboard</li>
-                            <li>Assignments</li>
-                            <li>Schedule</li>
-                            <li>────────────</li>
-                            <li>Logout 🚪</li>
-                        </ul>
-                    </div>
-                </div>
-
                 <div class="flow-diagram">
-                    <strong>Loading Pattern:</strong><br>
-                    <div class="flow-step">[Spinner] + "Action message..."</div>
-                    <span class="flow-arrow">↓</span>
-                    <div class="flow-step">Success/Error Feedback</div>
+                    <div style="margin-bottom: var(--space-lg);">
+                        <h4
+                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
+                            Header Structure</h4>
+                        <div class="flow-step">Menu Toggle</div>
+                        <span class="flow-arrow">+</span>
+                        <div class="flow-step active">Screen Title</div>
+                        <span class="flow-arrow">+</span>
+                        <div class="flow-step">Context Info</div>
+                    </div>
+                    <div
+                        style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--gray-100);">
+                        <h4
+                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
+                            Navigation Menu</h4>
+                        <div class="flow-step">Dashboard</div>
+                        <span class="flow-arrow">•</span>
+                        <div class="flow-step">Assignments</div>
+                        <span class="flow-arrow">•</span>
+                        <div class="flow-step">Schedule</div>
+                        <span class="flow-arrow">•</span>
+                        <div class="flow-step">Logout</div>
+                    </div>
+                    <div
+                        style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--gray-100);">
+                        <h4
+                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
+                            Loading Pattern</h4>
+                        <div class="flow-step">Processing</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-step active">Success Feedback</div>
+                    </div>
                 </div>
 
                 <div class="goals-grid">
@@ -1722,7 +2047,8 @@
                 </div>
 
                 <div class="mobile-features">
-                    <h3>Touch & Performance Optimization</h3>
+                    <h3 style="color: var(--primary); font-weight: 600; margin-bottom: var(--space-lg);">Touch &
+                        Performance Optimization</h3>
                     <div class="mobile-grid">
                         <div class="mobile-item">
                             <h4>Touch Targets</h4>
@@ -1806,7 +2132,14 @@
             <!-- Technical Implementation Analysis -->
             <div class="flow-card" style="background: var(--gray-50); border: 2px solid var(--accent-light);">
                 <div class="card-header">
-                    <div class="card-number" style="background: var(--accent);">⚙️</div>
+                    <div class="card-number">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
                     <h2 class="card-title">Technical Implementation & Architecture</h2>
                 </div>
 
@@ -1947,7 +2280,13 @@
 
                 <div class="comparison-grid">
                     <div class="strengths-card">
-                        <h3>Current Strengths</h3>
+                        <h3>
+                            <svg width="20" height="20" fill="none" stroke="var(--success)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
+                            Current Strengths
+                        </h3>
                         <ul>
                             <li>Clear linear progression</li>
                             <li>Consistent interaction patterns</li>
@@ -1960,7 +2299,13 @@
                         </ul>
                     </div>
                     <div class="weaknesses-card">
-                        <h3>Future Enhancements</h3>
+                        <h3>
+                            <svg width="20" height="20" fill="none" stroke="var(--warning)" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            Future Enhancements
+                        </h3>
                         <ul>
                             <li>Quick actions from dashboard</li>
                             <li>Bulk operations in assignments</li>
@@ -2187,6 +2532,10 @@
                     style="text-align: center; margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid var(--gray-200);">
                     <p style="font-size: 0.875rem; color: var(--gray-600);">Moodle User Flow Analysis - Comprehensive UX
                         Research & Design System</p>
+                    <p style="margin-top: var(--space-sm); font-size: 0.8125rem; color: var(--gray-500);">
+                        Research conducted using Jakob Nielsen's heuristics, WCAG 2.1 guidelines, and mobile-first
+                        design principles
+                    </p>
                     <div
                         style="margin-top: var(--space-lg); display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap;">
                         <span style="font-size: 0.75rem; color: var(--gray-400);">Authentication: 9/10</span>
