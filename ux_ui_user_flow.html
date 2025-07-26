@@ -241,6 +241,7 @@
             justify-content: center;
             text-decoration: none;
             color: var(--accent);
+            gap: var(--space-sm);
         }
 
         .prototype-link:hover {
@@ -263,6 +264,26 @@
         }
 
         .telegram-link:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
+        }
+
+        .research-link {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--primary);
+            gap: var(--space-sm);
+        }
+
+        .research-link:hover {
             background: var(--gray-50);
             border-color: var(--gray-300);
         }
@@ -969,18 +990,21 @@
                         title="View Live Prototype">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                d="M5 3l14 9-14 9V3z" />
                         </svg>
+                        <span>Live Prototype</span>
                     </a>
-                    <!-- <div class="profile-avatar">M</div> -->
+                    <a href="https://xmind.ai/share/obMd0ggc?xid=E2hOzOS7" target="_blank" class="research-link"
+                        title="View Usability Research Scheme">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <span>Usability Research Scheme</span>
+                    </a>
                     <a href="https://t.me/mbkot7" target="_blank" class="profile-avatar" title="Contact via Telegram">
                         M
                     </a>
-                    <!-- <a href="https://t.me/mbkot7" target="_blank" class="telegram-link" title="Contact via Telegram">
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </a> -->
                 </div>
             </div>
 
