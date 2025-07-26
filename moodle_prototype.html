@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodle Redesign - Interactive Prototype Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Minimalist Design System */
+        :root {
+            /* Neutral Scale */
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+            
+            /* Primary */
+            --primary: #1A1A1A;
+            --primary-light: #333333;
+            
+            /* Accent */
+            --accent: #0066FF;
+            --accent-light: #E6F2FF;
+            
+            /* Status */
+            --success: #00C851;
+            --warning: #FF8800;
+            --error: #FF4444;
+            
+            /* Typography */
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.5;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Main Layout */
+        .showcase-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .showcase-sidebar {
+            width: 300px;
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .prototype-nav {
+            padding: var(--space-lg) 0;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-xl);
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0 var(--space-xl);
+            margin-bottom: var(--space-md);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-md) var(--space-xl);
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: var(--gray-50);
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--accent-light);
+            color: var(--accent);
+            border-right: 2px solid var(--accent);
+        }
+
+        .nav-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: var(--space-md);
+            stroke-width: 1.5;
+        }
+
+        /* Main Content */
+        .showcase-main {
+            margin-left: 300px;
+            flex: 1;
+            padding: var(--space-2xl);
+            max-width: calc(100vw - 300px);
+        }
+
+        /* Header */
+        .showcase-header {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+            letter-spacing: -0.025em;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--gray-600);
+            font-weight: 400;
+        }
+
+        /* Prototype Viewer */
+        .prototype-viewer {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .viewer-header {
+            background: var(--gray-50);
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .viewer-title {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .viewer-controls {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        .control-btn {
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm) var(--space-md);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--gray-50);
+        }
+
+        .control-btn.active {
+            background: var(--accent);
+            color: var(--white);
+            border-color: var(--accent);
+        }
+
+        /* Device Frame */
+        .device-frame {
+            padding: var(--space-2xl);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 600px;
+            background: var(--gray-50);
+        }
+
+        .mobile-frame {
+            width: 375px;
+            height: 667px;
+            background: var(--primary);
+            border-radius: 25px;
+            padding: 8px;
+            position: relative;
+        }
+
+        .mobile-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            border-radius: 17px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .desktop-frame {
+            width: 100%;
+            max-width: 1200px;
+            height: 700px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Screen Content */
+        .screen-content {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Moodle UI Components */
+        .moodle-header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .moodle-logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+
+        .notification-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Navigation Drawer */
+        .nav-drawer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .nav-drawer.open {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .drawer-menu {
+            padding: var(--space-lg) 0;
+        }
+
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-md) var(--space-xl);
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .drawer-item:hover {
+            background: var(--gray-50);
+            color: var(--primary);
+        }
+
+        .drawer-item.active {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            padding: var(--space-xl);
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.with-drawer {
+            margin-left: 280px;
+        }
+
+        /* Dashboard Components */
+        .dashboard-section {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-lg);
+        }
+
+        .assignment-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            transition: all 0.2s ease;
+        }
+
+        .assignment-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .assignment-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .assignment-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .due-date {
+            color: var(--error);
+            font-weight: 500;
+        }
+
+        .course-name {
+            color: var(--gray-500);
+        }
+
+        /* Login Screen */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: var(--space-xl);
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            background: var(--white);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gray-200);
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: var(--space-sm);
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--space-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin: var(--space-lg) 0;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: var(--space-md);
+        }
+
+        .login-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .login-btn:disabled {
+            background: var(--gray-400);
+            cursor: not-allowed;
+        }
+
+        .sso-btn {
+            width: 100%;
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sso-btn:hover {
+            background: #0052CC;
+        }
+
+        /* Loading States */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--white);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-right: var(--space-sm);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Assignment Table */
+        .assignment-table {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .assignment-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .assignment-table th {
+            background: var(--gray-50);
+            padding: var(--space-lg);
+            text-align: left;
+            font-weight: 600;
+            color: var(--primary);
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.875rem;
+        }
+
+        .assignment-table td {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+
+        .assignment-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .assignment-table tr:hover {
+            background: var(--gray-50);
+        }
+
+        .grade-badge {
+            background: var(--success);
+            color: var(--white);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        .grade-badge.unavailable {
+            background: var(--gray-400);
+        }
+
+        /* Calendar */
+        .calendar-container {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            background: var(--gray-50);
+            padding: var(--space-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .calendar-nav-btn {
+            background: none;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            padding: var(--space-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-nav-btn:hover {
+            background: var(--gray-100);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: var(--gray-200);
+        }
+
+        .calendar-day {
+            background: var(--white);
+            padding: var(--space-md);
+            min-height: 60px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day:hover {
+            background: var(--gray-50);
+        }
+
+        .calendar-day.today {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .calendar-day.other-month {
+            color: var(--gray-400);
+        }
+
+        /* State Indicators */
+        .state-indicator {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            background: var(--accent);
+            color: var(--white);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .state-indicator.loading {
+            background: var(--warning);
+        }
+
+        .state-indicator.error {
+            background: var(--error);
+        }
+
+        /* Mobile Toggle Button */
+        .mobile-sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: var(--space-lg);
+            left: var(--space-lg);
+            z-index: 1002;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm);
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-sidebar-toggle:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .showcase-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .showcase-sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .showcase-main {
+                margin-left: 0;
+                max-width: 100vw;
+            }
+
+            .mobile-sidebar-toggle {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .showcase-header {
+                margin-left: 70px; /* Space for mobile toggle button */
+                padding-top: var(--space-sm);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .showcase-main {
+                padding: var(--space-lg);
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .device-frame {
+                padding: var(--space-lg);
+            }
+
+            .showcase-header {
+                margin-left: 70px;
+                margin-top: var(--space-md);
+            }
+
+            .page-title {
+                font-size: 1.25rem;
+                line-height: 1.3;
+            }
+
+            .page-subtitle {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <!-- Mobile Sidebar Toggle -->
+        <button class="mobile-sidebar-toggle" onclick="toggleSidebar()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="showcase-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Moodle Prototype
+                </div>
+            </div>
+            
+            <div class="prototype-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Authentication</div>
+                    <div class="nav-item active" data-screen="login-empty">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        Login - Empty State
+                    </div>
+                    <div class="nav-item" data-screen="login-filled">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Login - Filled State
+                    </div>
+                    <div class="nav-item" data-screen="login-loading">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Login - Loading State
+                    </div>
+                    <div class="nav-item" data-screen="login-error">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        Login - Error State
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Dashboard</div>
+                    <div class="nav-item" data-screen="dashboard-main">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                        </svg>
+                        Dashboard - Main View
+                    </div>
+                    <div class="nav-item" data-screen="dashboard-drawer">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                        Dashboard - Navigation Drawer
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Assignments</div>
+                    <div class="nav-item" data-screen="assignments-list">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Assignments - List View
+                    </div>
+                    <div class="nav-item" data-screen="assignments-download">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Assignments - Download State
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Schedule</div>
+                    <div class="nav-item" data-screen="schedule-calendar">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Schedule - Calendar View
+                    </div>
+                    <div class="nav-item" data-screen="schedule-events">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Schedule - Event Details
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="showcase-main">
+            <!-- Header -->
+            <div class="showcase-header">
+                <h1 class="page-title">Moodle Redesign - Interactive Prototype</h1>
+                <p class="page-subtitle">Explore the new Moodle interface with all states and interactions</p>
+            </div>
+
+            <!-- Prototype Viewer -->
+            <div class="prototype-viewer">
+                <div class="viewer-header">
+                    <div class="viewer-title" id="currentScreenTitle">Login - Empty State</div>
+                    <div class="viewer-controls">
+                        <button class="control-btn active" data-mode="mobile">Mobile</button>
+                        <button class="control-btn" data-mode="desktop">Desktop</button>
+                    </div>
+                </div>
+
+                <div class="device-frame" id="deviceFrame">
+                    <div class="mobile-frame" id="mobileFrame">
+                        <div class="mobile-screen">
+                            <div class="screen-content" id="screenContent">
+                                <!-- Content will be dynamically loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Screen definitions with all states
+        const screens = {
+            'login-empty': {
+                title: 'Login - Empty State',
+                content: `
+                    <div class="login-container">
+                        <div class="login-form fade-in">
+                            <div class="login-title">Moodle</div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" placeholder="student@innopolis.university">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-input" placeholder="••••••••">
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="remember1">
+                                <label for="remember1">Remember me</label>
+                            </div>
+                            <button class="login-btn" disabled>Login</button>
+                            <button class="sso-btn">Login with Innopolis account</button>
+                        </div>
+                    </div>
+                `
+            },
+            'login-filled': {
+                title: 'Login - Filled State',
+                content: `
+                    <div class="login-container">
+                        <div class="login-form fade-in">
+                            <div class="login-title">Moodle</div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" value="m.ivanov@innopolis.university" style="border-color: var(--success);">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-input" value="••••••••" style="border-color: var(--success);">
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="remember" checked>
+                                <label for="remember">Remember me</label>
+                            </div>
+                            <button class="login-btn">Login</button>
+                            <button class="sso-btn">Login with Innopolis account</button>
+                        </div>
+                    </div>
+                `
+            },
+            'login-loading': {
+                title: 'Login - Loading State',
+                content: `
+                    <div class="login-container">
+                        <div class="login-form fade-in">
+                            <div class="login-title">Moodle</div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" value="m.ivanov@innopolis.university" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-input" value="••••••••" disabled>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="remember" checked disabled>
+                                <label for="remember">Remember me</label>
+                            </div>
+                            <button class="login-btn" disabled>
+                                <span class="loading-spinner"></span>
+                                Checking Innopolis credentials...
+                            </button>
+                            <button class="sso-btn" disabled>Login with Innopolis account</button>
+                        </div>
+                    </div>
+                    <div class="state-indicator loading">Loading</div>
+                `
+            },
+            'login-error': {
+                title: 'Login - Error State',
+                content: `
+                    <div class="login-container">
+                        <div class="login-form fade-in">
+                            <div class="login-title">Moodle</div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" value="m.ivanov@innopolis.university" style="border-color: var(--error);">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-input" value="••••••••" style="border-color: var(--error);">
+                                <div style="color: var(--error); font-size: 0.75rem; margin-top: var(--space-xs);">Invalid email or password</div>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="remember" checked>
+                                <label for="remember">Remember me</label>
+                            </div>
+                            <button class="login-btn">Try Again</button>
+                            <button class="sso-btn">Login with Innopolis account</button>
+                            <div style="text-align: center; margin-top: var(--space-md);">
+                                <a href="#" style="color: var(--accent); font-size: 0.875rem;">Forgot password?</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="state-indicator error">Error</div>
+                `
+            },
+            'dashboard-main': {
+                title: 'Dashboard - Main View',
+                content: `
+                    <div class="moodle-header">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <button onclick="togglePrototypeDrawer()" style="background: none; border: none; cursor: pointer;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </button>
+                            <div class="moodle-logo">Dashboard</div>
+                        </div>
+                        <div class="header-actions">
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">09.07.25, Wed</div>
+                            <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                            </svg>
+                            <div class="user-avatar">M</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-drawer">
+                        <div class="drawer-header">
+                            <div class="moodle-logo">Moodle</div>
+                        </div>
+                        <div class="drawer-menu">
+                            <a href="#" class="drawer-item active">Dashboard</a>
+                            <a href="#" class="drawer-item">Assignments</a>
+                            <a href="#" class="drawer-item">Schedule</a>
+                            <div style="border-top: 1px solid var(--gray-200); margin: var(--space-md) 0;"></div>
+                            <a href="#" class="drawer-item" style="color: var(--error);">Logout</a>
+                        </div>
+                    </div>
+                    
+                    <div class="main-content">
+                        <div class="dashboard-section">
+                            <div class="section-title">Today</div>
+                            <div class="assignment-card slide-in">
+                                <div class="assignment-title">Hi-Fi design prototype</div>
+                                <div class="assignment-meta">
+                                    <span class="due-date">Due Today, 12:00</span>
+                                    <span class="course-name">UX/UI Course</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-section">
+                            <div class="section-title">Tomorrow</div>
+                            <div class="assignment-card slide-in">
+                                <div class="assignment-title">FCMG Retail Store Analysis</div>
+                                <div class="assignment-meta">
+                                    <span class="due-date">Due Tomorrow, 23:59</span>
+                                    <span class="course-name">Business Course</span>
+                                </div>
+                            </div>
+                            <div class="assignment-card slide-in">
+                                <div class="assignment-title">Value Stream Mapping</div>
+                                <div class="assignment-meta">
+                                    <span class="due-date">Due 01.07</span>
+                                    <span class="course-name">Process Course</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-section">
+                            <div class="section-title">Later</div>
+                            <div class="assignment-card slide-in">
+                                <div class="assignment-title">Final Exam Preparation</div>
+                                <div class="assignment-meta">
+                                    <span class="due-date">Due 15.07</span>
+                                    <span class="course-name">Multiple Courses</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'dashboard-drawer': {
+                title: 'Dashboard - Navigation Drawer Open',
+                content: `
+                    <div class="moodle-header">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <button onclick="togglePrototypeDrawer()" style="background: none; border: none; cursor: pointer;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                            <div class="moodle-logo">Dashboard</div>
+                        </div>
+                        <div class="header-actions">
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">09.07.25, Wed</div>
+                            <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                            </svg>
+                            <div class="user-avatar">M</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-drawer open">
+                        <div class="drawer-header">
+                            <div class="moodle-logo">Moodle</div>
+                        </div>
+                        <div class="drawer-menu">
+                            <a href="#" class="drawer-item active">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: var(--space-sm);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                                Dashboard
+                            </a>
+                            <a href="#" class="drawer-item">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: var(--space-sm);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Assignments
+                            </a>
+                            <a href="#" class="drawer-item">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: var(--space-sm);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                Schedule
+                            </a>
+                            <div style="border-top: 1px solid var(--gray-200); margin: var(--space-md) 0;"></div>
+                            <a href="#" class="drawer-item" style="color: var(--error);">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: var(--space-sm);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="main-content with-drawer">
+                        <div class="dashboard-section">
+                            <div class="section-title">Today</div>
+                            <div class="assignment-card">
+                                <div class="assignment-title">Hi-Fi design prototype</div>
+                                <div class="assignment-meta">
+                                    <span class="due-date">Due Today, 12:00</span>
+                                    <span class="course-name">UX/UI Course</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-section">
+                            <div class="section-title">Tomorrow</div>
+                            <div class="assignment-card">
+                                <div class="assignment-title">FCMG Retail Store Analysis</div>
+                                <div class="assignment-meta">
+                                    <span class="due-date">Due Tomorrow, 23:59</span>
+                                    <span class="course-name">Business Course</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'assignments-list': {
+                title: 'Assignments - List View',
+                content: `
+                    <div class="moodle-header">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <button onclick="toggleDrawer()" style="background: none; border: none; cursor: pointer;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </button>
+                            <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                                <button style="background: none; border: none; cursor: pointer;">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                    </svg>
+                                </button>
+                                <span style="font-size: 0.875rem; color: var(--gray-600);">Course name</span>
+                                <button style="background: none; border: none; cursor: pointer;">
+                                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="moodle-logo">Assignments</div>
+                        </div>
+                        <div class="header-actions">
+                            <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                            </svg>
+                            <div class="user-avatar">M</div>
+                        </div>
+                    </div>
+                    
+                    <div class="main-content">
+                        <div class="assignment-table fade-in">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Assignment</th>
+                                        <th>Grade</th>
+                                        <th>Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Hi-Fi design prototype</td>
+                                        <td><span class="grade-badge">A</span></td>
+                                        <td><a href="#" style="color: var(--accent); text-decoration: none;">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>FCMG Retail Store Analysis</td>
+                                        <td><span class="grade-badge">B</span></td>
+                                        <td><a href="#" style="color: var(--accent); text-decoration: none;">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Value Stream Mapping</td>
+                                        <td><span class="grade-badge unavailable">Unavailable</span></td>
+                                        <td><span style="color: var(--gray-500);">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final Exam Preparation</td>
+                                        <td><span class="grade-badge unavailable">Unavailable</span></td>
+                                        <td><a href="#" style="color: var(--accent); text-decoration: none;">Link</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `
+            },
+            'assignments-download': {
+                title: 'Assignments - Download State',
+                content: `
+                    <div class="moodle-header">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <button onclick="toggleDrawer()" style="background: none; border: none; cursor: pointer;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </button>
+                            <div class="moodle-logo">Assignments</div>
+                        </div>
+                        <div class="header-actions">
+                            <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                            </svg>
+                            <div class="user-avatar">M</div>
+                        </div>
+                    </div>
+                    
+                    <div class="main-content">
+                        <div class="assignment-table fade-in">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Assignment</th>
+                                        <th>Grade</th>
+                                        <th>Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background: var(--accent-light);">
+                                        <td>Hi-Fi design prototype</td>
+                                        <td><span class="grade-badge">A</span></td>
+                                        <td>
+                                            <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                                                <span class="loading-spinner" style="border-color: var(--accent); border-top-color: transparent;"></span>
+                                                <span style="color: var(--accent);">Preparing download...</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FCMG Retail Store Analysis</td>
+                                        <td><span class="grade-badge">B</span></td>
+                                        <td><a href="#" style="color: var(--accent); text-decoration: none;">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Value Stream Mapping</td>
+                                        <td><span class="grade-badge unavailable">Unavailable</span></td>
+                                        <td><span style="color: var(--gray-500);">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final Exam Preparation</td>
+                                        <td><span class="grade-badge unavailable">Unavailable</span></td>
+                                        <td><a href="#" style="color: var(--accent); text-decoration: none;">Link</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div style="position: fixed; bottom: var(--space-xl); right: var(--space-xl); background: var(--success); color: var(--white); padding: var(--space-md) var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); animation: slideIn 0.3s ease-out;">
+                            <div style="display: flex; align-items: center; gap: var(--space-sm);">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                File downloaded successfully
+                            </div>
+                        </div>
+                    </div>
+                    <div class="state-indicator">Download Complete</div>
+                `
+            },
+            'schedule-calendar': {
+                title: 'Schedule - Calendar View',
+                content: `
+                    <div class="moodle-header">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <button onclick="toggleDrawer()" style="background: none; border: none; cursor: pointer;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </button>
+                            <div class="moodle-logo">Schedule</div>
+                        </div>
+                        <div class="header-actions">
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">09.07.25, Wed</div>
+                            <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                            </svg>
+                            <div class="user-avatar">M</div>
+                        </div>
+                    </div>
+                    
+                    <div class="main-content">
+                        <div class="calendar-container fade-in">
+                            <div class="calendar-header">
+                                <div style="font-weight: 600; color: var(--primary);">July, 2025</div>
+                                <div class="calendar-nav">
+                                    <button class="calendar-nav-btn">
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                        </svg>
+                                    </button>
+                                    <button class="calendar-nav-btn">
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="calendar-grid">
+                                <div class="calendar-day" style="font-weight: 600; background: var(--gray-100);">Sun</div>
+                                <div class="calendar-day" style="font-weight: 600; background: var(--gray-100);">Mon</div>
+                                <div class="calendar-day" style="font-weight: 600; background: var(--gray-100);">Tue</div>
+                                <div class="calendar-day" style="font-weight: 600; background: var(--gray-100);">Wed</div>
+                                <div class="calendar-day" style="font-weight: 600; background: var(--gray-100);">Thu</div>
+                                <div class="calendar-day" style="font-weight: 600; background: var(--gray-100);">Fri</div>
+                                <div class="calendar-day" style="font-weight: 600; background: var(--gray-100);">Sat</div>
+                                
+                                <div class="calendar-day other-month">29</div>
+                                <div class="calendar-day other-month">30</div>
+                                <div class="calendar-day">1</div>
+                                <div class="calendar-day">2</div>
+                                <div class="calendar-day">3</div>
+                                <div class="calendar-day">4</div>
+                                <div class="calendar-day">5</div>
+                                
+                                <div class="calendar-day">6</div>
+                                <div class="calendar-day">7</div>
+                                <div class="calendar-day">8</div>
+                                <div class="calendar-day today">9</div>
+                                <div class="calendar-day">10</div>
+                                <div class="calendar-day">11</div>
+                                <div class="calendar-day">12</div>
+                                
+                                <div class="calendar-day">13</div>
+                                <div class="calendar-day">14</div>
+                                <div class="calendar-day">15</div>
+                                <div class="calendar-day">16</div>
+                                <div class="calendar-day">17</div>
+                                <div class="calendar-day">18</div>
+                                <div class="calendar-day">19</div>
+                                
+                                <div class="calendar-day">20</div>
+                                <div class="calendar-day">21</div>
+                                <div class="calendar-day">22</div>
+                                <div class="calendar-day">23</div>
+                                <div class="calendar-day">24</div>
+                                <div class="calendar-day">25</div>
+                                <div class="calendar-day">26</div>
+                                
+                                <div class="calendar-day">27</div>
+                                <div class="calendar-day">28</div>
+                                <div class="calendar-day">29</div>
+                                <div class="calendar-day">30</div>
+                                <div class="calendar-day">31</div>
+                                <div class="calendar-day other-month">1</div>
+                                <div class="calendar-day other-month">2</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: var(--space-xl);">
+                            <div style="font-weight: 600; color: var(--primary); margin-bottom: var(--space-lg);">09.month.YY</div>
+                            <div class="assignment-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div class="assignment-title">UX/UI Online</div>
+                                        <div class="course-name">UX/UI Course</div>
+                                    </div>
+                                    <div style="text-align: right; color: var(--gray-600);">
+                                        <div>12:00</div>
+                                        <div>13:30</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="assignment-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div class="assignment-title">UX/UI Online</div>
+                                        <div class="course-name">UX/UI Course</div>
+                                    </div>
+                                    <div style="text-align: right; color: var(--gray-600);">
+                                        <div>13:45</div>
+                                        <div>15:15</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'schedule-events': {
+                title: 'Schedule - Event Details',
+                content: `
+                    <div class="moodle-header">
+                        <div style="display: flex; align-items: center; gap: var(--space-md);">
+                            <button onclick="toggleDrawer()" style="background: none; border: none; cursor: pointer;">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </button>
+                            <div class="moodle-logo">Schedule</div>
+                        </div>
+                        <div class="header-actions">
+                            <div style="font-size: 0.875rem; color: var(--gray-600);">09.07.25, Wed</div>
+                            <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5z"/>
+                            </svg>
+                            <div class="user-avatar">M</div>
+                        </div>
+                    </div>
+                    
+                    <div class="main-content">
+                        <div style="margin-bottom: var(--space-xl);">
+                            <div style="font-weight: 600; color: var(--primary); margin-bottom: var(--space-lg); font-size: 1.25rem;">Today's Schedule</div>
+                            
+                            <div class="assignment-card" style="border-left: 4px solid var(--accent);">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-md);">
+                                    <div>
+                                        <div class="assignment-title" style="font-size: 1.125rem;">UX/UI Online Lecture</div>
+                                        <div class="course-name">User Experience Design Course</div>
+                                    </div>
+                                    <div style="text-align: right; color: var(--accent); font-weight: 600;">
+                                        <div>12:00 - 13:30</div>
+                                        <div style="font-size: 0.75rem; color: var(--gray-500);">90 minutes</div>
+                                    </div>
+                                </div>
+                                <div style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: var(--space-sm);">
+                                    <strong>Topic:</strong> Hi-Fi Prototyping and User Testing
+                                </div>
+                                <div style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: var(--space-sm);">
+                                    <strong>Location:</strong> Online (Zoom)
+                                </div>
+                                <div style="color: var(--gray-600); font-size: 0.875rem;">
+                                    <strong>Instructor:</strong> Dr. Marina Kotelevskaya
+                                </div>
+                            </div>
+                            
+                            <div class="assignment-card" style="border-left: 4px solid var(--success);">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-md);">
+                                    <div>
+                                        <div class="assignment-title" style="font-size: 1.125rem;">UX/UI Workshop</div>
+                                        <div class="course-name">Practical Design Session</div>
+                                    </div>
+                                    <div style="text-align: right; color: var(--success); font-weight: 600;">
+                                        <div>13:45 - 15:15</div>
+                                        <div style="font-size: 0.75rem; color: var(--gray-500);">90 minutes</div>
+                                    </div>
+                                </div>
+                                <div style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: var(--space-sm);">
+                                    <strong>Topic:</strong> Interactive Prototype Development
+                                </div>
+                                <div style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: var(--space-sm);">
+                                    <strong>Location:</strong> Design Lab 301
+                                </div>
+                                <div style="color: var(--gray-600); font-size: 0.875rem;">
+                                    <strong>Materials:</strong> Laptop, Figma account
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div style="font-weight: 600; color: var(--primary); margin-bottom: var(--space-lg); font-size: 1.125rem;">Upcoming This Week</div>
+                            
+                            <div class="assignment-card" style="opacity: 0.7;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div class="assignment-title">Business Analysis Seminar</div>
+                                        <div class="course-name">Tomorrow, 10:00 - 11:30</div>
+                                    </div>
+                                    <div style="color: var(--gray-500);">
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="assignment-card" style="opacity: 0.7;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div class="assignment-title">Final Project Presentation</div>
+                                        <div class="course-name">Friday, 14:00 - 16:00</div>
+                                    </div>
+                                    <div style="color: var(--gray-500);">
+                                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // Current state
+        let currentScreen = 'login-empty';
+        let currentViewMode = 'mobile';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeNavigation();
+            initializeViewControls();
+            showScreen('login-empty');
+        });
+
+        // Initialize navigation clicks
+        function initializeNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const screenId = this.getAttribute('data-screen');
+                    if (screenId) {
+                        showScreen(screenId);
+                        
+                        // Update active state
+                        document.querySelectorAll('.nav-item').forEach(navItem => {
+                            navItem.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // Initialize view mode controls
+        function initializeViewControls() {
+            document.querySelectorAll('.control-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const mode = this.getAttribute('data-mode');
+                    if (mode) {
+                        setViewMode(mode);
+                        
+                        // Update active state
+                        document.querySelectorAll('.control-btn').forEach(controlBtn => {
+                            controlBtn.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // Show screen function
+        function showScreen(screenId) {
+            const screen = screens[screenId];
+            if (!screen) return;
+
+            currentScreen = screenId;
+
+            // Update content
+            document.getElementById('currentScreenTitle').textContent = screen.title;
+            
+            // Update frame based on current view mode
+            updateFrame();
+        }
+
+        // Set view mode function
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            updateFrame();
+        }
+
+        // Update frame content
+        function updateFrame() {
+            const screen = screens[currentScreen];
+            if (!screen) return;
+
+            const deviceFrame = document.getElementById('deviceFrame');
+            
+            if (currentViewMode === 'desktop') {
+                deviceFrame.innerHTML = `
+                    <div class="desktop-frame">
+                        <div class="screen-content">
+                            ${screen.content}
+                        </div>
+                    </div>
+                `;
+            } else {
+                deviceFrame.innerHTML = `
+                    <div class="mobile-frame">
+                        <div class="mobile-screen">
+                            <div class="screen-content">
+                                ${screen.content}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Add fade-in animation
+            const content = deviceFrame.querySelector('.screen-content');
+            if (content) {
+                content.style.opacity = '0';
+                setTimeout(() => {
+                    content.style.opacity = '1';
+                    content.style.transition = 'opacity 0.3s ease-in-out';
+                }, 50);
+            }
+        }
+
+        // Toggle drawer function (for prototype interaction) - disabled for demo
+        function togglePrototypeDrawer() {
+            // Disabled for static demo
+            console.log('Drawer toggle - demo only');
+        }
+
+        // Auto-advance demo (optional)
+        function startAutoDemo() {
+            const screenOrder = [
+                'login-empty', 'login-filled', 'login-loading', 'dashboard-main',
+                'dashboard-drawer', 'assignments-list', 'assignments-download',
+                'schedule-calendar', 'schedule-events'
+            ];
+            
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % screenOrder.length;
+                showScreen(screenOrder[currentIndex]);
+            }, 5000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const screenKeys = Object.keys(screens);
+            const currentIndex = screenKeys.indexOf(currentScreen);
+            
+            if (e.key === 'ArrowRight' && currentIndex < screenKeys.length - 1) {
+                const nextScreen = screenKeys[currentIndex + 1];
+                showScreen(nextScreen);
+                updateActiveNavItem(nextScreen);
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                const prevScreen = screenKeys[currentIndex - 1];
+                showScreen(prevScreen);
+                updateActiveNavItem(prevScreen);
+            }
+        });
+
+        // Update active navigation item
+        function updateActiveNavItem(screenId) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-screen') === screenId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Toggle sidebar for mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.querySelector('.mobile-sidebar-toggle');
+            
+            if (window.innerWidth <= 1200 && 
+                !sidebar.contains(e.target) && 
+                !toggleBtn.contains(e.target) && 
+                sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Close sidebar when nav item is clicked on mobile
+        function setupMobileNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    if (window.innerWidth <= 1200) {
+                        const sidebar = document.getElementById('sidebar');
+                        sidebar.classList.remove('open');
+                    }
+                });
+            });
+        }
+        
+        // Call setup after DOM is loaded
+        document.addEventListener('DOMContentLoaded', setupMobileNavigation);
+    </script>
+</body>
+</html>
