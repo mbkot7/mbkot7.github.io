@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodle User Flow Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js" rel="stylesheet">
+    <style>
+        /* Horizon Color System */
+        :root {
+            /* White Scale */
+            --white-100: #FFFFFF;
+            --white-200: #FAFCFE;
+            --white-300: #F4F7FE;
+            --white-400: #EFF4FB;
+            --white-500: #E9EDF7;
+            
+            /* Gray Scale */
+            --gray-100: #E0E5F2;
+            --gray-500: #A3AED0;
+            --gray-900: #707EAE;
+            
+            /* Blue Scale */
+            --blue-500: #4481EB;
+            --skyblue-300: #6AD2FF;
+            --skyblue-500: #04BEFE;
+            
+            /* Purple Scale */
+            --purple-300: #6946ff;
+            --purple-500: #4318FF;
+            
+            /* Indigo Scale */
+            --indigo-300: #868CFF;
+            --indigo-500: #2B3674;
+            
+            /* Red Scale */
+            --red-100: #FEEFEE;
+            --red-500: #EE5D50;
+            --red-900: #E31A1A;
+            
+            /* Green Scale */
+            --green-500: #05CD99;
+            --green-900: #01B574;
+            
+            /* Yellow Scale */
+            --yellow-300: #FFB547;
+            --yellow-500: #FFCE20;
+            
+            /* Typography */
+            --font-dm-sans: 'DM Sans', sans-serif;
+            --font-poppins: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-dm-sans);
+            background: linear-gradient(135deg, var(--white-300) 0%, var(--white-400) 100%);
+            min-height: 100vh;
+            color: var(--indigo-500);
+            line-height: 1.6;
+        }
+
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 290px;
+            background: var(--white-100);
+            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .logo {
+            font-family: var(--font-poppins);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--indigo-500);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 2rem;
+            color: var(--gray-900);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--white-300);
+            color: var(--indigo-500);
+            border-left-color: var(--blue-500);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 290px;
+            flex: 1;
+            padding: 2rem 3.5rem;
+        }
+
+        /* Topbar */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 90px;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--white-300);
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-dm-sans);
+            font-size: 1rem;
+            color: var(--indigo-500);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            background: var(--white-100);
+            box-shadow: 0 0 0 2px var(--blue-500);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: var(--white-300);
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notification-btn:hover {
+            background: var(--white-100);
+            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 8px;
+            height: 8px;
+            background: var(--red-500);
+            border-radius: 50%;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-family: var(--font-poppins);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--indigo-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-900);
+            font-weight: 400;
+        }
+
+        /* Cards */
+        .flow-card {
+            background: var(--white-100);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-100);
+        }
+
+        .flow-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(112, 126, 174, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-number {
+            background: linear-gradient(135deg, var(--blue-500), var(--purple-500));
+            color: var(--white-100);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+        }
+
+        .card-title {
+            font-family: var(--font-poppins);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--indigo-500);
+        }
+
+        .card-score {
+            margin-left: auto;
+            background: var(--green-500);
+            color: var(--white-100);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Flow Diagram */
+        .flow-diagram {
+            background: var(--white-300);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--blue-500);
+            overflow-x: auto;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--blue-500), var(--skyblue-500));
+            color: var(--white-100);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(68, 129, 235, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(68, 129, 235, 0.4);
+        }
+
+        .flow-arrow {
+            color: var(--blue-500);
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Grid Layouts */
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .state-card {
+            background: linear-gradient(135deg, var(--purple-300), var(--purple-500));
+            color: var(--white-100);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(105, 70, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .state-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(105, 70, 255, 0.4);
+        }
+
+        .state-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .goal-item {
+            background: var(--white-200);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--green-500);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(112, 126, 174, 0.1);
+        }
+
+        .goal-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 20px rgba(112, 126, 174, 0.15);
+        }
+
+        .goal-item strong {
+            color: var(--indigo-500);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .goal-item p {
+            color: var(--gray-900);
+            font-size: 0.875rem;
+        }
+
+        /* Pattern Cards */
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .pattern-card {
+            background: linear-gradient(135deg, var(--yellow-300), var(--yellow-500));
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(255, 181, 71, 0.3);
+            color: var(--indigo-500);
+        }
+
+        .pattern-card h4 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .pattern-card ul {
+            list-style: none;
+        }
+
+        .pattern-card li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.875rem;
+        }
+
+        .pattern-card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--blue-500);
+            font-weight: bold;
+        }
+
+        /* Navigation Demo */
+        .navigation-demo {
+            background: var(--indigo-500);
+            color: var(--white-100);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .nav-header-demo {
+            background: var(--gray-900);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-menu-demo {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--blue-500);
+        }
+
+        .nav-menu-demo ul {
+            list-style: none;
+        }
+
+        .nav-menu-demo li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu-demo li:last-child {
+            border-bottom: none;
+            color: var(--red-500);
+        }
+
+        /* Strengths/Weaknesses */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .strengths-card {
+            background: linear-gradient(135deg, var(--green-500), var(--green-900));
+            color: var(--white-100);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(5, 205, 153, 0.3);
+        }
+
+        .weaknesses-card {
+            background: linear-gradient(135deg, var(--yellow-300), var(--red-500));
+            color: var(--white-100);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(255, 181, 71, 0.3);
+        }
+
+        .comparison-grid h3 {
+            margin-bottom: 1rem;
+            font-family: var(--font-poppins);
+            font-weight: 700;
+        }
+
+        .comparison-grid ul {
+            list-style: none;
+        }
+
+        .comparison-grid li {
+            margin-bottom: 0.75rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .strengths-card li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        .weaknesses-card li::before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Mobile Features */
+        .mobile-features {
+            background: linear-gradient(135deg, var(--indigo-300), var(--indigo-500));
+            color: var(--white-100);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+        }
+
+        .mobile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .mobile-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-item h4 {
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        /* Progress Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 290px;
+            width: calc(100% - 290px);
+            height: 4px;
+            background: rgba(163, 174, 208, 0.3);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blue-500), var(--purple-500));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .scroll-indicator {
+                left: 0;
+                width: 100%;
+            }
+            
+            .mobile-toggle {
+                display: block !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-container {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: var(--white-300);
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        /* Table Styles */
+        .data-table {
+            background: var(--white-100);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(112, 126, 174, 0.1);
+            margin: 1.5rem 0;
+        }
+
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: var(--white-300);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            color: var(--indigo-500);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .data-table tr:hover {
+            background: var(--white-200);
+        }
+
+        .grade-badge {
+            background: var(--green-500);
+            color: var(--white-100);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .grade-badge.unavailable {
+            background: var(--gray-500);
+        }
+
+        .download-link {
+            color: var(--blue-500);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .download-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    📚 Moodle Analysis
+                </div>
+            </div>
+            <div class="nav-menu">
+                <a href="#auth-flow" class="nav-item active">
+                    <span class="nav-icon">🔐</span>
+                    Authentication
+                </a>
+                <a href="#dashboard-flow" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="#assignment-flow" class="nav-item">
+                    <span class="nav-icon">📝</span>
+                    Assignments
+                </a>
+                <a href="#schedule-flow" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    Schedule
+                </a>
+                <a href="#navigation-patterns" class="nav-item">
+                    <span class="nav-icon">🧭</span>
+                    Navigation
+                </a>
+                <a href="#mobile-design" class="nav-item">
+                    <span class="nav-icon">📱</span>
+                    Mobile Design
+                </a>
+                <a href="#error-handling" class="nav-item">
+                    <span class="nav-icon">⚠️</span>
+                    Error Handling
+                </a>
+                <a href="#optimization" class="nav-item">
+                    <span class="nav-icon">🚀</span>
+                    Optimization
+                </a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <div class="topbar">
+                <div style="display: flex; align-items: center;">
+                    <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search flows and patterns...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                </div>
+                <div class="topbar-actions">
+                    <button class="notification-btn">
+                        🔔
+                        <span class="notification-badge"></span>
+                    </button>
+                    <div style="width: 40px; height: 40px; background: var(--blue-500); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">M</div>
+                </div>
+            </div>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Moodle User Flow Analysis</h1>
+                <p class="page-subtitle">Student Journey Through Educational Platform - Horizon Design Integration</p>
+            </div>   
+         <!-- Authentication Flow -->
+            <div class="flow-card" id="auth-flow">
+                <div class="card-header">
+                    <div class="card-number">1</div>
+                    <h2 class="card-title">Authentication Flow</h2>
+                    <div class="card-score">Score: 9/10</div>
+                </div>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">Entry Point</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Form Validation</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Processing</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Success</div>
+                    <br><br>
+                    <div class="flow-step">Empty Form</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Filled Form</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Loading</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Dashboard</div>
+                </div>
+
+                <div class="states-grid">
+                    <div class="state-card">
+                        <h4>Empty State</h4>
+                        <p>Clean form with placeholders and initial focus</p>
+                    </div>
+                    <div class="state-card">
+                        <h4>Filled State</h4>
+                        <p>User input with real-time validation feedback</p>
+                    </div>
+                    <div class="state-card">
+                        <h4>Loading State</h4>
+                        <p>Authentication processing with spinner</p>
+                    </div>
+                    <div class="state-card">
+                        <h4>Error State</h4>
+                        <p>Failed login with visual feedback</p>
+                    </div>
+                    <div class="state-card">
+                        <h4>Success State</h4>
+                        <p>Redirect to dashboard with session</p>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Hi-Fi Implementation Highlights</h3>
+                <div class="goals-grid">
+                    <div class="goal-item">
+                        <strong>Clean Branded Interface</strong>
+                        <p>Professional Moodle branding with Innopolis integration</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Multiple Login Options</strong>
+                        <p>Standard login plus institutional authentication</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Comprehensive States</strong>
+                        <p>Loading, error, and success states with visual feedback</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Password Security</strong>
+                        <p>Visibility toggle and remember me functionality</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation Flow -->
+            <div class="flow-card" id="dashboard-flow">
+                <div class="card-header">
+                    <div class="card-number">2</div>
+                    <h2 class="card-title">Dashboard Navigation Flow</h2>
+                    <div class="card-score">Score: 8/10</div>
+                </div>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">Landing</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Content Organization</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Navigation Options</div>
+                    <br><br>
+                    <div class="flow-step">Today View</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Time Grouping</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Menu Access</div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">User Goals Supported</h3>
+                <div class="goals-grid">
+                    <div class="goal-item">
+                        <strong>Quick Overview</strong>
+                        <p>Today's urgent items displayed first for immediate attention</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Time Management</strong>
+                        <p>Chronological organization (Today/Tomorrow/Later)</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Context Awareness</strong>
+                        <p>Course names provided with each assignment</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Easy Navigation</strong>
+                        <p>Consistent drawer pattern across all screens</p>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Smart Design Decisions</h3>
+                <div class="patterns-grid">
+                    <div class="pattern-card">
+                        <h4>Cognitive Load Reduction</h4>
+                        <ul>
+                            <li>Chronological grouping simplifies scanning</li>
+                            <li>Red due dates create urgency awareness</li>
+                            <li>Course context without clutter</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Navigation Excellence</h4>
+                        <ul>
+                            <li>Drawer keeps main content focused</li>
+                            <li>Consistent interaction patterns</li>
+                            <li>Date navigation with arrows</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignment Management Flow -->
+            <div class="flow-card" id="assignment-flow">
+                <div class="card-header">
+                    <div class="card-number">3</div>
+                    <h2 class="card-title">Assignment Management Flow</h2>
+                    <div class="card-score">Score: 8.5/10</div>
+                </div>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">Access</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Browse</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Action</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Feedback</div>
+                    <br><br>
+                    <div class="flow-step">Entry</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Table</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Download</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Confirmation</div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Assignment Table Example</h3>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Assignment</th>
+                                <th>Grade</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hi-Fi Design Prototype</td>
+                                <td><span class="grade-badge">A</span></td>
+                                <td><a href="#" class="download-link">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td>FCMG Retail Store Analysis</td>
+                                <td><span class="grade-badge">B</span></td>
+                                <td><a href="#" class="download-link">Download</a></td>
+                            </tr>
+                            <tr>
+                                <td>Value Stream Mapping</td>
+                                <td><span class="grade-badge unavailable">Unavailable</span></td>
+                                <td>Pending</td>
+                            </tr>
+                            <tr>
+                                <td>Final Exam Preparation</td>
+                                <td><span class="grade-badge unavailable">Unavailable</span></td>
+                                <td><a href="#" class="download-link">Download</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="patterns-grid">
+                    <div class="pattern-card">
+                        <h4>Multiple Entry Points</h4>
+                        <ul>
+                            <li>Dashboard assignment cards</li>
+                            <li>Navigation menu access</li>
+                            <li>Course-specific navigation</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Scannable Format</h4>
+                        <ul>
+                            <li>Table with Assignment/Grade/Download</li>
+                            <li>Clear column headers</li>
+                            <li>Consistent row formatting</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Status Clarity</h4>
+                        <ul>
+                            <li>Grade indicators (A, B, Unavailable)</li>
+                            <li>Download availability status</li>
+                            <li>Course context maintenance</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Process Feedback</h4>
+                        <ul>
+                            <li>Loading states during downloads</li>
+                            <li>Success confirmations</li>
+                            <li>Error handling with recovery</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Interaction Flow -->
+            <div class="flow-card" id="schedule-flow">
+                <div class="card-header">
+                    <div class="card-number">4</div>
+                    <h2 class="card-title">Schedule Interaction Flow</h2>
+                    <div class="card-score">Score: 7.5/10</div>
+                </div>
+                
+                <div class="flow-diagram">
+                    <div class="flow-step">Calendar View</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Date Selection</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Event Details</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Navigation</div>
+                    <br><br>
+                    <div class="flow-step">Monthly Grid</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Highlight Day</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Show Events</div>
+                    <span class="flow-arrow">→</span>
+                    <div class="flow-step">Change Period</div>
+                </div>
+
+                <div class="goals-grid">
+                    <div class="goal-item">
+                        <strong>Visual Orientation</strong>
+                        <p>Current date highlighting with blue background for easy identification</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Clear Information</strong>
+                        <p>Separated calendar view and event details to reduce clutter</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Easy Navigation</strong>
+                        <p>Intuitive arrow controls for month/year navigation</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Time Clarity</strong>
+                        <p>Formatted time ranges (12:00-13:30) for quick scanning</p>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Enhancement Opportunities</h3>
+                <div class="patterns-grid">
+                    <div class="pattern-card">
+                        <h4>Current Strengths</h4>
+                        <ul>
+                            <li>Clean calendar grid layout</li>
+                            <li>Separated event details view</li>
+                            <li>Current date highlighting</li>
+                            <li>Consistent navigation patterns</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Future Enhancements</h4>
+                        <ul>
+                            <li>Color coding for event types</li>
+                            <li>Quick event creation</li>
+                            <li>Week view option</li>
+                            <li>Event descriptions/locations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cross-System Navigation -->
+            <div class="flow-card" id="navigation-patterns">
+                <div class="card-header">
+                    <div class="card-number">5</div>
+                    <h2 class="card-title">Cross-System Navigation Patterns</h2>
+                    <div class="card-score">Score: 9/10</div>
+                </div>
+                
+                <div class="navigation-demo">
+                    <div class="nav-header-demo">
+                        <span>[☰] Screen Title</span>
+                        <span>[Date/Context]</span>
+                    </div>
+                    
+                    <div class="nav-menu-demo">
+                        <h4>Overlay Menu:</h4>
+                        <ul>
+                            <li>Dashboard</li>
+                            <li>Assignments</li>
+                            <li>Schedule</li>
+                            <li>────────────</li>
+                            <li>Logout 🚪</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flow-diagram">
+                    <strong>Loading Pattern:</strong><br>
+                    <div class="flow-step">[Spinner] + "Action message..."</div>
+                    <span class="flow-arrow">↓</span>
+                    <div class="flow-step">Success/Error Feedback</div>
+                </div>
+
+                <div class="goals-grid">
+                    <div class="goal-item">
+                        <strong>Consistent Elements</strong>
+                        <p>Same header structure across all screens</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Unified Drawer</strong>
+                        <p>Overlay menu with main sections and logout</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>State Management</strong>
+                        <p>Loading patterns with clear feedback</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Context Awareness</strong>
+                        <p>Date and contextual information in headers</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile-First Design -->
+            <div class="flow-card" id="mobile-design">
+                <div class="card-header">
+                    <div class="card-number">6</div>
+                    <h2 class="card-title">Mobile-First Interaction Design</h2>
+                    <div class="card-score">Score: 9/10</div>
+                </div>
+                
+                <div class="mobile-features">
+                    <h3>Touch & Performance Optimization</h3>
+                    <div class="mobile-grid">
+                        <div class="mobile-item">
+                            <h4>Touch Targets</h4>
+                            <p>Minimum 44px touch areas for thumb-friendly navigation</p>
+                        </div>
+                        <div class="mobile-item">
+                            <h4>Screen Utilization</h4>
+                            <p>Single column layouts with stacked information hierarchy</p>
+                        </div>
+                        <div class="mobile-item">
+                            <h4>Performance</h4>
+                            <p>Loading states for network operations and efficient data display</p>
+                        </div>
+                        <div class="mobile-item">
+                            <h4>Gestures</h4>
+                            <p>Swipe gestures for drawer navigation and smooth interactions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="patterns-grid">
+                    <div class="pattern-card">
+                        <h4>Responsive Behavior</h4>
+                        <ul>
+                            <li>Single column layouts</li>
+                            <li>Stacked navigation elements</li>
+                            <li>Touch-optimized controls</li>
+                            <li>Thumb-friendly zones</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Performance Considerations</h4>
+                        <ul>
+                            <li>Loading states for network ops</li>
+                            <li>Progressive disclosure</li>
+                            <li>Efficient data display</li>
+                            <li>Network-aware interactions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Handling -->
+            <div class="flow-card" id="error-handling">
+                <div class="card-header">
+                    <div class="card-number">7</div>
+                    <h2 class="card-title">Error Handling & Edge Cases</h2>
+                </div>
+                
+                <div class="patterns-grid">
+                    <div class="pattern-card">
+                        <h4>Authentication Errors</h4>
+                        <ul>
+                            <li>Visual feedback with red field borders</li>
+                            <li>Clear error messaging</li>
+                            <li>Retry functionality</li>
+                            <li>Recovery options</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Network Issues</h4>
+                        <ul>
+                            <li>Loading indicators with spinners</li>
+                            <li>Timeout handling</li>
+                            <li>Graceful degradation</li>
+                            <li>Offline states (future)</li>
+                        </ul>
+                    </div>
+                    <div class="pattern-card">
+                        <h4>Data States</h4>
+                        <ul>
+                            <li>Empty states with helpful messages</li>
+                            <li>Loading states during preparation</li>
+                            <li>Error states with clear feedback</li>
+                            <li>Success confirmations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flow Optimization -->
+            <div class="flow-card" id="optimization">
+                <div class="card-header">
+                    <div class="card-number">8</div>
+                    <h2 class="card-title">Flow Optimization Analysis</h2>
+                </div>
+                
+                <div class="comparison-grid">
+                    <div class="strengths-card">
+                        <h3>Current Strengths</h3>
+                        <ul>
+                            <li>Clear linear progression</li>
+                            <li>Consistent interaction patterns</li>
+                            <li>Proper state management</li>
+                            <li>Mobile-optimized flows</li>
+                            <li>Comprehensive loading states</li>
+                            <li>Touch-friendly interface</li>
+                            <li>Excellent navigation system</li>
+                            <li>Professional visual design</li>
+                        </ul>
+                    </div>
+                    <div class="weaknesses-card">
+                        <h3>Future Enhancements</h3>
+                        <ul>
+                            <li>Quick actions from dashboard</li>
+                            <li>Bulk operations in assignments</li>
+                            <li>Calendar event creation</li>
+                            <li>Search functionality integration</li>
+                            <li>Offline functionality</li>
+                            <li>Push notifications</li>
+                            <li>Advanced filtering options</li>
+                            <li>Analytics dashboard</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0; color: var(--indigo-500); font-family: var(--font-poppins);">Implementation Roadmap</h3>
+                <div class="goals-grid">
+                    <div class="goal-item">
+                        <strong>Phase 1: Core Features</strong>
+                        <p>Current hi-fi designs ready for development with established patterns</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Phase 2: Enhancements</strong>
+                        <p>Assignment status system, schedule color coding, quick actions</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Phase 3: Advanced</strong>
+                        <p>Search functionality, notifications, bulk operations</p>
+                    </div>
+                    <div class="goal-item">
+                        <strong>Phase 4: Innovation</strong>
+                        <p>Offline support, analytics, social features</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="margin-top: 4rem; padding: 2rem; text-align: center; color: var(--gray-500); border-top: 1px solid var(--gray-100);">
+                <p>Moodle User Flow Analysis - Integrated with Horizon Design System</p>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem;">Overall Usability Score: <strong style="color: var(--green-500);">8.4/10</strong></p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+        });
+
+        // Sidebar toggle for mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Navigation highlighting
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.flow-card');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for navigation
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = item.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all flow cards
+        document.querySelectorAll('.flow-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add click effects to flow steps
+        document.querySelectorAll('.flow-step').forEach(step => {
+            step.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95) translateY(-2px)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.05) translateY(-2px)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1) translateY(-2px)';
+                    }, 150);
+                }, 100);
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.flow-card');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            
+            if (window.innerWidth <= 1200 && 
+                !sidebar.contains(e.target) && 
+                !mobileToggle.contains(e.target) && 
+                sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
