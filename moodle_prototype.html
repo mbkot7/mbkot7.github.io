@@ -64,7 +64,7 @@
         }
 
         body {
-            font-family: var(--font-primary);
+            font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--gray-50);
             color: var(--gray-900);
             line-height: 1.5;
@@ -542,11 +542,33 @@
             background: var(--white);
             border: 1px solid var(--gray-200);
             border-radius: var(--radius-lg);
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+
+        /* Scroll indicator shadow */
+        .assignment-table::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .assignment-table:hover::after {
+            opacity: 1;
         }
 
         .assignment-table table {
             width: 100%;
+            min-width: 500px; /* Minimum width to prevent cramping */
             border-collapse: collapse;
         }
 
@@ -558,6 +580,8 @@
             color: var(--primary);
             border-bottom: 1px solid var(--gray-200);
             font-size: 0.875rem;
+            white-space: nowrap;
+            min-width: 120px;
         }
 
         .assignment-table td {
@@ -565,6 +589,13 @@
             border-bottom: 1px solid var(--gray-100);
             color: var(--gray-700);
             font-size: 0.875rem;
+            white-space: nowrap;
+            min-width: 120px;
+        }
+
+        .assignment-table td:first-child {
+            min-width: 200px; /* Assignment name column wider */
+            white-space: normal; /* Allow wrapping for assignment names */
         }
 
         .assignment-table tr:last-child td {
@@ -757,6 +788,25 @@
             .page-subtitle {
                 font-size: 0.875rem;
             }
+
+            /* Mobile table improvements */
+            .assignment-table {
+                margin: 0 -var(--space-lg); /* Extend to screen edges */
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+
+            .assignment-table th,
+            .assignment-table td {
+                padding: var(--space-md);
+                font-size: 0.8125rem;
+            }
+
+            .assignment-table th:first-child,
+            .assignment-table td:first-child {
+                min-width: 160px; /* Smaller on mobile */
+            }
         }
 
         /* Animation Classes */
@@ -776,6 +826,144 @@
         @keyframes slideIn {
             from { transform: translateX(-20px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse-annotation {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: var(--shadow-md);
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.3);
+            }
+        }
+
+        @keyframes fadeInTooltip {
+            from { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(-90%) scale(0.9);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(-50%) translateY(-100%) scale(1);
+            }
+        }
+
+        @keyframes fadeOutTooltip {
+            from { 
+                opacity: 1; 
+                transform: translateX(-50%) translateY(-100%) scale(1);
+            }
+            to { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(-90%) scale(0.9);
+            }
+        }
+
+        /* UX Annotation System */
+        .annotation-point {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border: 3px solid var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .annotation-point:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+            animation: none;
+        }
+
+        .annotation-tooltip {
+            position: fixed;
+            background: var(--primary);
+            color: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            max-width: 320px;
+            z-index: 2000;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .annotation-tooltip.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .annotation-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid var(--primary);
+        }
+
+        .tooltip-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            font-weight: 600;
+            color: var(--warning);
+        }
+
+        .tooltip-close {
+            position: absolute;
+            top: var(--space-sm);
+            right: var(--space-sm);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .tooltip-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 0 4px 12px rgba(0, 102, 255, 0.6), 0 0 0 8px rgba(0, 102, 255, 0.1);
+            }
         }
     </style>
 </head>
@@ -884,15 +1072,78 @@
             <div class="showcase-header">
                 <h1 class="page-title">Moodle Redesign - Interactive Prototype</h1>
                 <p class="page-subtitle">Explore the new Moodle interface with all states and interactions</p>
+                
+                <!-- UX/UI Design Highlights -->
+                <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-lg); margin-top: var(--space-xl);">
+                    <h3 style="color: var(--primary); font-weight: 600; margin-bottom: var(--space-md); font-size: 1rem; display: flex; align-items: center; gap: var(--space-sm);">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4 4 4 0 004-4V5z"/>
+                        </svg>
+                        Key UX/UI Improvements
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); font-size: 0.875rem;">
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="var(--success)" viewBox="0 0 24 24" style="margin-top: 2px; flex-shrink: 0;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span><strong>Mobile-First:</strong> Optimized for touch interactions</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="var(--success)" viewBox="0 0 24 24" style="margin-top: 2px; flex-shrink: 0;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span><strong>Time-Based:</strong> Today/Tomorrow/Later organization</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="var(--success)" viewBox="0 0 24 24" style="margin-top: 2px; flex-shrink: 0;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span><strong>Clear States:</strong> Loading, error, success feedback</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="var(--success)" viewBox="0 0 24 24" style="margin-top: 2px; flex-shrink: 0;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            <span><strong>Consistent:</strong> Unified navigation patterns</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Prototype Viewer -->
             <div class="prototype-viewer">
                 <div class="viewer-header">
-                    <div class="viewer-title" id="currentScreenTitle">Login - Empty State</div>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+                        <div class="viewer-title" id="currentScreenTitle">Login - Empty State</div>
+                        <div id="screenDescription" style="font-size: 0.875rem; color: var(--gray-600); font-weight: 400;">
+                            Clean, minimal login form with focus on usability and accessibility
+                        </div>
+                    </div>
                     <div class="viewer-controls">
-                        <button class="control-btn active" data-mode="mobile">Mobile</button>
-                        <button class="control-btn" data-mode="desktop">Desktop</button>
+                        <button class="control-btn active" data-mode="mobile" title="View mobile version (375x667px)">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 4px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a1 1 0 001-1V4a1 1 0 00-1-1H8a1 1 0 00-1 1v16a1 1 0 001 1z"/>
+                            </svg>
+                            Mobile
+                        </button>
+                        <button class="control-btn" data-mode="desktop" title="View desktop version (1200x700px)">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 4px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Desktop
+                        </button>
+                        <button class="control-btn" id="annotationsToggle" onclick="toggleAnnotations()" title="Toggle UX annotations">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 4px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                            Notes
+                        </button>
+                        <button class="control-btn" onclick="showHelp()" title="Show keyboard shortcuts and help">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right: 4px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Help
+                        </button>
                     </div>
                 </div>
 
@@ -914,6 +1165,13 @@
         const screens = {
             'login-empty': {
                 title: 'Login - Empty State',
+                description: 'Clean, minimal login form with focus on usability and accessibility. Notice the disabled login button until form is valid.',
+                uxNotes: [
+                    'Login button remains disabled (gray) until both email and password fields are filled, preventing empty submissions',
+                    'Visual hierarchy uses font weights and spacing: large title → medium labels → input fields → small checkbox',
+                    'All form elements have proper labels and WCAG 2.1 AA compliant color contrast ratios for accessibility',
+                    'Remember me checkbox positioned below fields follows expected form flow and reduces future login friction'
+                ],
                 content: `
                     <div class="login-container">
                         <div class="login-form fade-in">
@@ -938,6 +1196,13 @@
             },
             'login-filled': {
                 title: 'Login - Filled State',
+                description: 'Form with valid input showing real-time validation feedback. Green borders indicate successful validation.',
+                uxNotes: [
+                    'Email validation occurs on blur, checking format (@domain.com) and providing instant feedback',
+                    'Green borders (success color) confirm valid input, reducing user anxiety about form completion',
+                    'Login button changes from gray to dark when validation passes, creating clear affordance',
+                    'Progressive validation guides users step-by-step rather than overwhelming with all errors at once'
+                ],
                 content: `
                     <div class="login-container">
                         <div class="login-form fade-in">
@@ -962,6 +1227,13 @@
             },
             'login-loading': {
                 title: 'Login - Loading State',
+                description: 'Authentication in progress with clear loading feedback. Form is disabled to prevent double submission.',
+                uxNotes: [
+                    'Animated spinner in button provides immediate visual feedback that system is processing request',
+                    '"Checking Innopolis credentials..." message explains the specific action happening, not just generic "loading"',
+                    'All form fields become disabled (grayed out) preventing double-submission and accidental changes',
+                    'Loading state with specific message reduces perceived wait time and user anxiety about system status'
+                ],
                 content: `
                     <div class="login-container">
                         <div class="login-form fade-in">
@@ -990,6 +1262,13 @@
             },
             'login-error': {
                 title: 'Login - Error State',
+                description: 'Error handling with clear feedback and recovery options. Red borders highlight problematic fields.',
+                uxNotes: [
+                    'Specific error message "Invalid email or password" helps users understand what went wrong',
+                    'Red field borders provide immediate visual feedback about problematic inputs',
+                    'Password recovery link offers alternative solution when users can\'t remember credentials',
+                    'Try Again button allows immediate retry without page refresh, reducing friction'
+                ],
                 content: `
                     <div class="login-container">
                         <div class="login-form fade-in">
@@ -1019,6 +1298,13 @@
             },
             'dashboard-main': {
                 title: 'Dashboard - Main View',
+                description: 'Time-based organization reduces cognitive load. Today\'s urgent items are prioritized at the top.',
+                uxNotes: [
+                    'Time-based sections (Today/Tomorrow/Later) follow natural mental model of task prioritization',
+                    'Red color for "Due Today, 12:00" creates visual urgency using universal danger/warning color psychology',
+                    'Course names like "UX/UI Course" provide context so users know which class assignment belongs to',
+                    'Hamburger menu (☰) follows mobile-first convention, accessible via thumb reach on mobile devices'
+                ],
                 content: `
                     <div class="moodle-header">
                         <div style="display: flex; align-items: center; gap: var(--space-md);">
@@ -1096,6 +1382,13 @@
             },
             'dashboard-drawer': {
                 title: 'Dashboard - Navigation Drawer Open',
+                description: 'Consistent navigation drawer with clear iconography. Main content shifts to accommodate drawer.',
+                uxNotes: [
+                    'Semi-transparent overlay clearly separates navigation from content without completely hiding context',
+                    'Consistent iconography (grid, document, calendar) helps users quickly identify and remember sections',
+                    'Content shifts right to show spatial relationship between drawer and main content',
+                    'Logout placed at bottom with red color and separator to prevent accidental clicks'
+                ],
                 content: `
                     <div class="moodle-header">
                         <div style="display: flex; align-items: center; gap: var(--space-md);">
@@ -1175,6 +1468,13 @@
             },
             'assignments-list': {
                 title: 'Assignments - List View',
+                description: 'Tabular format improves scannability. Grade badges provide quick status overview.',
+                uxNotes: [
+                    'Table format with clear columns (Assignment | Grade | Download) enables fast vertical scanning',
+                    'Colored grade badges (green for A/B, gray for unavailable) provide instant status recognition',
+                    'Breadcrumb "< Course name >" shows current location and provides easy navigation back',
+                    'Blue "Link" text follows web conventions for clickable elements, "Pending" shows unavailable state'
+                ],
                 content: `
                     <div class="moodle-header">
                         <div style="display: flex; align-items: center; gap: var(--space-md);">
@@ -1245,6 +1545,13 @@
             },
             'assignments-download': {
                 title: 'Assignments - Download State',
+                description: 'Loading feedback during download with success confirmation. Row highlighting shows active process.',
+                uxNotes: [
+                    'Animated spinner with "Preparing download..." text provides clear feedback about system status',
+                    'Blue row highlighting draws attention to active process without being disruptive',
+                    'Toast notification in bottom-right confirms successful completion with checkmark icon',
+                    'Non-modal feedback allows users to continue browsing while download processes in background'
+                ],
                 content: `
                     <div class="moodle-header">
                         <div style="display: flex; align-items: center; gap: var(--space-md);">
@@ -1317,6 +1624,13 @@
             },
             'schedule-calendar': {
                 title: 'Schedule - Calendar View',
+                description: 'Clean calendar grid with current date highlighting. Event details separated for clarity.',
+                uxNotes: [
+                    'Today (9th) highlighted in blue background helps users orient themselves in time',
+                    'Calendar grid and event list separated vertically prevents visual clutter and allows focus on each',
+                    'Time format "12:00-13:30" shows duration clearly, easier to read than separate start/end times',
+                    'Arrow navigation (< >) follows universal calendar conventions for month switching'
+                ],
                 content: `
                     <div class="moodle-header">
                         <div style="display: flex; align-items: center; gap: var(--space-md);">
@@ -1437,6 +1751,13 @@
             },
             'schedule-events': {
                 title: 'Schedule - Event Details',
+                description: 'Detailed event view with comprehensive information. Color coding helps distinguish event types.',
+                uxNotes: [
+                    'Information hierarchy: event title → course → topic → location → instructor, following F-pattern reading',
+                    'Blue and green left borders create visual categories (lecture vs workshop) for quick scanning',
+                    'Duration automatically calculated (90 minutes) saves users mental math and provides context',
+                    'Future events shown with 70% opacity creates temporal hierarchy without hiding information'
+                ],
                 content: `
                     <div class="moodle-header">
                         <div style="display: flex; align-items: center; gap: var(--space-md);">
@@ -1550,6 +1871,12 @@
             initializeNavigation();
             initializeViewControls();
             showScreen('login-empty');
+            
+            // Set annotations button as active by default
+            const annotationsBtn = document.getElementById('annotationsToggle');
+            if (annotationsBtn) {
+                annotationsBtn.classList.add('active');
+            }
         });
 
         // Initialize navigation clicks
@@ -1598,14 +1925,190 @@
             // Update content
             document.getElementById('currentScreenTitle').textContent = screen.title;
             
+            // Update description
+            const descriptionEl = document.getElementById('screenDescription');
+            if (descriptionEl && screen.description) {
+                descriptionEl.textContent = screen.description;
+            }
+            
             // Update frame based on current view mode
             updateFrame();
+            
+            // Show UX notes if available - wait for frame to be updated
+            setTimeout(() => {
+                showUXNotes(screen);
+            }, 100);
         }
+
+        // Add UX annotation points to the current screen
+        function showUXNotes(screen) {
+            // Remove existing annotations
+            clearAllAnnotations();
+
+            if (screen.uxNotes && screen.uxNotes.length > 0 && annotationsVisible) {
+                // Add annotation points based on screen type
+                setTimeout(() => {
+                    addAnnotations(screen);
+                }, 300);
+            }
+        }
+
+        // Clear all annotations and tooltips
+        function clearAllAnnotations() {
+            document.querySelectorAll('.annotation-point').forEach(el => el.remove());
+            document.querySelectorAll('.annotation-tooltip').forEach(el => el.remove());
+        }
+
+        // Add annotations to current screen
+        function addAnnotations(screen) {
+            if (!annotationsVisible || !screen.uxNotes) return;
+
+            const screenContent = document.querySelector('.screen-content');
+            if (!screenContent) return;
+
+            // Remove existing annotations
+            clearAllAnnotations();
+
+            // Define annotation positions for different screens
+            const annotationConfigs = {
+                'login-empty': [
+                    { x: '50%', y: '75%', index: 0 },
+                    { x: '20%', y: '35%', index: 1 },
+                    { x: '30%', y: '60%', index: 2 },
+                    { x: '70%', y: '45%', index: 3 }
+                ],
+                'login-filled': [
+                    { x: '75%', y: '35%', index: 0 },
+                    { x: '25%', y: '40%', index: 1 },
+                    { x: '50%', y: '75%', index: 2 },
+                    { x: '60%', y: '60%', index: 3 }
+                ],
+                'login-loading': [
+                    { x: '50%', y: '75%', index: 0 },
+                    { x: '30%', y: '40%', index: 1 },
+                    { x: '70%', y: '35%', index: 2 },
+                    { x: '50%', y: '20%', index: 3 }
+                ],
+                'login-error': [
+                    { x: '75%', y: '40%', index: 0 },
+                    { x: '25%', y: '45%', index: 1 },
+                    { x: '50%', y: '85%', index: 2 },
+                    { x: '50%', y: '75%', index: 3 }
+                ],
+                'dashboard-main': [
+                    { x: '30%', y: '35%', index: 0 },
+                    { x: '80%', y: '40%', index: 1 },
+                    { x: '60%', y: '50%', index: 2 },
+                    { x: '15%', y: '15%', index: 3 }
+                ],
+                'dashboard-drawer': [
+                    { x: '25%', y: '30%', index: 0 },
+                    { x: '20%', y: '40%', index: 1 },
+                    { x: '70%', y: '35%', index: 2 },
+                    { x: '25%', y: '70%', index: 3 }
+                ],
+                'assignments-list': [
+                    { x: '50%', y: '40%', index: 0 },
+                    { x: '75%', y: '35%', index: 1 },
+                    { x: '30%', y: '20%', index: 2 },
+                    { x: '85%', y: '40%', index: 3 }
+                ],
+                'assignments-download': [
+                    { x: '50%', y: '35%', index: 0 },
+                    { x: '30%', y: '35%', index: 1 },
+                    { x: '80%', y: '80%', index: 2 },
+                    { x: '70%', y: '40%', index: 3 }
+                ],
+                'schedule-calendar': [
+                    { x: '50%', y: '45%', index: 0 },
+                    { x: '30%', y: '70%', index: 1 },
+                    { x: '80%', y: '75%', index: 2 },
+                    { x: '70%', y: '25%', index: 3 }
+                ],
+                'schedule-events': [
+                    { x: '30%', y: '40%', index: 0 },
+                    { x: '15%', y: '45%', index: 1 },
+                    { x: '80%', y: '45%', index: 2 },
+                    { x: '50%', y: '70%', index: 3 }
+                ]
+            };
+
+            const config = annotationConfigs[currentScreen];
+            if (!config) return;
+
+            // Add new annotations
+            config.forEach((annotation, i) => {
+                const point = document.createElement('div');
+                point.className = 'annotation-point';
+                point.style.left = annotation.x;
+                point.style.top = annotation.y;
+                point.textContent = i + 1;
+                
+                // Add click handler
+                point.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showTooltip(point, screen.uxNotes[annotation.index], i + 1);
+                });
+                
+                screenContent.appendChild(point);
+            });
+        }
+
+        // Show tooltip for annotation
+        function showTooltip(point, noteText, noteNumber) {
+            // Remove existing tooltips
+            document.querySelectorAll('.annotation-tooltip').forEach(el => el.remove());
+
+            // Create new tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'annotation-tooltip show';
+            tooltip.innerHTML = `
+                <div class="tooltip-header">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    UX Note ${noteNumber}
+                </div>
+                <div style="margin-top: var(--space-sm);">${noteText}</div>
+                <button class="tooltip-close">×</button>
+            `;
+
+            // Position tooltip near the point
+            const pointRect = point.getBoundingClientRect();
+            tooltip.style.left = (pointRect.left - 160) + 'px'; // Center tooltip
+            tooltip.style.top = (pointRect.top - 120) + 'px'; // Above the point
+
+            // Add close handler
+            tooltip.querySelector('.tooltip-close').addEventListener('click', (e) => {
+                e.stopPropagation();
+                tooltip.remove();
+            });
+
+            // Add to body
+            document.body.appendChild(tooltip);
+
+            // Auto-hide after 8 seconds
+            setTimeout(() => {
+                if (tooltip.parentNode) {
+                    tooltip.remove();
+                }
+            }, 8000);
+        }
+
+
 
         // Set view mode function
         function setViewMode(mode) {
             currentViewMode = mode;
             updateFrame();
+            
+            // Re-add annotations after view mode change
+            const screen = screens[currentScreen];
+            if (screen) {
+                setTimeout(() => {
+                    showUXNotes(screen);
+                }, 100);
+            }
         }
 
         // Update frame content
@@ -1648,25 +2151,30 @@
 
         // Toggle drawer function (for prototype interaction) - disabled for demo
         function togglePrototypeDrawer() {
-            // Disabled for static demo
+            // This function is called from static demo content
+            // In real implementation, this would toggle the navigation drawer
             console.log('Drawer toggle - demo only');
+            return false;
         }
 
-        // Auto-advance demo (optional)
-        function startAutoDemo() {
-            const screenOrder = [
-                'login-empty', 'login-filled', 'login-loading', 'dashboard-main',
-                'dashboard-drawer', 'assignments-list', 'assignments-download',
-                'schedule-calendar', 'schedule-events'
-            ];
-            
-            let currentIndex = 0;
-            
-            setInterval(() => {
-                currentIndex = (currentIndex + 1) % screenOrder.length;
-                showScreen(screenOrder[currentIndex]);
-            }, 5000);
-        }
+        // Auto-advance demo (optional) - currently unused
+        // function startAutoDemo() {
+        //     const screenOrder = [
+        //         'login-empty', 'login-filled', 'login-loading', 'dashboard-main',
+        //         'dashboard-drawer', 'assignments-list', 'assignments-download',
+        //         'schedule-calendar', 'schedule-events'
+        //     ];
+        //     
+        //     let currentIndex = 0;
+        //     
+        //     const interval = setInterval(() => {
+        //         currentIndex = (currentIndex + 1) % screenOrder.length;
+        //         showScreen(screenOrder[currentIndex]);
+        //         updateActiveNavItem(screenOrder[currentIndex]);
+        //     }, 5000);
+        //     
+        //     return interval; // Return interval ID for cleanup
+        // }
 
         // Keyboard navigation
         document.addEventListener('keydown', function(e) {
@@ -1727,6 +2235,178 @@
         
         // Call setup after DOM is loaded
         document.addEventListener('DOMContentLoaded', setupMobileNavigation);
+
+        // Toggle annotations visibility
+        let annotationsVisible = true;
+        function toggleAnnotations() {
+            annotationsVisible = !annotationsVisible;
+            const toggleBtn = document.getElementById('annotationsToggle');
+            
+            if (annotationsVisible) {
+                toggleBtn.classList.add('active');
+                toggleBtn.title = 'Hide UX annotations';
+                // Re-add annotations
+                const screen = screens[currentScreen];
+                if (screen) {
+                    setTimeout(() => {
+                        addAnnotations(screen);
+                    }, 100);
+                }
+            } else {
+                toggleBtn.classList.remove('active');
+                toggleBtn.title = 'Show UX annotations';
+                // Remove all annotations
+                clearAllAnnotations();
+            }
+        }
+
+        // Show help modal
+        function showHelp() {
+            const helpModal = document.createElement('div');
+            helpModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+            `;
+
+            const helpContent = document.createElement('div');
+            helpContent.style.cssText = `
+                background: var(--white);
+                border-radius: var(--radius-xl);
+                padding: var(--space-2xl);
+                max-width: 500px;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: var(--shadow-lg);
+            `;
+
+            helpContent.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-xl);">
+                    <h3 style="color: var(--primary); font-weight: 600; margin: 0; display: flex; align-items: center; gap: var(--space-sm);">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        Prototype Help
+                    </h3>
+                    <button onclick="this.closest('.help-modal').remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray-500);">×</button>
+                </div>
+                
+                <div style="margin-bottom: var(--space-lg);">
+                    <h4 style="color: var(--primary); font-weight: 600; margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-sm);">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                        </svg>
+                        Keyboard Shortcuts
+                    </h4>
+                    <div style="font-size: 0.875rem; line-height: 1.6;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-sm);">
+                            <span><kbd style="background: var(--gray-100); padding: 2px 6px; border-radius: 4px;">←</kbd> Previous screen</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-sm);">
+                            <span><kbd style="background: var(--gray-100); padding: 2px 6px; border-radius: 4px;">→</kbd> Next screen</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-sm);">
+                            <span><kbd style="background: var(--gray-100); padding: 2px 6px; border-radius: 4px;">M</kbd> Toggle Mobile/Desktop</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: var(--space-lg);">
+                    <h4 style="color: var(--primary); font-weight: 600; margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-sm);">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                        </svg>
+                        How to Use
+                    </h4>
+                    <ul style="font-size: 0.875rem; line-height: 1.6; padding-left: var(--space-lg);">
+                        <li>Click any item in the left sidebar to view different screens</li>
+                        <li>Switch between Mobile and Desktop views using the buttons</li>
+                        <li>Click numbered annotation points to see UX design insights</li>
+                        <li>Use the "Notes" button to show/hide annotation points</li>
+                        <li>Look for visual indicators and state changes in each screen</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 style="color: var(--primary); font-weight: 600; margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-sm);">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4 4 4 0 004-4V5z"/>
+                        </svg>
+                        Design Highlights
+                    </h4>
+                    <ul style="font-size: 0.875rem; line-height: 1.6; padding-left: var(--space-lg);">
+                        <li><strong>Mobile-First:</strong> Designed for touch interactions</li>
+                        <li><strong>Time-Based:</strong> Assignments organized by urgency</li>
+                        <li><strong>State Management:</strong> Clear loading and error states</li>
+                        <li><strong>Accessibility:</strong> WCAG 2.1 AA compliant</li>
+                    </ul>
+                </div>
+            `;
+
+            helpModal.className = 'help-modal';
+            helpModal.appendChild(helpContent);
+            document.body.appendChild(helpModal);
+
+            // Close on outside click
+            helpModal.addEventListener('click', (e) => {
+                if (e.target === helpModal) {
+                    helpModal.remove();
+                }
+            });
+
+            // Close on Escape key
+            const escapeHandler = (e) => {
+                if (e.key === 'Escape') {
+                    helpModal.remove();
+                    document.removeEventListener('keydown', escapeHandler);
+                }
+            };
+            document.addEventListener('keydown', escapeHandler);
+        }
+
+        // Enhanced keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const screenKeys = Object.keys(screens);
+            const currentIndex = screenKeys.indexOf(currentScreen);
+            
+            if (e.key === 'ArrowRight' && currentIndex < screenKeys.length - 1) {
+                const nextScreen = screenKeys[currentIndex + 1];
+                showScreen(nextScreen);
+                updateActiveNavItem(nextScreen);
+            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                const prevScreen = screenKeys[currentIndex - 1];
+                showScreen(prevScreen);
+                updateActiveNavItem(prevScreen);
+            } else if (e.key.toLowerCase() === 'm') {
+                // Toggle between mobile and desktop
+                const newMode = currentViewMode === 'mobile' ? 'desktop' : 'mobile';
+                setViewMode(newMode);
+                document.querySelectorAll('.control-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-mode') === newMode) {
+                        btn.classList.add('active');
+                    }
+                });
+            } else if (e.key === '?') {
+                showHelp();
+            }
+        });
+
+        // Close tooltips when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.annotation-point') && !e.target.closest('.annotation-tooltip')) {
+                document.querySelectorAll('.annotation-tooltip').forEach(t => {
+                    t.remove();
+                });
+            }
+        });
     </script>
 </body>
 </html>
