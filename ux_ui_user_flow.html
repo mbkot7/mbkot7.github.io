@@ -972,12 +972,15 @@
                                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                     </a>
-                    <div class="profile-avatar">M</div>
-                    <a href="https://t.me/mbkot7" target="_blank" class="telegram-link" title="Contact via Telegram">
+                    <!-- <div class="profile-avatar">M</div> -->
+                    <a href="https://t.me/mbkot7" target="_blank" class="profile-avatar" title="Contact via Telegram">
+                        M
+                    </a>
+                    <!-- <a href="https://t.me/mbkot7" target="_blank" class="telegram-link" title="Contact via Telegram">
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                    </a>
+                    </a> -->
                 </div>
             </div>
 
@@ -1116,7 +1119,7 @@
                                 <small>Server authentication</small>
                             </div>
                             <span class="flow-arrow">→</span>
-                            <div class="flow-step-detailed active">
+                            <div class="flow-step-detailed">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
@@ -1157,7 +1160,7 @@
                                 <small>Processing request</small>
                             </div>
                             <span class="flow-arrow">→</span>
-                            <div class="flow-step-detailed active">
+                            <div class="flow-step-detailed">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
                                 </svg>
@@ -1589,7 +1592,7 @@
                                 <small>Time-based grouping</small>
                             </div>
                             <span class="flow-arrow">→</span>
-                            <div class="flow-step-detailed active">
+                            <div class="flow-step-detailed">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                                 </svg>
@@ -1606,7 +1609,7 @@
                             Time-Based Organization
                         </h4>
                         <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
-                            <div class="flow-step-detailed active">
+                            <div class="flow-step-detailed">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
@@ -1719,7 +1722,7 @@
                                 <small>Click download link</small>
                             </div>
                             <span class="flow-arrow">→</span>
-                            <div class="flow-step-detailed active">
+                            <div class="flow-step-detailed">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                                 </svg>
@@ -1752,7 +1755,7 @@
                                 <small>Assignment list</small>
                             </div>
                             <span class="flow-arrow">→</span>
-                            <div class="flow-step-detailed active">
+                            <div class="flow-step-detailed">
                                 <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
                                 </svg>
@@ -1904,49 +1907,88 @@
                 </div>
 
                 <div class="flow-diagram">
-                    <div style="margin-bottom: var(--space-lg);">
-                        <h4
-                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
-                            Calendar Navigation</h4>
-                        <div class="flow-step">Calendar View</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-step">Date Selection</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-step active">Event Details</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-step">Navigation</div>
+                    <div style="margin-bottom: var(--space-xl);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            Calendar Navigation
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <div>Calendar View</div>
+                                <small>Full monthly overview</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                </svg>
+                                <div>Date Selection</div>
+                                <small>Tap to select a day</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2v2.219a3 3 0 00.897 2.372l-.114.114a1 1 0 00.707 1.707l1.414-1.414a1 1 0 00.707-.172l3.146-3.146A1 1 0 0017 10v-2h-5z"/>
+                                </svg>
+                                <div>Event Details</div>
+                                <small>View scheduled items</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                </svg>
+                                <div>Navigation</div>
+                                <small>Change month/year</small>
+                            </div>
+                        </div>
                     </div>
                     <div
-                        style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--gray-100);">
-                        <h4
-                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
-                            Visual Interaction</h4>
-                        <div class="flow-step">Monthly Grid</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-step active">Highlight Day</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-step">Show Events</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-step">Change Period</div>
-                    </div>
-                </div>
-
-                <div class="goals-grid">
-                    <div class="goal-item">
-                        <strong>Visual Orientation</strong>
-                        <p>Current date highlighting with blue background for easy identification</p>
-                    </div>
-                    <div class="goal-item">
-                        <strong>Clear Information</strong>
-                        <p>Separated calendar view and event details to reduce clutter</p>
-                    </div>
-                    <div class="goal-item">
-                        <strong>Easy Navigation</strong>
-                        <p>Intuitive arrow controls for month/year navigation</p>
-                    </div>
-                    <div class="goal-item">
-                        <strong>Time Clarity</strong>
-                        <p>Formatted time ranges (12:00-13:30) for quick scanning</p>
+                        style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--gray-100);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2v2.219a3 3 0 00.897 2.372l-.114.114a1 1 0 00.707 1.707l1.414-1.414a1 1 0 00.707-.172l3.146-3.146A1 1 0 0017 10v-2h-5z"/>
+                            </svg>
+                            Visual Interaction
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l2 2m-2-2v8m9-12h.01M12 10h.01M12 14h.01M12 18h.01M16 12h.01M16 16h.01M16 20h.01M19 12h.01M19 16h.01M19 20h.01M5 19V6.789a2 2 0 01.432-1.342l3.37-4.489A1 1 0 019.266 1h5.468a1 1 0 01.732.358l3.37 4.489A2 2 0 0119 6.789V19a2 2 0 01-2 2H7a2 2 0 01-2-2z"/>
+                                </svg>
+                                <div>Monthly Grid</div>
+                                <small>Overview of month</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2v2.219a3 3 0 00.897 2.372l-.114.114a1 1 0 00.707 1.707l1.414-1.414a1 1 0 00.707-.172l3.146-3.146A1 1 0 0017 10v-2h-5z"/>
+                                </svg>
+                                <div>Highlight Day</div>
+                                <small>Selected date indicated</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                                <div>Show Events</div>
+                                <small>Events for selected day</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                                <div>Change Period</div>
+                                <small>Next/previous month</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1984,37 +2026,106 @@
                 </div>
 
                 <div class="flow-diagram">
-                    <div style="margin-bottom: var(--space-lg);">
-                        <h4
-                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
-                            Header Structure</h4>
-                        <div class="flow-step">Menu Toggle</div>
-                        <span class="flow-arrow">+</span>
-                        <div class="flow-step active">Screen Title</div>
-                        <span class="flow-arrow">+</span>
-                        <div class="flow-step">Context Info</div>
+                    <div style="margin-bottom: var(--space-xl);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            Header Structure
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                                <div>Menu Toggle</div>
+                                <small>Open/close sidebar</small>
+                            </div>
+                            <span class="flow-arrow">+</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                                <div>Screen Title</div>
+                                <small>Current page name</small>
+                            </div>
+                            <span class="flow-arrow">+</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div>Context Info</div>
+                                <small>Date/user info</small>
+                            </div>
+                        </div>
                     </div>
                     <div
-                        style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--gray-100);">
-                        <h4
-                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
-                            Navigation Menu</h4>
-                        <div class="flow-step">Dashboard</div>
-                        <span class="flow-arrow">•</span>
-                        <div class="flow-step">Assignments</div>
-                        <span class="flow-arrow">•</span>
-                        <div class="flow-step">Schedule</div>
-                        <span class="flow-arrow">•</span>
-                        <div class="flow-step">Logout</div>
+                        style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--gray-100);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            Navigation Menu
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                </svg>
+                                <div>Dashboard</div>
+                                <small>Main overview</small>
+                            </div>
+                            <span class="flow-arrow">•</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <div>Assignments</div>
+                                <small>All tasks and grades</small>
+                            </div>
+                            <span class="flow-arrow">•</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <div>Schedule</div>
+                                <small>Calendar and events</small>
+                            </div>
+                            <span class="flow-arrow">•</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                <div>Logout</div>
+                                <small>End session</small>
+                            </div>
+                        </div>
                     </div>
                     <div
-                        style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--gray-100);">
-                        <h4
-                            style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-md);">
-                            Loading Pattern</h4>
-                        <div class="flow-step">Processing</div>
-                        <span class="flow-arrow">→</span>
-                        <div class="flow-step active">Success Feedback</div>
+                        style="margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 1px solid var(--gray-100);">
+                        <h4 style="color: var(--gray-600); font-size: 0.875rem; font-weight: 500; margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            Loading Pattern
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-md); flex-wrap: wrap;">
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                <div>Processing</div>
+                                <small>Data loading</small>
+                            </div>
+                            <span class="flow-arrow">→</span>
+                            <div class="flow-step-detailed">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: var(--space-xs);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                <div>Success Feedback</div>
+                                <small>Content loaded</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
