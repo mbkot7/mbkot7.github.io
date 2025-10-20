@@ -94,6 +94,38 @@
             margin-top: var(--space-2);
         }
         
+        .contact-info {
+            margin-top: var(--space-2);
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-top: var(--space-2);
+        }
+        
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        
+        .contact-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
         .grid {
             display: grid;
             grid-template-columns: 1.2fr .8fr;
@@ -181,31 +213,14 @@
                 </div>
                 <div>
                     <h1 class="name">Marina Kotelevskaya</h1>
-                    <p class="role">Senior SAP Integration Architect · Python Developer</p>
-                    <p class="meta">Moscow, Russia · Citizenship: Russia, Israel · Open to relocation · +7 916 403-73-22 · kotelevskayamarina2077@gmail.com</p>
-                    <div class="tags">
-                        <span class="tag">SAP ERP (SD/MM)</span>
-                        <span class="tag">SAP BW</span>
-                        <span class="tag">SAP HANA</span>
-                        <span class="tag">ABAP</span>
-                        <span class="tag">Python</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">SQL · SQL Server</span>
-                        <span class="tag">API (REST/SOAP)</span>
-                        <span class="tag">Postman</span>
-                        <span class="tag">SoapUI</span>
-                        <span class="tag">Swagger</span>
-                        <span class="tag">WSDL</span>
-                        <span class="tag">Microservices</span>
-                        <span class="tag">Test Automation</span>
-                        <span class="tag">AI/ML</span>
-                        <span class="tag">BPMN 2.0</span>
-                        <span class="tag">Jira · Tempo · Confluence</span>
-                        <span class="tag">Zebra ZPL</span>
-                        <span class="tag">Profi‑T · Crystal</span>
-                        <span class="tag">PowerShell</span>
-                        <span class="tag">Draw.io</span>
-                        <span class="tag">TestIT</span>
+                    <p class="role">Senior SAP Integration Consultant · Python Developer</p>
+                    <div class="contact-info">
+                        <p class="meta">📍 Moscow, Russia · 🇮🇱 Israeli Citizen · ✈️ Open to relocation</p>
+                        <div class="contact-links">
+                            <a href="tel:+79164037322" class="contact-link">📞 +7 916 403-73-22</a>
+                            <a href="mailto:kotelevskayamarina2077@gmail.com" class="contact-link">✉️ kotelevskayamarina2077@gmail.com</a>
+                            <a href="https://t.me/mbkot7" class="contact-link" target="_blank">💬 @mbkot7</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -293,8 +308,6 @@
                             <span class="tag">SAP BW</span>
                             <span class="tag">SAP HANA</span>
                             <span class="tag">ABAP Development</span>
-                            <span class="tag">SAP PI/PO</span>
-                            <span class="tag">SAP Fiori</span>
                         </div>
                         
                         <h3>Integration & APIs</h3>
